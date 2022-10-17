@@ -1,2 +1,9 @@
-draft: []
-release: []
+release:
+  - name: fernapi/fern-typescript-sdk
+    version: 0.0.213
+    publishing:
+      npm:
+        package-name: '@fern-api/hookdeck'
+        token: ${FERN_NPM_TOKEN}
+    github:
+      repository: fern-api/hookdeck-node
