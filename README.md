@@ -1,20 +1,20 @@
-# [TODO] API
+# Hookdeck API
 
 Tagging a release on this repository will:
 
-- Update the [TypeScript SDK Github Repo](https://github.com/fern-api/TODO-node)
+- Update the [TypeScript SDK Github Repo](https://github.com/fern-hookdeck/hookdeck-node)
 - _More SDKs to come..._
 
 ## What is in this repository?
 
 This repository contains
 
-- TODO's Fern API Definition which lives in the [definition](./fern/api/definition/) folder
+- Hookdeck's Fern API Definition which lives in the [definition](./fern/api/definition/) folder
 - Generators (see [generators.yml](./fern/api/generators.yml))
 
 ## What is in the API Definition?
 
-The API Definition contains information about what endpoints, types, and errors are used in the API. The definition is broken into smaller files such as [TODO.yml](fern/api/definition/TODO.yml) and [TODO.yml](fern/api/definition/TODO.yml).
+The API Definition contains information about what endpoints, types, and errors are used in the API. The definition is broken into smaller files such as [connection.yml](fern/api/definition/connection.yml) and [event.yml](fern/api/definition/event.yml).
 
 In order to make sure that the definition is valid, you can use the Fern CLI.
 

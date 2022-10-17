@@ -97,7 +97,7 @@ services:
               type: optional<BulkRetryId>
               docs: ID of the bulk retry
             query:
-              type: optional<string> #TODO consider changing to unknown
+              type: optional<string> # consider changing to unknown
               docs: Filter filter for events to be included in the bulk retry, use query parameters of Event
             query_partial_match:
               type: optional<boolean>
