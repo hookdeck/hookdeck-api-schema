@@ -1,4 +1,44 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 types:
-  id: string
+  EventId: string
+  EventDataId: string
+
+  RequestId: string
+  RequestStatus:
+    enum:
+      - QUEUED
+      - HOLD
+      - SUCCESSFUL
+      - FAILED
+
+  ConnectionId: string
+
+  ResourceMetadata:
+    properties:
+      team_id:
+        type: TeamId
+        docs: ID of the workspace
+      archived_at:
+        type: datetime
+        docs: defaults to null
+      updated_at:
+        type: datetime
+        docs: Date the connection was last updated
+      created_at:
+        type: datetime
+        docs: Date the connection was created
+
+  Period:
+    enum:
+      - second
+      - minute
+      - hour
+
+  TeamId:
+    docs: ID of the workspace
+    alias: string
+
+  CliId:
+    docs: ID of the CLI the event is sent to
+    alias: string

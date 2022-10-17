@@ -1,0 +1,207 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+  pagination: pagination.yml
+  destination: destination.yml
+  source: source.yml
+
+types:
+  RulesetId: string
+
+  Ruleset:
+    properties:
+      id:
+        type: RulesetId
+        docs: ID of the ruleset
+      team_id:
+        type: commons.TeamId
+        docs: ID of the workspace
+      name:
+        type: string
+        docs: A unique name for the ruleset
+      rules:
+        type: list<Rule>
+        docs: Array of rules to apply
+      is_team_default:
+        type: boolean
+        docs: Defaults to true.
+      archived_at:
+        docs: Date the source was archived
+        type: datetime
+      updated_at:
+        docs: Date the source was last updated
+        type: datetime
+      created_at:
+        docs: Date the source was created
+        type: datetime
+
+  Rule:
+    union:
+      retry: Retry
+      alert: Alert
+      filter: Filter
+    discriminant: type
+
+  Retry:
+    docs: Determines the rate and limit of automatic retries on failed events.
+    properties:
+      strategy: RetryStrategy
+      count:
+        type: integer
+        docs: Maximum number of retries to attempt
+      interval:
+        type: integer
+        docs: Time in MS between each retry
+
+  RetryStrategy:
+    docs: Algorithm to use when calculating delay between retries.
+    enum:
+      - LINEAR
+      - EXPONENTIAL
+
+  Alert:
+    docs: The alert rule determines when Hookdeck will trigger new issues for failed events.
+    properties:
+      strategy: AlertStrategy
+
+  AlertStrategy:
+    docs: Strategy to use when deciding to trigger an issue
+    enum:
+      - each_attempt
+      - last_attempt
+
+  Filter:
+    docs: |
+      The filter rule allows you to permit and route webhooks conditionally
+      based on the contents of their Headers, Body, Query, and/or Path.
+    properties:
+      body: optional<string> #TODO consider changing to unknown
+      headers: optional<string> #TODO consider changing to unknown
+      path: optional<string> #TODO consider changing to unknown
+      query: optional<string> #TODO consider changing to unknown
+
+  AllRulesets:
+    extends: pagination.Pagination
+    properties:
+      count: integer
+      models: list<Connection>
+
+  Connection:
+    extends: commons.ResourceMetadata
+    properties:
+      id:
+        type: commons.ConnectionId
+        docs: ID of the connection
+      name:
+        type: string
+        docs: Unique name of the connection for this source
+      source:
+        type: source.Source
+        docs: Associated Source object
+      destination:
+        type: destination.Destination
+        docs: Associated Destination object
+      ruleset:
+        type: Ruleset
+        docs: Workspace default ruleset
+      resolved_rules:
+        type: list<Rule>
+        docs: Array of rules applied to connection after factoring for the ruleset
+      rules:
+        type: list<Rule>
+        docs: Array of rules configured on the connection
+
+  RulesetRequest:
+    properties:
+      name:
+        type: string
+        docs: Name for the ruleset
+      rules:
+        type: list<Rule>
+        docs: Array of rules to apply
+
+services:
+  http:
+    RulesetService:
+      docs: A ruleset defines a group of rules that can be used across many connections.
+      base-path: /rulesets
+      auth: true
+      endpoints:
+        retrieveAllRulesets:
+          method: GET
+          path: /
+          query-parameters:
+            id:
+              type: optional<RulesetId>
+              docs: Filter by ruleset IDs
+            name:
+              type: optional<string>
+              docs: The ruleset name
+            archived:
+              type: optional<boolean>
+              docs: Include archived resources in the response
+            archived_at:
+              type: optional<datetime>
+              docs: Date the ruleset was archived
+            limit:
+              type: optional<integer>
+              docs: Limit the returned event count (max 250)
+          response: AllRulesets
+
+        retrieveRuleset:
+          docs: This endpoint retrieves a specific
+          method: GET
+          path: /{id}
+          path-parameters:
+            id:
+              type: RulesetId
+              docs: Ruleset ID
+          response: Ruleset
+
+        createRuleset:
+          docs: This endpoint creates a
+          method: POST
+          path: /
+          request: RulesetRequest
+          response: Ruleset
+
+        upsertRuleset:
+          docs: This endpoint creates a ruleset, or updates an existing ruleset by name.
+          method: PUT
+          path: /
+          request: RulesetRequest
+          response: Ruleset
+
+        updateRuleset:
+          docs: This endpoint updates a
+          method: PUT
+          path: /{id}
+          path-parameters:
+            id:
+              type: RulesetId
+              docs: Ruleset ID
+          request: RulesetRequest
+          response: Ruleset
+
+        archiveRuleset:
+          docs: |
+            This endpoint archives a 
+            The parameter archived_at is set to the current timestamp.
+          method: PUT
+          path: /{id}/archive
+          path-parameters:
+            id:
+              type: RulesetId
+              docs: Ruleset ID
+          response: Ruleset
+
+        unarchiveRuleset:
+          docs: |
+            This endpoint unarchives a 
+            The parameter archived_at is set to null.
+          method: PUT
+          path: /{id}/unarchive
+          path-parameters:
+            id: RulesetId
+          response: Ruleset

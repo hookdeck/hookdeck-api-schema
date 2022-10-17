@@ -1,0 +1,204 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+  pagination: pagination.yml
+  connection: connection.yml
+  destination: destination.yml
+  source: source.yml
+  attempt: attempt.yml
+
+types:
+  Event:
+    properties:
+      id:
+        docs: ID of the event
+        type: commons.EventId
+      team_id:
+        docs: ID of the workspace
+        type: commons.TeamId
+      webhook_id:
+        docs: ID of the associated connection
+        type: commons.ConnectionId
+      source_id:
+        docs: ID of the associated source
+        type: source.SourceId
+      destination_id:
+        docs: ID of the associated destination
+        type: destination.DestinationId
+      cli_id:
+        docs: ID of the CLI the event is sent to
+        type: commons.CliId
+      request_id:
+        docs: ID of the request that created the event
+        type: commons.RequestId
+      event_data_id:
+        docs: ID of the request data
+        type: commons.EventDataId
+      attempts:
+        docs: Number of delivery attempts made
+        type: integer
+      status:
+        docs: Lifecyle status of the event.
+        type: EventStatus
+      response_status:
+        docs: Event status
+        type: integer
+      error_code:
+        docs: HTTP error code.
+        type: string
+      last_attempt_at:
+        docs: Date of the most recently attempted retry
+        type: datetime
+      next_attempt_at:
+        docs: Date of the next scheduled retry
+        type: datetime
+      sucessful_at:
+        docs: Date of the latest successful attempt
+        type: datetime
+      updated_at:
+        docs: Date the event was last updated
+        type: datetime
+      created_at:
+        docs: Date the event was created
+        type: datetime
+
+  EventStatus:
+    enum:
+      - QUEUED
+      - HOLD
+      - SUCCESSFUL
+      - FAILED
+
+  EventData:
+    properties:
+      headers: EventHeaders
+      body: EventBody
+      query: string
+      parsed_query: ParsedQuery
+      path: string
+
+  ParsedQuery: unknown
+
+  EventHeaders:
+    properties:
+      content-length: string
+      x-original-url: string
+      cookie: string
+      x-client-version: string
+      content-type: string
+      user-agent: string
+
+  EventBody: unknown
+
+  AllEvents:
+    extends: pagination.Pagination
+    properties:
+      count: integer
+      models: list<Event>
+
+  EventRetryResponse:
+    properties:
+      event: Event
+      attempt: attempt.Attempt
+
+services:
+  http:
+    EventService:
+      docs: |
+        An event is any request that Hookdeck receives from a source.
+      base-path: /events
+      auth: true
+      endpoints:
+        retrieveAllEvents:
+          method: GET
+          path: /
+          query-parameters:
+            id:
+              type: optional<commons.EventId>
+              docs: Filter by event IDs
+            webhook_id:
+              type: optional<commons.ConnectionId>
+              docs: Filter by webhook connection IDs
+            source_id:
+              type: optional<source.SourceId>
+              docs: Filter by source IDs
+            destination_id:
+              type: optional<destination.DestinationId>
+              docs: Filter by destination IDs
+            cli_id:
+              type: optional<commons.CliId>
+              docs: |
+                Filter by CLI IDs.
+                ?[any]=true operator for any CLI.
+                Defaults to null.
+            status:
+              type: optional<commons.RequestStatus>
+              docs: Lifecyle status of the event.
+            response_status:
+              type: optional<integer>
+              docs: Filter by HTTP response status code
+            attempts:
+              type: optional<integer>
+              docs: Filter by number of attempts
+            created_at:
+              type: optional<datetime>
+              docs: Filter by created_at date using a date operator
+            successful_at:
+              type: optional<datetime>
+              docs: Filter by last_attempt_at date using a date operator
+            last_attempt_at:
+              type: optional<datetime>
+              docs: Filter by last_attempt_at date using a date operator
+            next_attempt_at:
+              type: optional<datetime>
+              docs: Filter by next_attempt_at date using a date operator
+            body:
+              type: optional<string> #EventBody
+              docs: URL Encoded string of the JSON to match to the data body
+            headers:
+              type: optional<string> #EventHeaders
+              docs: URL Encoded string of the JSON to match to the data headers
+            parsed_query:
+              type: optional<string> #TODO consider changing to unknown
+              docs: URL Encoded string of the JSON to match to the parsed query (JSON representation of the query)
+            path:
+              type: optional<string>
+              docs: URL Encoded string of the string to match partially to the path
+            include:
+              type: optional<string> #TODO consider changing to unknown
+              docs: Include the data object in the event model
+            limit:
+              type: optional<string>
+              docs: Limit the returned event count (max 250)
+            order_by:
+              type: optional<pagination.OrderBy>
+              docs: Sort by created_at (default) or last_attempt_at.
+          response: AllEvents
+
+        retrieveEvent:
+          docs: This endpoint retrieves a specific event.
+          method: GET
+          path: /{id}
+          path-parameters:
+            id: commons.EventId
+          response: Event
+
+        retryEvent:
+          docs: This endpoint manually queues an event for retry.
+          method: POST
+          path: /{id}/retry
+          path-parameters:
+            id: commons.EventId
+          response: EventRetryResponse
+
+        muteEvent:
+          docs: |
+            This endpoint cancels the next automatic retry.
+            The parameter next_attempt_at is set to null. 
+            This action is not reversible.
+          method: PUT
+          path: /{id}/mute
+          path-parameters:
+            id: commons.EventId
+          response: Event

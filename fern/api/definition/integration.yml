@@ -1,0 +1,119 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  source: source.yml
+  commons: commons.yml
+  connection: connection.yml
+  pagination: pagination.yml
+  destination: destination.yml
+  attempt: attempt.yml
+
+types:
+  IntegrationId: string
+
+  Integration:
+    properties:
+      id: IntegrationId
+      team_id: commons.TeamId
+      label: string
+      provider: IntegrationProvider
+      features: list<IntegrationFeature>
+      configs: IntegrationConfig
+      updated_at: datetime
+      created_at: datetime
+
+  IntegrationProvider:
+    enum:
+      - twitter
+      - recharge
+      - stripe
+      - shopify
+      - github
+      - postmark
+
+  IntegrationFeature:
+    enum:
+      - HANDSHAKE
+      - VERIFICATION
+      - POLLING
+
+  IntegrationConfig:
+    properties:
+      configs: map<string, string>
+
+  AllIntegrations:
+    extends: pagination.Pagination
+    properties:
+      count: integer
+      models: list<Integration>
+
+  CreateIntegrationRequest:
+    properties:
+      label: string
+      provider: IntegrationProvider
+      features: list<IntegrationFeature>
+      configs: IntegrationConfig
+
+  UpdateIntegrationRequest:
+    properties:
+      label: string
+      provider: IntegrationProvider
+      features: list<IntegrationFeature>
+      configs: IntegrationConfig
+
+services:
+  http:
+    IntegrationService:
+      docs: |
+        An integration configures platform-specific behaviors, such as signature verification.
+      base-path: /integrations
+      auth: true
+      endpoints:
+        retrieveAllIntegrations:
+          method: GET
+          path: /
+          response: AllIntegrations
+
+        retrieveIntegration:
+          method: GET
+          path: /{id}
+          path-parameters:
+            id: IntegrationId
+          response: Integration
+
+        createIntegration:
+          method: POST
+          path: /
+          request: CreateIntegrationRequest
+          response: Integration
+
+        updateIntegration:
+          method: PUT
+          path: /{id}
+          path-parameters:
+            id: IntegrationId
+          request: UpdateIntegrationRequest
+          response: Integration
+
+        deleteIntegration:
+          method: DELETE
+          path: /{id}
+          path-parameters:
+            id: IntegrationId
+          response: IntegrationId
+
+        attachIntegrationToSource:
+          method: PUT
+          path: /{id}/attach/{source_id}
+          path-parameters:
+            id: IntegrationId
+            source_id: source.SourceId
+          response: boolean
+
+        detachIntegrationToSource:
+          method: PUT
+          path: /{id}/detach/{source_id}
+          path-parameters:
+            id: IntegrationId
+            source_id: source.SourceId
+          response: boolean

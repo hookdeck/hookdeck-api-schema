@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+#docs: |
+  #All GET endpoints that retrieve a list of resources are paged using cursor (aka keyset) pagination,
+  #which resides in the response body's pagination object.
+
+types: 
+  Pagination:
+    properties:
+      order_by: OrderBy
+      dir: Direction
+      limit:
+        type: integer
+        docs: The making amount of results returned per query (max 250)
+      next: string
+      previous: string
+
+  OrderBy:
+    enum:
+      - created_at
+      - updated_at
+
+  Direction:
+    enum:
+      - desc
+      - asc
