@@ -6,4 +6,5 @@ release:
         package-name: '@fern-api/hookdeck'
         token: ${FERN_NPM_TOKEN}
     github:
-      repository: fern-api/hookdeck-node
+      repository: fern-hookdeck/hookdeck-node
+      
