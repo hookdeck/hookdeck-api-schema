@@ -1,0 +1,12 @@
+default-group: publish
+groups:
+  publish:
+    generators:
+      - name: fernapi/fern-typescript-sdk
+        version: 0.1.4
+        output:
+          location: npm
+          package-name: '@fern-api/hookdeck'
+          token: ${FERN_NPM_TOKEN}
+        github:
+          repository: fern-hookdeck/hookdeck-node

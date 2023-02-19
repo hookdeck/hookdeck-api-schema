@@ -61,7 +61,8 @@ types:
       - EXPONENTIAL
 
   Alert:
-    docs: The alert rule determines when Hookdeck will trigger new issues for failed events.
+    docs: The alert rule determines when Hookdeck will trigger new issues for failed
+      events.
     properties:
       strategy: AlertStrategy
 
@@ -112,7 +113,7 @@ types:
         type: list<Rule>
         docs: Array of rules configured on the connection
 
-  RulesetRequest:
+  RulesetRequest:   
     properties:
       name:
         type: string
@@ -121,87 +122,93 @@ types:
         type: list<Rule>
         docs: Array of rules to apply
 
-services:
-  http:
-    RulesetService:
-      docs: A ruleset defines a group of rules that can be used across many connections.
-      base-path: /rulesets
-      auth: true
-      endpoints:
-        retrieveAllRulesets:
-          method: GET
-          path: /
-          query-parameters:
-            id:
-              type: optional<RulesetId>
-              docs: Filter by ruleset IDs
-            name:
-              type: optional<string>
-              docs: The ruleset name
-            archived:
-              type: optional<boolean>
-              docs: Include archived resources in the response
-            archived_at:
-              type: optional<datetime>
-              docs: Date the ruleset was archived
-            limit:
-              type: optional<integer>
-              docs: Limit the returned event count (max 250)
-          response: AllRulesets
+service:
+  docs: A ruleset defines a group of rules that can be used across many connections.
+  base-path: /rulesets
+  auth: true
+  endpoints:
+    getAll:
+      method: GET
+      path: ""
+      response: AllRulesets
+      request:
+        name: GetAllRulesetsRequest
+        query-parameters:
+          id:
+            type: optional<RulesetId>
+            docs: Filter by ruleset IDs
+          name:
+            type: optional<string>
+            docs: The ruleset name
+          archived:
+            type: optional<boolean>
+            docs: Include archived resources in the response
+          archived_at:
+            type: optional<datetime>
+            docs: Date the ruleset was archived
+          limit:
+            type: optional<integer>
+            docs: Limit the returned event count (max 250)
 
-        retrieveRuleset:
-          docs: This endpoint retrieves a specific
-          method: GET
-          path: /{id}
-          path-parameters:
-            id:
-              type: RulesetId
-              docs: Ruleset ID
-          response: Ruleset
+    get:
+      docs: This endpoint retrieves a specific
+      method: GET
+      path: /{id}
+      path-parameters:
+        id:
+          type: RulesetId
+          docs: Ruleset ID
+      response: Ruleset
 
-        createRuleset:
-          docs: This endpoint creates a
-          method: POST
-          path: /
-          request: RulesetRequest
-          response: Ruleset
+    create:
+      docs: This endpoint creates a Ruleset 
+      method: POST
+      path: ""
+      request:
+        body: RulesetRequest
+      response: Ruleset
 
-        upsertRuleset:
-          docs: This endpoint creates a ruleset, or updates an existing ruleset by name.
-          method: PUT
-          path: /
-          request: RulesetRequest
-          response: Ruleset
+    upsert:
+      docs: This endpoint creates a ruleset, or updates an existing ruleset by name.
+      method: PUT
+      path: ""
+      request:
+        name: RulesetUpsertRequest
+        body:
+          type: RulesetRequest
+      response: Ruleset
 
-        updateRuleset:
-          docs: This endpoint updates a
-          method: PUT
-          path: /{id}
-          path-parameters:
-            id:
-              type: RulesetId
-              docs: Ruleset ID
-          request: RulesetRequest
-          response: Ruleset
+    update:
+      docs: This endpoint updates a
+      method: PUT
+      path: /{id}
+      path-parameters:
+        id:
+          type: RulesetId
+          docs: Ruleset ID
+      request:
+        body:
+          type: RulesetRequest
+      response: Ruleset
 
-        archiveRuleset:
-          docs: |
-            This endpoint archives a 
-            The parameter archived_at is set to the current timestamp.
-          method: PUT
-          path: /{id}/archive
-          path-parameters:
-            id:
-              type: RulesetId
-              docs: Ruleset ID
-          response: Ruleset
+    archive:
+      docs: |
+        This endpoint archives a 
+        The parameter archived_at is set to the current timestamp.
+      method: PUT
+      path: /{id}/archive
+      path-parameters:
+        id:
+          type: RulesetId
+          docs: Ruleset ID
+      response: Ruleset
 
-        unarchiveRuleset:
-          docs: |
-            This endpoint unarchives a 
-            The parameter archived_at is set to null.
-          method: PUT
-          path: /{id}/unarchive
-          path-parameters:
-            id: RulesetId
-          response: Ruleset
+    unarchive:
+      docs: |
+        This endpoint unarchives a 
+        The parameter archived_at is set to null.
+      method: PUT
+      path: /{id}/unarchive
+      path-parameters:
+        id: RulesetId
+      response: Ruleset

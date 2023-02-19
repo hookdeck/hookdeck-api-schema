@@ -1,0 +1,97 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  source: source.yml
+  commons: commons.yml
+  connection: connection.yml
+  pagination: pagination.yml
+
+types:
+  BookmarkId: string
+
+  Bookmark:
+    properties:
+      id: BookmarkId
+      team_id: commons.TeamId
+      label: string
+      webhook_id: commons.ConnectionId
+      event_data_id: commons.EventDataId
+      last_used_at: datetime
+      updated_at: datetime
+      created_at: datetime
+
+  AllBookmarks:
+    extends: pagination.Pagination
+    properties:
+      count: integer
+      models: list<Bookmark>
+
+  Target:
+    enum:
+      - cli
+      - http
+
+service:
+  docs: |
+    A bookmark lets you conveniently store and replay a specific request.
+  base-path: /bookmarks
+  auth: true
+  endpoints:
+    getAll:
+      method: GET
+      path: ""
+      response: AllBookmarks
+
+    get:
+      method: GET
+      path: /{id}
+      path-parameters:
+        id: BookmarkId
+      response: Bookmark
+
+    create:
+      method: POST
+      path: ""
+      request:
+        name: CreateBookmarkRequest
+        body:
+          properties:
+            label: string
+            type: optional<string>
+            webhook_id: commons.ConnectionId
+            event_data_id: commons.EventDataId
+      response: Bookmark
+
+    update:
+      method: PUT
+      path: /{id}
+      path-parameters:
+        id: BookmarkId
+      request:
+        name: UpdateBookmarkRequest
+        body:
+          properties:
+            label: optional<string>
+            type: optional<string>
+            webhook_id: optional<commons.ConnectionId>
+            event_data_id: optional<commons.EventDataId>
+      response: Bookmark
+
+    trigger:
+      docs: |
+        This endpoint uses a bookmark to create events.
+      method: POST
+      path: /{id}/trigger
+      path-parameters:
+        id: Bookmark
+      request:
+        name: TriggerBookmarkRequest
+        body:
+          type: optional<Target>
+
+    delete:
+      method: DELETE
+      path: /{id}
+      path-parameters:
+        id: BookmarkId
+      response: BookmarkId

@@ -10,7 +10,7 @@ imports:
 
 types:
   IssueId:
-    alias: string
+    type: string
     docs: Issue ID
 
   Issue:
@@ -55,7 +55,8 @@ types:
         docs: ISO timestamp for when the issue was created
         type: datetime
       data:
-        docs: Expended data of the reference object. Only populated when retrieving a single issue and not a list
+        docs: Expended data of the reference object. Only populated when retrieving a
+          single issue and not a list
         type: IssueData
 
   IssueStatus:
@@ -181,132 +182,134 @@ types:
 
   IssueBody: unknown
 
-  UpdateIssueRequest:
-    properties:
-      status: IssueStatus
+service:
+  docs: |
+    Issues let you track problems in your workspace and communicate resolution steps with your team.
+  base-path: /issues
+  auth: true
+  endpoints:
+    getAll:
+      method: GET
+      path: ""
+      response: AllIssues
+      request:
+        name: GetAllIssuesRequest
+        query-parameters:
+          id:
+            docs: Filter by issue IDs
+            type: optional<IssueId>
+          type:
+            docs: The issue type
+            type: optional<string>
+          status:
+            docs: The issue status
+            type: optional<IssueStatus>
+          merged_with:
+            docs: The issue ID it was merged with
+            type: optional<IssueId>
+          aggregation_keys:
+            docs: JSON that will evaluate has a partial match of issue aggregation_keys
+            type: optional<string> #TODO consider changing to unknown
+          created_at:
+            docs: Date the issues were created
+            type: optional<datetime>
+          first_seen_at:
+            docs: Date the issues were first seen
+            type: optional<datetime>
+          last_seen_at:
+            docs: Date the issues were last seen
+            type: optional<datetime>
+          dismissed_at:
+            docs: Date the issues were dismissed
+            type: optional<datetime>
+          opened_at:
+            docs: Date the issues were opened
+            type: optional<datetime>
+          order_by:
+            docs: The date property to order by
+            type: optional<string>
+          dir:
+            docs: The ordering direction
+            type: optional<pagination.Direction>
+          limit:
+            docs: Limit the returned model count (max 250)
+            type: optional<integer>
 
-services:
-  http:
-    IssueService:
-      docs: |
-        Issues let you track problems in your workspace and communicate resolution steps with your team.
-      base-path: /issues
-      auth: true
-      endpoints:
-        retrieveAllIssues:
-          method: GET
-          path: /
-          query-parameters:
-            id:
-              docs: Filter by issue IDs
-              type: optional<IssueId>
-            type:
-              docs: The issue type
-              type: optional<string>
-            status:
-              docs: The issue status
-              type: optional<IssueStatus>
-            merged_with:
-              docs: The issue ID it was merged with
-              type: optional<IssueId>
-            aggregation_keys:
-              docs: JSON that will evaluate has a partial match of issue aggregation_keys
-              type: optional<string> #TODO consider changing to unknown
-            created_at:
-              docs: Date the issues were created
-              type: optional<datetime>
-            first_seen_at:
-              docs: Date the issues were first seen
-              type: optional<datetime>
-            last_seen_at:
-              docs: Date the issues were last seen
-              type: optional<datetime>
-            dismissed_at:
-              docs: Date the issues were dismissed
-              type: optional<datetime>
-            opened_at:
-              docs: Date the issues were opened
-              type: optional<datetime>
-            order_by:
-              docs: The date property to order by
-              type: optional<string>
-            dir:
-              docs: The ordering direction
-              type: optional<pagination.Direction>
-            limit:
-              docs: Limit the returned model count (max 250)
-              type: optional<integer>
-          response: AllIssues
+    get:
+      method: GET
+      path: /count
+      response: integer
+      request:
+        name: GetIssueRequest
+        query-parameters:
+          id:
+            docs: Filter by issue IDs
+            type: optional<IssueId>
+          type:
+            docs: The issue type
+            type: optional<string>
+          status:
+            docs: The issue status
+            type: optional<IssueStatus>
+          merged_with:
+            docs: The issue ID it was merged with
+            type: optional<IssueId>
+          aggregation_keys:
+            docs: JSON that will evaluate has a partial match of issue aggregation_keys
+            type: optional<string> #TODO consider changing to unknown
+          created_at:
+            docs: Date the issues were created
+            type: optional<datetime>
+          first_seen_at:
+            docs: Date the issues were first seen
+            type: optional<datetime>
+          last_seen_at:
+            docs: Date the issues were last seen
+            type: optional<datetime>
+          dismissed_at:
+            docs: Date the issues were dismissed
+            type: optional<datetime>
+          opened_at:
+            docs: Date the issues were opened
+            type: optional<datetime>
+          order_by:
+            docs: The date property to order by
+            type: optional<string>
+          dir:
+            docs: The ordering direction
+            type: optional<pagination.Direction>
+          limit:
+            docs: Limit the returned model count (max 250)
+            type: optional<integer>
 
-        countIssues:
-          method: GET
-          path: /count
-          query-parameters:
-            id:
-              docs: Filter by issue IDs
-              type: optional<IssueId>
-            type:
-              docs: The issue type
-              type: optional<string>
-            status:
-              docs: The issue status
-              type: optional<IssueStatus>
-            merged_with:
-              docs: The issue ID it was merged with
-              type: optional<IssueId>
-            aggregation_keys:
-              docs: JSON that will evaluate has a partial match of issue aggregation_keys
-              type: optional<string> #TODO consider changing to unknown
-            created_at:
-              docs: Date the issues were created
-              type: optional<datetime>
-            first_seen_at:
-              docs: Date the issues were first seen
-              type: optional<datetime>
-            last_seen_at:
-              docs: Date the issues were last seen
-              type: optional<datetime>
-            dismissed_at:
-              docs: Date the issues were dismissed
-              type: optional<datetime>
-            opened_at:
-              docs: Date the issues were opened
-              type: optional<datetime>
-            order_by:
-              docs: The date property to order by
-              type: optional<string>
-            dir:
-              docs: The ordering direction
-              type: optional<pagination.Direction>
-            limit:
-              docs: Limit the returned model count (max 250)
-              type: optional<integer>
-          response: integer
+    retrieve:
+      method: GET
+      path: /{id}
+      path-parameters:
+        id:
+          type: IssueId
+          docs: Issue ID
+      response: Issue
 
-        retrieveIssue:
-          method: GET
-          path: /{id}
-          path-parameters:
-            id:
-              type: IssueId
-              docs: Issue ID
-          response: Issue
+    update:
+      method: PUT
+      path: /{id}
+      path-parameters:
+        id:
+          type: IssueId
+          docs: Issue ID
+      request:
+        name: UpdateIssueRequest
+        body:
+          properties:
+            status: IssueStatus
+      response: Issue
 
-        updateIssue:
-          method: PUT
-          path: /{id}
-          path-parameters:
-            id:
-              type: IssueId
-              docs: Issue ID
-          request: UpdateIssueRequest
-          response: Issue
-
-        dismissIssue:
-          method: DELETE
-          path: /{id}
-          path-parameters:
-            id:
-              type: IssueId
-              docs: Issue ID
-          response: Issue
+    dismissIssue:
+      method: DELETE
+      path: /{id}
+      path-parameters:
+        id:
+          type: IssueId
+          docs: Issue ID
+      response: Issue

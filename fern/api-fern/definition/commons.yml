@@ -37,8 +37,8 @@ types:
 
   TeamId:
     docs: ID of the workspace
-    alias: string
+    type: string
 
   CliId:
     docs: ID of the CLI the event is sent to
-    alias: string
+    type: string

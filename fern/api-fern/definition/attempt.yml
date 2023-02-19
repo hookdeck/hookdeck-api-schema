@@ -48,7 +48,8 @@ types:
         docs: How this attempt was triggered
       attempt_number:
         type: integer
-        docs: Sequential number of attempts (up to and including this one) made for the associated event
+        docs: Sequential number of attempts (up to and including this one) made for the
+          associated event
       delivered_at:
         type: datetime
         docs: Date the attempt was delivered
@@ -60,7 +61,8 @@ types:
         docs: Time elapsed between attempt initiation and final delivery (in ms)
       archived_at:
         type: datetime
-        docs: Time elapsed between attempt initiation and a response from the destination (in ms)
+        docs: Time elapsed between attempt initiation and a response from the
+          destination (in ms)
       body:
         type: string
         docs: Response body from the destination
@@ -90,32 +92,32 @@ types:
       count: integer
       models: list<Attempt>
 
-services:
-  http:
-    AttemptService:
-      docs: |
-        An attempt is any request that Hookdeck makes on behalf of an event.
-      base-path: /attempts
-      auth: true
-      endpoints:
-        retrieveAllAttempts:
-          docs: This endpoint lists all attempts, or a subset of attempts.
-          method: GET
-          path: /
-          query-parameters:
-            event_id:
-              type: optional<commons.EventId>
-              docs: Event the attempt is associated with
-          response: AllAttempts
+service:
+  docs: |
+    An attempt is any request that Hookdeck makes on behalf of an event.
+  base-path: /attempts
+  auth: true
+  endpoints:
+    getAll:
+      docs: This endpoint lists all attempts, or a subset of attempts.
+      method: GET
+      path: ""
+      response: AllAttempts
+      request:
+        name: RetrieveAllAttemptsRequest
+        query-parameters:
+          event_id:
+            type: optional<commons.EventId>
+            docs: Event the attempt is associated with
 
-        retrieveAttempt:
-          docs: |
-            This endpoint retrieves a specific attempt.
-            When retrieving a completed attempt, the response will contain the body of the destination's response.
-          method: GET
-          path: /{id}
-          path-parameters:
-            id:
-              type: AttemptId
-              docs: Attempt ID
-          response: Attempt
+    get:
+      docs: |
+        This endpoint retrieves a specific attempt.
+        When retrieving a completed attempt, the response will contain the body of the destination's response.
+      method: GET
+      path: /{id}
+      path-parameters:
+        id:
+          type: AttemptId
+          docs: Attempt ID
+      response: Attempt

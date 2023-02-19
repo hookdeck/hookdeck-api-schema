@@ -1,0 +1,177 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+  destination: destination.yml
+  source: source.yml
+  pagination: pagination.yml
+  ruleset: ruleset.yml
+
+types:
+  AllConnections:
+    extends: pagination.Pagination
+    properties:
+      count: integer
+      models: list<ruleset.Connection>
+
+service:
+  docs: |
+    A connection lets you route webhooks from a source 
+    to a destination, using a ruleset.
+    Connections were historically called "webhooks". 
+    The endpoint root path /webhooks has been moved to /connections. 
+    The former will remain functional, but consider migrating to /connections.
+  auth: true
+  base-path: /connections
+  endpoints:
+    getAll:
+      docs: This endpoint lists all connections, or a subset of connections.
+      method: GET
+      path: ""
+      response: AllConnections
+      request:
+        name: GetAllConnectionsRequest
+        query-parameters:
+          id: optional<commons.ConnectionId>
+          name: optional<string>
+          full_name: optional<string>
+          source_id: optional<source.SourceId>
+          destination_id: optional<destination.DestinationId>
+          archived: optional<boolean>
+          archived_at: optional<datetime>
+          paused_at: optional<datetime>
+          limit:
+            type: optional<integer>
+            docs: Limit the returned event count (max 250)
+
+    get:
+      docs: This endpoint retrieves a specific connection.
+      method: GET
+      path: /{id}
+      path-parameters:
+        id: commons.ConnectionId
+
+    create:
+      docs: This endpoint creates a connection.
+      method: POST
+      path: ""
+      request:
+        name: CreateConnectionRequest
+        body:
+          properties:
+            name:
+              docs: A unique name of the connection for the source
+              type: string
+            source_id:
+              docs: ID of a source to bind to the connection
+              type: optional<source.SourceId>
+            destination_id:
+              docs: ID of a destination to bind to the connection
+              type: optional<destination.DestinationId>
+            ruleset_id:
+              docs: ID of a destination to bind to the connection
+              type: optional<ruleset.RulesetId>
+            ruleset:
+              docs: Ruleset input object
+              type: optional<ruleset.Ruleset>
+            rules:
+              docs: Array of rules to apply
+              type: optional<list<ruleset.Rule>>
+      response: ruleset.Connection
+
+    upsert:
+      docs: |
+        This endpoint creates a connection, or updates an existing connection by name. 
+        A connection's source and destination cannot be updated.
+      method: PUT
+      path: ""
+      request:
+        name: UpsertConnectionRequest
+        body:
+          properties:
+            name:
+              docs: A unique name of the connection for the source
+              type: string
+            source_id:
+              docs: ID of a source to bind to the connection
+              type: optional<source.SourceId>
+            destination_id:
+              docs: ID of a destination to bind to the connection
+              type: optional<destination.DestinationId>
+            ruleset_id:
+              docs: ID of a destination to bind to the connection
+              type: optional<ruleset.RulesetId>
+            ruleset:
+              docs: Ruleset input object
+              type: optional<ruleset.Ruleset>
+            rules:
+              docs: Array of rules to apply
+              type: optional<list<ruleset.Rule>>
+
+    update:
+      docs: This endpoint updates a connection.
+      method: PUT
+      path: /{id}
+      path-parameters:
+        id: commons.ConnectionId
+      request:
+        name: UpdateConnectionRequest
+        body:
+          properties:
+            name:
+              docs: A unique name of the connection for the source
+              type: string
+            ruleset_id:
+              docs: ID of a destination to bind to the connection
+              type: optional<ruleset.RulesetId>
+            ruleset:
+              docs: Ruleset input object
+              type: optional<ruleset.Ruleset>
+            rules:
+              docs: Array of rules to apply
+              type: optional<list<ruleset.Rule>>
+
+    pause:
+      docs: |
+        A paused connection will still receive events, 
+        but those events will be marked with a status of HOLD 
+        and will be delivered only once the connection is unpaused.
+      method: PUT
+      path: /{id}/pause
+      path-parameters:
+        id: commons.ConnectionId
+      response: ruleset.Connection
+
+    unpause:
+      docs: |
+        Any event with a status of HOLD will be attempted (rate limits will be respected).
+        This operation is asynchronous, 
+        so it may take some time for all events to be QUEUED for delivery.
+        The parameter paused_at is set to null.
+      method: PUT
+      path: /{id}/unpause
+      path-parameters:
+        id: commons.ConnectionId
+      response: ruleset.Connection
+
+    archive:
+      docs: |
+        This endpoint archives a connection. 
+        An archived connection will no longer receive or deliver any webhooks.
+      method: PUT
+      path: /{id}/archive
+      path-parameters:
+        id: commons.ConnectionId
+      response: ruleset.Connection
+
+    unarchive:
+      docs: |
+        This endpoint unarchives a connection.
+        The associated source and destination will also be unarchived 
+        if they were previously archived. 
+        The parameter archived_at is set to null.
+      method: PUT
+      path: /{id}/unarchive
+      path-parameters:
+        id: commons.ConnectionId
+      response: ruleset.Connection
