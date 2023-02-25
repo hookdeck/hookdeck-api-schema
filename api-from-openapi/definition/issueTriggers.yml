@@ -1,0 +1,107 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+service:
+  auth: false
+  base-path: /issue-triggers
+  endpoints:
+    getIssueTriggers:
+      path: ""
+      method: GET
+      docs: ""
+      display-name: Get issue triggers
+      request:
+        query-parameters:
+          name: optional<string>
+          type: optional<commons.IssueType>
+          limit: optional<integer>
+          next: optional<string>
+          prev: optional<string>
+      response: IssueTriggerPaginatedResult
+
+    upsertIssueTrigger:
+      path: ""
+      method: PUT
+      docs: ""
+      display-name: Create or update an issue trigger
+      request:
+        body:
+          properties:
+            type: commons.IssueType
+            name: optional<string>
+      response: commons.IssueTrigger
+
+    createIssueTrigger:
+      path: ""
+      method: POST
+      docs: ""
+      display-name: Create an issue trigger
+      request:
+        body:
+          properties:
+            type: commons.IssueType
+            name: optional<string>
+      response: commons.IssueTrigger
+
+    getIssueTrigger:
+      path: /{id}
+      method: GET
+      docs: ""
+      display-name: Get a single issue trigger
+      path-parameters:
+        id: string
+      response: commons.IssueTrigger
+
+    updateIssueTrigger:
+      path: /{id}
+      method: PUT
+      docs: ""
+      display-name: Update an issue trigger
+      path-parameters:
+        id: string
+      request:
+        body:
+          properties:
+            disabled_at: optional<string>
+            name: optional<string>
+      response: commons.IssueTrigger
+
+    deleteIssueTrigger:
+      path: /{id}
+      method: DELETE
+      docs: ""
+      display-name: Delete an issue trigger
+      path-parameters:
+        id: string
+      response: DeletedIssueTriggerResponse
+
+    disableIssueTrigger:
+      path: /{id}/disable
+      method: PUT
+      docs: ""
+      display-name: Disable an issue trigger
+      path-parameters:
+        id: string
+      response: commons.IssueTrigger
+
+    enableIssueTrigger:
+      path: /{id}/enable
+      method: PUT
+      docs: ""
+      display-name: Enable an issue trigger
+      path-parameters:
+        id: string
+      response: commons.IssueTrigger
+
+types:
+  IssueTriggerPaginatedResult:
+    properties:
+      pagination: optional<commons.SeekPagination>
+      count: optional<integer>
+      models: optional<list<commons.IssueTrigger>>
+
+  DeletedIssueTriggerResponse:
+    properties:
+      id: string

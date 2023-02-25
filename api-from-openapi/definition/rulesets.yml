@@ -1,0 +1,96 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+service:
+  auth: false
+  base-path: /rulesets
+  endpoints:
+    getRulesets:
+      path: ""
+      method: GET
+      docs: ""
+      display-name: Get rulesets
+      request:
+        query-parameters:
+          archived: optional<boolean>
+          limit: optional<integer>
+          next: optional<string>
+          prev: optional<string>
+      response: RulesetPaginatedResult
+
+    upsertRuleset:
+      path: ""
+      method: PUT
+      docs: ""
+      display-name: Update or create a ruleset
+      request:
+        body:
+          properties:
+            name: string
+            rules: optional<list<unknown>>
+            is_team_default: optional<boolean>
+      response: commons.Ruleset
+
+    createRuleset:
+      path: ""
+      method: POST
+      docs: ""
+      display-name: Create a ruleset
+      request:
+        body:
+          properties:
+            name: string
+            rules: optional<list<unknown>>
+            is_team_default: optional<boolean>
+      response: commons.Ruleset
+
+    getRuleset:
+      path: /{id}
+      method: GET
+      docs: ""
+      display-name: Get a ruleset
+      path-parameters:
+        id: string
+      response: commons.Ruleset
+
+    updateRuleset:
+      path: /{id}
+      method: PUT
+      docs: ""
+      display-name: Update a ruleset
+      path-parameters:
+        id: string
+      request:
+        body:
+          properties:
+            name: optional<string>
+            rules: optional<list<unknown>>
+            is_team_default: optional<boolean>
+      response: commons.Ruleset
+
+    archiveRuleset:
+      path: /{id}/archive
+      method: PUT
+      docs: ""
+      display-name: Archive a ruleset
+      path-parameters:
+        id: string
+      response: commons.Ruleset
+
+    unarchiveRuleset:
+      path: /{id}/unarchive
+      method: PUT
+      docs: ""
+      display-name: Unarchive a ruleset
+      path-parameters:
+        id: string
+      response: commons.Ruleset
+
+types:
+  RulesetPaginatedResult:
+    properties:
+      pagination: optional<commons.SeekPagination>
+      count: optional<integer>
+      models: optional<list<commons.Ruleset>>

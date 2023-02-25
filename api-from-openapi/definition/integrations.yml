@@ -1,0 +1,111 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+service:
+  auth: false
+  base-path: /integrations
+  endpoints:
+    getIntegrations:
+      path: ""
+      method: GET
+      docs: ""
+      display-name: Get integrations
+      request:
+        query-parameters:
+          label: optional<string>
+          provider: optional<commons.IntegrationProvider>
+      response: IntegrationPaginatedResult
+
+    createIntegration:
+      path: ""
+      method: POST
+      docs: ""
+      display-name: Create an integration
+      request:
+        body:
+          properties:
+            label: string
+            configs: _InlinedType11
+            provider: commons.IntegrationProvider
+            features: list<string>
+      response: commons.Integration
+
+    getIntegration:
+      path: /{id}
+      method: GET
+      docs: ""
+      display-name: Get an integration
+      path-parameters:
+        id: string
+      response: commons.Integration
+
+    updateIntegration:
+      path: /{id}
+      method: PUT
+      docs: ""
+      display-name: Update an integration
+      path-parameters:
+        id: string
+      request:
+        body:
+          properties:
+            label: optional<string>
+            configs: optional<_InlinedType12>
+            provider: optional<string>
+            features: list<string>
+      response: commons.Integration
+
+    deleteIntegration:
+      path: /{id}
+      method: DELETE
+      docs: ""
+      display-name: Delete an integration
+      path-parameters:
+        id: string
+      response: DeletedIntegration
+
+    attachIntegrationToSource:
+      path: /{id}/attach/{source_id}
+      method: PUT
+      docs: ""
+      display-name: Attach an integration to a source
+      path-parameters:
+        id: string
+        source_id: string
+      response: AttachedIntegrationToSource
+
+    detachIntegrationToSource:
+      path: /{id}/detach/{source_id}
+      method: PUT
+      docs: ""
+      display-name: Detach an integration from a source
+      path-parameters:
+        id: string
+        source_id: string
+      response: DetachedIntegrationFromSource
+
+types:
+  IntegrationPaginatedResult:
+    properties:
+      pagination: optional<commons.SeekPagination>
+      count: optional<integer>
+      models: optional<list<commons.Integration>>
+
+  DeletedIntegration:
+    properties:
+      id: string
+
+  AttachedIntegrationToSource:
+    properties:
+      success: boolean
+
+  DetachedIntegrationFromSource:
+    properties: {}
+
+  _InlinedType11:
+    properties: {}
+
+  _InlinedType12:
+    properties: {}

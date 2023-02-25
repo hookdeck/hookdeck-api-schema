@@ -1,0 +1,373 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  SeekPagination:
+    properties:
+      limit: optional<integer>
+      prev: optional<string>
+      next: optional<string>
+
+  IssueTrigger:
+    properties:
+      id: string
+      team_id: optional<string>
+      name: optional<string>
+      type: IssueType
+      configs: IssueTriggerReference
+      disabled_at: optional<string>
+      updated_at: string
+      created_at: string
+      deleted_at: optional<string>
+
+  IssueType:
+    docs: List of valid Issue types
+    enum:
+      - delivery
+      - transformation
+      - backpressure
+
+  EventAttempt:
+    properties:
+      id: string
+      team_id: string
+      event_id: string
+      response_status: optional<double>
+      attempt_number: optional<double>
+      trigger: optional<AttemptTrigger>
+      error_code: optional<AttemptErrorCodes>
+      body: optional<_InlinedType36>
+      requested_url: optional<string>
+      bulk_retry_id: optional<string>
+      status: AttemptStatus
+      successful_at: optional<string>
+      delivered_at: optional<string>
+      responded_at: optional<string>
+      delivery_latency: optional<double>
+      response_latency: optional<double>
+      updated_at: string
+      created_at: string
+      state: optional<AttemptState>
+      archived_at: optional<string>
+      destination_id: optional<string>
+
+  _InlinedType36:
+    properties: {}
+
+  AttemptTrigger:
+    enum:
+      - INITIAL
+      - MANUAL
+      - BULK_RETRY
+      - UNPAUSE
+      - AUTOMATIC
+
+  AttemptErrorCodes:
+    enum:
+      - TIMEOUT
+      - NOT_FOUND
+      - CONNECTION_REFUSED
+      - CONNECTION_RESET
+      - MISSING_URL
+      - CLI
+      - CLI_UNAVAILABLE
+      - SELF_SIGNED_CERT
+      - ERR_TLS_CERT_ALTNAME_INVALID
+      - SSL_ERROR_CA_UNKNOWN
+      - TTL_EXPIRED
+      - DATA_ARCHIVED
+      - SSL_CERT_EXPIRED
+      - BULK_RETRY_CANCELLED
+      - DNS_LOOKUP_FAILED
+      - HOST_UNREACHABLE
+      - PROTOCOL_ERROR
+      - SOCKET_CLOSED
+      - UNKNOWN
+
+  AttemptStatus:
+    enum:
+      - QUEUED
+      - FAILED
+      - SUCCESSFUL
+      - HOLD
+
+  AttemptState:
+    enum:
+      - DELIVERING
+      - QUEUED
+      - PENDING
+      - COMPLETED
+      - HOLD
+
+  Bookmark:
+    properties:
+      id: string
+      team_id: string
+      webhook_id: string
+      event_data_id: string
+      label: string
+      alias: optional<string>
+      last_used_at: optional<string>
+      updated_at: string
+      created_at: string
+
+  Event:
+    properties:
+      id: string
+      team_id: string
+      webhook_id: string
+      source_id: string
+      destination_id: string
+      event_data_id: string
+      request_id: string
+      attempts: double
+      last_attempt_at: optional<string>
+      next_attempt_at: optional<string>
+      response_status: optional<double>
+      status: EventStatus
+      successful_at: optional<string>
+      cli_id: optional<string>
+      updated_at: string
+      created_at: string
+
+  EventStatus:
+    enum:
+      - SCHEDULED
+      - QUEUED
+      - HOLD
+      - SUCCESSFUL
+      - FAILED
+
+  Destination:
+    properties:
+      id: string
+      name: string
+      team_id: string
+      path_forwarding_disabled: optional<boolean>
+      url: optional<string>
+      cli_path: optional<string>
+      rate_limit: optional<integer>
+      rate_limit_period: optional<DestinationRateLimitPeriod>
+      archived_at: optional<string>
+      updated_at: string
+      created_at: string
+
+  DestinationRateLimitPeriod:
+    enum:
+      - second
+      - minute
+      - hour
+
+  EventPaginatedResult:
+    properties:
+      pagination: optional<SeekPagination>
+      count: optional<integer>
+      models: optional<list<Event>>
+
+  BatchOperationPaginatedResult:
+    properties:
+      pagination: optional<SeekPagination>
+      count: optional<integer>
+      models: optional<list<BatchOperation>>
+
+  BatchOperation:
+    properties:
+      id: string
+      team_id: string
+      created_at: string
+      updated_at: string
+      cancelled_at: optional<string>
+      completed_at: optional<string>
+      estimated_batch: optional<double>
+      estimated_count: optional<double>
+      processed_batch: optional<double>
+      completed_count: optional<double>
+      in_progress: boolean
+      progress: optional<double>
+      failed_count: optional<double>
+      number: optional<double>
+
+  BatchOperationPlan:
+    properties:
+      estimated_batch: optional<double>
+      estimated_count: optional<double>
+      progress: optional<double>
+
+  Integration:
+    properties:
+      id: string
+      team_id: string
+      label: string
+      provider: IntegrationProvider
+      features: list<IntegrationFeature>
+      configs: IntegrationConfig
+      sources: list<Source>
+      updated_at: string
+      created_at: string
+
+  IntegrationProvider:
+    enum:
+      - twitter
+      - stripe
+      - recharge
+      - github
+      - shopify
+      - postmark
+      - hmac
+      - basic_auth
+      - api_key
+      - xero
+      - svix
+      - zoom
+      - akeneo
+      - adyen
+
+  IntegrationFeature:
+    enum:
+      - VERIFICATION
+      - HANDSHAKE
+      - POLLING
+
+  Source:
+    properties:
+      id: string
+      name: string
+      team_id: string
+      url: string
+      integration_id: optional<string>
+      integration: optional<_InlinedType37>
+      archived_at: optional<string>
+      updated_at: string
+      created_at: string
+
+  _InlinedType37:
+    properties:
+      id: string
+      label: string
+      provider: IntegrationProvider
+      features: list<IntegrationFeature>
+
+  Request:
+    properties:
+      id: string
+      team_id: string
+      verified: optional<boolean>
+      original_event_data_id: optional<string>
+      duplicate_hash: optional<string>
+      duplicate_hits: optional<double>
+      rejection_cause: optional<RequestRejectionCause>
+      ingest_priority: optional<_InlinedType38>
+      ingested_at: optional<string>
+      source_id: string
+      events_count: optional<double>
+      cli_events_count: optional<double>
+      ignored_count: optional<double>
+      data: optional<ShortEventData>
+      updated_at: string
+      created_at: string
+
+  _InlinedType38:
+    enum:
+      - NORMAL
+      - LOW
+
+  RequestRejectionCause:
+    enum:
+      - SOURCE_ARCHIVED
+      - NO_WEBHOOK
+      - VERIFICATION_FAILED
+      - UNSUPPORTED_HTTP_METHOD
+      - UNSUPPORTED_CONTENT_TYPE
+      - UNPARSABLE_JSON
+      - PAYLOAD_TOO_LARGE
+      - INGESTION_FATAL
+      - UNKNOWN
+
+  ShortEventData:
+    properties:
+      path: string
+      query: optional<string>
+      is_large_payload: optional<boolean>
+
+  Ruleset:
+    properties:
+      id: string
+      name: string
+      team_id: string
+      rules: list<Rule>
+      is_team_default: boolean
+      archived_at: optional<string>
+      updated_at: string
+      created_at: string
+
+  TopicsValue:
+    enum:
+      - issue.opened
+      - issue.updated
+      - deprecated.attempt-failed
+      - event.successful
+
+  Transformation:
+    properties:
+      id: string
+      team_id: string
+      name: string
+      code: string
+      encrypted_env: optional<string>
+      iv: optional<string>
+      env: optional<map<string, _InlinedType39>>
+      updated_at: string
+      created_at: string
+
+  _InlinedType39: string
+
+  TransformationExecutionLogLevel:
+    enum:
+      - debug
+      - info
+      - warn
+      - error
+      - fatal
+
+  ConsoleLine:
+    properties:
+      type: _InlinedType40
+      message: string
+
+  _InlinedType40:
+    enum:
+      - error
+      - log
+      - warn
+      - info
+      - debug
+
+  TransformationExecution:
+    properties:
+      id: string
+      transformed_event_data_id: string
+      original_event_data_id: string
+      transformation_id: string
+      team_id: string
+      webhook_id: string
+      log_level: TransformationExecutionLogLevel
+      logs: list<ConsoleLine>
+      updated_at: string
+      created_at: string
+      original_event_data: optional<ShortEventData>
+      transformed_event_data: optional<ShortEventData>
+      issue_id: optional<string>
+
+  Connection:
+    properties:
+      id: string
+      name: string
+      team_id: string
+      destination: Destination
+      source: Source
+      ruleset: optional<Ruleset>
+      resolved_rules: optional<list<Rule>>
+      rules: optional<list<Rule>>
+      archived_at: optional<string>
+      paused_at: optional<string>
+      updated_at: string
+      created_at: string

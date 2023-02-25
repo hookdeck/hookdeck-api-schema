@@ -1,0 +1,119 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+service:
+  auth: false
+  base-path: /requests
+  endpoints:
+    getRequests:
+      path: ""
+      method: GET
+      docs: ""
+      display-name: Get requests
+      request:
+        query-parameters:
+          status: optional<_InlinedType14>
+          verified: optional<boolean>
+          path: optional<string>
+          limit: optional<integer>
+          next: optional<string>
+          prev: optional<string>
+      response: RequestPaginatedResult
+
+    getRequest:
+      path: /{id}
+      method: GET
+      docs: ""
+      display-name: Get a request
+      path-parameters:
+        id: string
+      response: commons.Request
+
+    retryRequest:
+      path: /{id}/retry
+      method: POST
+      docs: ""
+      display-name: Retry a request
+      path-parameters:
+        id: string
+      request:
+        body:
+          properties:
+            webhook_ids: list<string>
+      response: RetryRequest
+
+    getRequestEvents:
+      path: /{id}/events
+      method: GET
+      docs: ""
+      display-name: Get request events
+      path-parameters:
+        id: string
+      request:
+        query-parameters:
+          include: optional<_InlinedType16>
+          path: optional<string>
+          limit: optional<integer>
+          next: optional<string>
+          prev: optional<string>
+      response: commons.EventPaginatedResult
+
+    getRequestIgnoredEvents:
+      path: /{id}/ignored_events
+      method: GET
+      docs: ""
+      display-name: Get request ignored events
+      path-parameters:
+        id: string
+      request:
+        query-parameters:
+          limit: optional<integer>
+          next: optional<string>
+          prev: optional<string>
+      response: IgnoredEventPaginatedResult
+
+types:
+  RequestPaginatedResult:
+    properties:
+      pagination: optional<commons.SeekPagination>
+      count: optional<integer>
+      models: optional<list<commons.Request>>
+
+  RetryRequest:
+    properties:
+      request: commons.Request
+      events: optional<list<commons.Event>>
+
+  IgnoredEventPaginatedResult:
+    properties:
+      pagination: optional<commons.SeekPagination>
+      count: optional<integer>
+      models: optional<list<IgnoredEvent>>
+
+  IgnoredEvent:
+    properties:
+      id: string
+      team_id: string
+      webhook_id: string
+      cause: IgnoredEventCause
+      request_id: string
+      updated_at: string
+      created_at: string
+
+  IgnoredEventCause:
+    enum:
+      - ARCHIVED
+      - FILTERED
+      - TRANSFORMATION_FAILED
+      - CLI_DISCONNECTED
+
+  _InlinedType15:
+    enum:
+      - accepted
+      - rejected
+
+  _InlinedType17:
+    enum:
+      - data

@@ -1,0 +1,183 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+service:
+  auth: false
+  base-path: /webhooks
+  endpoints:
+    getConnections:
+      path: ""
+      method: GET
+      docs: ""
+      display-name: Get connections
+      request:
+        query-parameters:
+          archived: optional<boolean>
+          full_name: optional<string>
+          limit: optional<integer>
+          next: optional<string>
+          prev: optional<string>
+      response: ConnectionPaginatedResult
+
+    upsertConnection:
+      path: ""
+      method: PUT
+      docs: ""
+      display-name: Update or create a connection
+      request:
+        body:
+          properties:
+            name: string
+            destination_id: optional<string>
+            source_id: optional<string>
+            destination: optional<_InlinedType28>
+            source: optional<_InlinedType29>
+            ruleset: optional<_InlinedType30>
+            ruleset_id: optional<string>
+            rules: optional<list<unknown>>
+      response: commons.Connection
+
+    createConnection:
+      path: ""
+      method: POST
+      docs: ""
+      display-name: Create a connection
+      request:
+        body:
+          properties:
+            name: string
+            destination_id: optional<string>
+            source_id: optional<string>
+            destination: optional<_InlinedType32>
+            source: optional<_InlinedType33>
+            ruleset: optional<_InlinedType34>
+            ruleset_id: optional<string>
+            rules: optional<list<unknown>>
+      response: commons.Connection
+
+    getConnection:
+      path: /{id}
+      method: GET
+      docs: ""
+      display-name: Get a single connection
+      path-parameters:
+        id: string
+      response: commons.Connection
+
+    updateConnection:
+      path: /{id}
+      method: PUT
+      docs: ""
+      display-name: Update a connection
+      path-parameters:
+        id: string
+      request:
+        body:
+          properties:
+            name: optional<string>
+            url: optional<string>
+            ruleset: optional<_InlinedType35>
+            ruleset_id: optional<string>
+            rules: optional<list<unknown>>
+      response: commons.Connection
+
+    archiveConnection:
+      path: /{id}/archive
+      method: PUT
+      docs: ""
+      display-name: Archive a connection
+      path-parameters:
+        id: string
+      response: commons.Connection
+
+    unarchiveConnection:
+      path: /{id}/unarchive
+      method: PUT
+      docs: ""
+      display-name: Unarchive a connection
+      path-parameters:
+        id: string
+      response: commons.Connection
+
+    pauseConnection:
+      path: /{id}/pause
+      method: PUT
+      docs: ""
+      display-name: Pause a connection
+      path-parameters:
+        id: string
+      response: commons.Connection
+
+    unpauseConnection:
+      path: /{id}/unpause
+      method: PUT
+      docs: ""
+      display-name: Unpause a connection
+      path-parameters:
+        id: string
+      response: commons.Connection
+
+types:
+  ConnectionPaginatedResult:
+    properties:
+      pagination: optional<commons.SeekPagination>
+      count: optional<integer>
+      models: optional<list<commons.Connection>>
+
+  _InlinedType27:
+    enum:
+      - second
+      - minute
+      - hour
+
+  _InlinedType28:
+    properties:
+      name: string
+      url: optional<string>
+      cli_path: optional<string>
+      rate_limit_period: optional<_InlinedType27>
+      rate_limit: optional<integer>
+      path_forwarding_disabled: optional<boolean>
+
+  _InlinedType29:
+    properties:
+      name: string
+
+  _InlinedType30:
+    properties:
+      name: string
+      rules: optional<list<unknown>>
+      is_team_default: optional<boolean>
+
+  _InlinedType31:
+    enum:
+      - second
+      - minute
+      - hour
+
+  _InlinedType32:
+    properties:
+      name: string
+      url: optional<string>
+      cli_path: optional<string>
+      rate_limit_period: optional<_InlinedType31>
+      rate_limit: optional<integer>
+      path_forwarding_disabled: optional<boolean>
+
+  _InlinedType33:
+    properties:
+      name: string
+
+  _InlinedType34:
+    properties:
+      name: string
+      rules: optional<list<unknown>>
+      is_team_default: optional<boolean>
+
+  _InlinedType35:
+    properties:
+      name: string
+      rules: optional<list<unknown>>
+      is_team_default: optional<boolean>

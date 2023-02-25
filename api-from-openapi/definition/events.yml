@@ -1,0 +1,59 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+service:
+  auth: false
+  base-path: /events
+  endpoints:
+    getEvents:
+      path: ""
+      method: GET
+      docs: ""
+      display-name: Get events
+      request:
+        query-parameters:
+          include: optional<_InlinedType4>
+          path: optional<string>
+          limit: optional<integer>
+          next: optional<string>
+          prev: optional<string>
+      response: commons.EventPaginatedResult
+
+    getEvent:
+      path: /{id}
+      method: GET
+      docs: ""
+      display-name: Get an event
+      path-parameters:
+        id: string
+      response: commons.Event
+
+    retryEvent:
+      path: /{id}/retry
+      method: POST
+      docs: ""
+      display-name: Retry an event
+      path-parameters:
+        id: string
+      response: RetriedEvent
+
+    muteEvent:
+      path: /{id}/mute
+      method: PUT
+      docs: ""
+      display-name: Mute an event
+      path-parameters:
+        id: string
+      response: commons.Event
+
+types:
+  RetriedEvent:
+    properties:
+      event: commons.Event
+      attempt: commons.EventAttempt
+
+  _InlinedType5:
+    enum:
+      - data

@@ -1,0 +1,90 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+service:
+  auth: false
+  base-path: /sources
+  endpoints:
+    getSources:
+      path: ""
+      method: GET
+      docs: ""
+      display-name: Get sources
+      request:
+        query-parameters:
+          archived: optional<boolean>
+          limit: optional<integer>
+          next: optional<string>
+          prev: optional<string>
+      response: SourcePaginatedResult
+
+    upsertSource:
+      path: ""
+      method: PUT
+      docs: ""
+      display-name: Update or create a source
+      request:
+        body:
+          properties:
+            name: string
+      response: commons.Source
+
+    createSource:
+      path: ""
+      method: POST
+      docs: ""
+      display-name: Create a source
+      request:
+        body:
+          properties:
+            name: string
+      response: commons.Source
+
+    getSource:
+      path: /{id}
+      method: GET
+      docs: ""
+      display-name: Get a source
+      path-parameters:
+        id: string
+      response: commons.Source
+
+    updateSource:
+      path: /{id}
+      method: PUT
+      docs: ""
+      display-name: Update a source
+      path-parameters:
+        id: string
+      request:
+        body:
+          properties:
+            name: optional<string>
+      response: commons.Source
+
+    archiveSource:
+      path: /{id}/archive
+      method: PUT
+      docs: ""
+      display-name: Archive a source
+      path-parameters:
+        id: string
+      response: commons.Source
+
+    unarchiveSource:
+      path: /{id}/unarchive
+      method: PUT
+      docs: ""
+      display-name: Unarchive a source
+      path-parameters:
+        id: string
+      response: commons.Source
+
+types:
+  SourcePaginatedResult:
+    properties:
+      pagination: optional<commons.SeekPagination>
+      count: optional<integer>
+      models: optional<list<commons.Source>>

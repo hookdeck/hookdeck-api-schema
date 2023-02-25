@@ -1,0 +1,123 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+service:
+  auth: false
+  base-path: /destinations
+  endpoints:
+    getDestinations:
+      path: ""
+      method: GET
+      docs: ""
+      display-name: Get destinations
+      request:
+        query-parameters:
+          archived: optional<boolean>
+          limit: optional<integer>
+          next: optional<string>
+          prev: optional<string>
+      response: DestinationPaginatedResult
+
+    upsertDestination:
+      path: ""
+      method: PUT
+      docs: ""
+      display-name: Update or create a destination
+      request:
+        body:
+          properties:
+            name: string
+            url: optional<string>
+            cli_path: optional<string>
+            rate_limit_period: optional<_InlinedType1>
+            rate_limit: optional<integer>
+            path_forwarding_disabled: optional<boolean>
+      response: commons.Destination
+
+    createDestination:
+      path: ""
+      method: POST
+      docs: ""
+      display-name: Create a destination
+      request:
+        body:
+          properties:
+            name: string
+            url: optional<string>
+            cli_path: optional<string>
+            rate_limit_period: optional<_InlinedType2>
+            rate_limit: optional<integer>
+            path_forwarding_disabled: optional<boolean>
+      response: commons.Destination
+
+    getDestination:
+      path: /{id}
+      method: GET
+      docs: ""
+      display-name: Get a destination
+      path-parameters:
+        id: string
+      response: commons.Destination
+
+    updateDestination:
+      path: /{id}
+      method: PUT
+      docs: ""
+      display-name: Update a destination
+      path-parameters:
+        id: string
+      request:
+        body:
+          properties:
+            name: optional<string>
+            url: optional<string>
+            cli_path: optional<string>
+            rate_limit: optional<integer>
+            rate_limit_period: optional<_InlinedType3>
+            path_forwarding_disabled: optional<boolean>
+      response: commons.Destination
+
+    archiveDestination:
+      path: /{id}/archive
+      method: PUT
+      docs: ""
+      display-name: Archive a destination
+      path-parameters:
+        id: string
+      response: commons.Destination
+
+    unarchiveDestination:
+      path: /{id}/unarchive
+      method: PUT
+      docs: ""
+      display-name: Unarchive a destination
+      path-parameters:
+        id: string
+      response: commons.Destination
+
+types:
+  DestinationPaginatedResult:
+    properties:
+      pagination: optional<commons.SeekPagination>
+      count: optional<integer>
+      models: optional<list<commons.Destination>>
+
+  _InlinedType1:
+    enum:
+      - second
+      - minute
+      - hour
+
+  _InlinedType2:
+    enum:
+      - second
+      - minute
+      - hour
+
+  _InlinedType3:
+    enum:
+      - second
+      - minute
+      - hour

@@ -1,0 +1,143 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+service:
+  auth: false
+  base-path: /transformations
+  endpoints:
+    getTransformations:
+      path: ""
+      method: GET
+      docs: ""
+      display-name: Get transformations
+      response: TransformationPaginatedResult
+
+    upsertTransformation:
+      path: ""
+      method: PUT
+      docs: ""
+      display-name: Update or create a transformation
+      request:
+        body:
+          properties:
+            name: string
+            code: string
+      response: commons.Transformation
+
+    createTransformation:
+      path: ""
+      method: POST
+      docs: ""
+      display-name: Create a transformation
+      request:
+        body:
+          properties:
+            name: string
+            code: string
+      response: commons.Transformation
+
+    getTransformation:
+      path: /{id}
+      method: GET
+      docs: ""
+      display-name: Get a transformation
+      path-parameters:
+        id: string
+      response: commons.Transformation
+
+    updateTransformation:
+      path: /{id}
+      method: PUT
+      docs: ""
+      display-name: Update a transformation
+      path-parameters:
+        id: string
+      request:
+        body:
+          properties:
+            name: optional<string>
+            code: optional<string>
+      response: commons.Transformation
+
+    testTransformation:
+      path: /run
+      method: PUT
+      docs: ""
+      display-name: Test a transformation code
+      request:
+        body:
+          properties:
+            env: optional<_InlinedType23>
+            webhook_id: optional<string>
+            code: optional<string>
+            transformation_id: optional<string>
+            request: optional<_InlinedType26>
+            event_id: optional<string>
+      response: TransformationExecutorOutput
+
+    getTransformationExecutions:
+      path: /{id}/executions
+      method: GET
+      docs: ""
+      display-name: Get transformation executions
+      path-parameters:
+        id: string
+      request:
+        query-parameters:
+          limit: optional<integer>
+          next: optional<string>
+          prev: optional<string>
+      response: TransformationExecutionPaginatedResult
+
+    getTransformationExecution:
+      path: /{id}/executions/{execution_id}
+      method: GET
+      docs: ""
+      display-name: Get a transformation execution
+      path-parameters:
+        id: string
+        execution_id: string
+      response: commons.TransformationExecution
+
+types:
+  TransformationPaginatedResult:
+    properties:
+      pagination: optional<commons.SeekPagination>
+      count: optional<integer>
+      models: optional<list<commons.Transformation>>
+
+  TransformationExecutorOutput:
+    properties:
+      request_id: optional<string>
+      transformation_id: optional<string>
+      execution_id: optional<string>
+      log_level: commons.TransformationExecutionLogLevel
+      request: optional<_InlinedType22>
+      console: optional<list<commons.ConsoleLine>>
+
+  _InlinedType22:
+    properties:
+      path: string
+
+  TransformationExecutionPaginatedResult:
+    properties:
+      pagination: optional<commons.SeekPagination>
+      count: optional<integer>
+      models: optional<list<commons.TransformationExecution>>
+
+  _InlinedType23:
+    properties: {}
+
+  _InlinedType24: string
+
+  _InlinedType25:
+    properties: {}
+
+  _InlinedType26:
+    properties:
+      headers: map<string, _InlinedType24>
+      path: optional<string>
+      query: optional<string>
+      parsed_query: optional<_InlinedType25>

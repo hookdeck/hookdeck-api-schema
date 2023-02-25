@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+service:
+  auth: false
+  base-path: /notifications/webhooks
+  endpoints:
+    toggleWebhookNotifications:
+      path: ""
+      method: PUT
+      docs: ""
+      display-name: Toggle webhook notifications for the workspace
+      request:
+        body:
+          properties:
+            enabled: optional<boolean>
+            topics: optional<list<commons.TopicsValue>>
+            source_id: optional<string>
+      response: ToggleWebhookNotifications
+
+types:
+  ToggleWebhookNotifications:
+    properties:
+      enabled: boolean
+      topics: optional<list<commons.TopicsValue>>
+      source_id: string

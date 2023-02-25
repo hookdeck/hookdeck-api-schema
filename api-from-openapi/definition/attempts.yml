@@ -1,0 +1,36 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+service:
+  auth: false
+  base-path: /attempts
+  endpoints:
+    getAttempts:
+      path: ""
+      method: GET
+      docs: ""
+      display-name: Get attempts
+      request:
+        query-parameters:
+          limit: optional<integer>
+          next: optional<string>
+          prev: optional<string>
+      response: EventAttemptPaginatedResult
+
+    getAttempt:
+      path: /{id}
+      method: GET
+      docs: ""
+      display-name: Get a single attempt
+      path-parameters:
+        id: string
+      response: commons.EventAttempt
+
+types:
+  EventAttemptPaginatedResult:
+    properties:
+      pagination: optional<commons.SeekPagination>
+      count: optional<integer>
+      models: optional<list<commons.EventAttempt>>

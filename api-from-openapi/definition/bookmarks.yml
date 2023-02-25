@@ -1,0 +1,99 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+service:
+  auth: false
+  base-path: /bookmarks
+  endpoints:
+    getBookmarks:
+      path: ""
+      method: GET
+      docs: ""
+      display-name: Get bookmarks
+      request:
+        query-parameters:
+          limit: optional<integer>
+          next: optional<string>
+          prev: optional<string>
+      response: BookmarkPaginatedResult
+
+    createBookmark:
+      path: ""
+      method: POST
+      docs: ""
+      display-name: Create a bookmark
+      request:
+        body:
+          properties:
+            event_data_id: string
+            webhook_id: string
+            label: string
+            name: optional<string>
+      response: commons.Bookmark
+
+    getBookmark:
+      path: /{id}
+      method: GET
+      docs: ""
+      display-name: Get a single bookmark
+      path-parameters:
+        id: string
+      response: commons.Bookmark
+
+    updateBookmark:
+      path: /{id}
+      method: PUT
+      docs: ""
+      display-name: Update a bookmark
+      path-parameters:
+        id: string
+      request:
+        body:
+          properties:
+            event_data_id: optional<string>
+            webhook_id: optional<string>
+            label: optional<string>
+            name: optional<string>
+      response: commons.Bookmark
+
+    deleteBookmark:
+      path: /{id}
+      method: DELETE
+      docs: ""
+      display-name: Delete a bookmark
+      path-parameters:
+        id: string
+      response: DeletedBookmarkResponse
+
+    triggerBookmark:
+      path: /{id}/trigger
+      method: POST
+      docs: ""
+      display-name: Trigger a bookmark
+      path-parameters:
+        id: string
+      request:
+        body:
+          properties:
+            target: optional<_InlinedType0>
+      response: EventArray
+
+types:
+  BookmarkPaginatedResult:
+    properties:
+      pagination: optional<commons.SeekPagination>
+      count: optional<integer>
+      models: optional<list<commons.Bookmark>>
+
+  DeletedBookmarkResponse:
+    properties:
+      id: string
+
+  EventArray: list<commons.Event>
+
+  _InlinedType0:
+    enum:
+      - http
+      - cli

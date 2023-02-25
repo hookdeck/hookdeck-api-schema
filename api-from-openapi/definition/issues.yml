@@ -1,0 +1,86 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+service:
+  auth: false
+  base-path: /issues
+  endpoints:
+    getIssues:
+      path: ""
+      method: GET
+      docs: ""
+      display-name: Get issues
+      request:
+        query-parameters:
+          limit: optional<integer>
+          next: optional<string>
+          prev: optional<string>
+      response: IssueWithDataPaginatedResult
+
+    getIssueCount:
+      path: /count
+      method: GET
+      docs: ""
+      display-name: Get the number of issues
+      request:
+        query-parameters:
+          limit: optional<integer>
+          next: optional<string>
+          prev: optional<string>
+      response: IssueCount
+
+    getIssue:
+      path: /{id}
+      method: GET
+      docs: ""
+      display-name: Get a single issue
+      path-parameters:
+        id: string
+      response: commons.IssueWithData
+
+    updateIssue:
+      path: /{id}
+      method: PUT
+      docs: ""
+      display-name: Update issue
+      path-parameters:
+        id: string
+      request:
+        body:
+          properties:
+            status:
+              docs: New status
+              type: _InlinedType13
+      response: commons.Issue
+
+    dismissIssue:
+      path: /{id}
+      method: DELETE
+      docs: ""
+      display-name: Dismiss an issue
+      path-parameters:
+        id: string
+      response: commons.Issue
+
+types:
+  IssueWithDataPaginatedResult:
+    properties:
+      pagination: optional<commons.SeekPagination>
+      count: optional<integer>
+      models: optional<list<commons.IssueWithData>>
+
+  IssueCount:
+    properties:
+      count:
+        docs: Number of issues
+        type: integer
+
+  _InlinedType13:
+    docs: New status
+    enum:
+      - OPENED
+      - IGNORED
+      - ACKNOWLEDGED
+      - RESOLVED

@@ -1,0 +1,63 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+service:
+  auth: false
+  base-path: /bulk/ignored-events/retry
+  endpoints:
+    getIgnoredEventBulkRetries:
+      path: ""
+      method: GET
+      docs: ""
+      display-name: Get ignored events bulk retries
+      request:
+        query-parameters:
+          in_progress: optional<boolean>
+          query_partial_match: optional<boolean>
+          limit: optional<integer>
+          next: optional<string>
+          prev: optional<string>
+      response: commons.BatchOperationPaginatedResult
+
+    createIgnoredEventBulkRetry:
+      path: ""
+      method: POST
+      docs: ""
+      display-name: Create an ignored events bulk retry
+      request:
+        body:
+          properties:
+            query: optional<_InlinedType10>
+      response: commons.BatchOperation
+
+    generateIgnoredEventBulkRetryPlan:
+      path: /plan
+      method: GET
+      docs: ""
+      display-name: Generate an ignored events bulk retry plan
+      response: commons.BatchOperationPlan
+
+    getIgnoredEventBulkRetry:
+      path: /{id}
+      method: GET
+      docs: ""
+      display-name: Get an ignored events bulk retry
+      path-parameters:
+        id: string
+      response: commons.BatchOperation
+
+    cancelIgnoredEventBulkRetry:
+      path: /{id}/cancel
+      method: POST
+      docs: ""
+      display-name: Cancel an ignored events bulk retry
+      path-parameters:
+        id: string
+      response: commons.BatchOperation
+
+types:
+  _InlinedType10:
+    properties:
+      transformation_id: optional<string>

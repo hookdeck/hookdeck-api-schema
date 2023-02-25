@@ -1,0 +1,77 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+service:
+  auth: false
+  base-path: /bulk/events/retry
+  endpoints:
+    getEventBulkRetries:
+      path: ""
+      method: GET
+      docs: ""
+      display-name: Get events bulk retries
+      request:
+        query-parameters:
+          in_progress: optional<boolean>
+          query_partial_match: optional<boolean>
+          limit: optional<integer>
+          next: optional<string>
+          prev: optional<string>
+      response: commons.BatchOperationPaginatedResult
+
+    createEventBulkRetry:
+      path: ""
+      method: POST
+      docs: ""
+      display-name: Create an events bulk retry
+      request:
+        body:
+          properties:
+            query: optional<_InlinedType8>
+      response: commons.BatchOperation
+
+    generateEventBulkRetryPlan:
+      path: /plan
+      method: GET
+      docs: ""
+      display-name: Generate an events bulk retry plan
+      response: commons.BatchOperationPlan
+
+    getEventBulkRetry:
+      path: /{id}
+      method: GET
+      docs: ""
+      display-name: Get an events bulk retry
+      path-parameters:
+        id: string
+      response: commons.BatchOperation
+
+    cancelEventBulkRetry:
+      path: /{id}/cancel
+      method: POST
+      docs: ""
+      display-name: Cancel an events bulk retry
+      path-parameters:
+        id: string
+      response: commons.BatchOperation
+
+types:
+  _InlinedType7:
+    enum:
+      - data
+
+  _InlinedType8:
+    properties:
+      include: optional<_InlinedType7>
+      path: optional<string>
+      limit:
+        docs: Result set size
+        type: optional<integer>
+      next:
+        docs: The ID to provide in the query to get the next set of results
+        type: optional<string>
+      prev:
+        docs: The ID to provide in the query to get the previous set of results
+        type: optional<string>

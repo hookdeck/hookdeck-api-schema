@@ -1,0 +1,79 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+service:
+  auth: false
+  base-path: /bulk/requests/retry
+  endpoints:
+    getRequestBulkRetries:
+      path: ""
+      method: GET
+      docs: ""
+      display-name: Get request bulk retries
+      request:
+        query-parameters:
+          in_progress: optional<boolean>
+          query_partial_match: optional<boolean>
+          limit: optional<integer>
+          next: optional<string>
+          prev: optional<string>
+      response: commons.BatchOperationPaginatedResult
+
+    createRequestBulkRetry:
+      path: ""
+      method: POST
+      docs: ""
+      display-name: Create a requests bulk retry
+      request:
+        body:
+          properties:
+            query: optional<_InlinedType20>
+      response: commons.BatchOperation
+
+    generateRequestBulkRetryPlan:
+      path: /plan
+      method: GET
+      docs: ""
+      display-name: Generate a requests bulk retry plan
+      response: commons.BatchOperationPlan
+
+    getRequestBulkRetry:
+      path: /{id}
+      method: GET
+      docs: ""
+      display-name: Get a requests bulk retry
+      path-parameters:
+        id: string
+      response: commons.BatchOperation
+
+    cancelRequestBulkRetry:
+      path: /{id}/cancel
+      method: POST
+      docs: ""
+      display-name: Cancel a requests bulk retry
+      path-parameters:
+        id: string
+      response: commons.BatchOperation
+
+types:
+  _InlinedType19:
+    enum:
+      - accepted
+      - rejected
+
+  _InlinedType20:
+    properties:
+      status: optional<_InlinedType19>
+      verified: optional<boolean>
+      path: optional<string>
+      limit:
+        docs: Result set size
+        type: optional<integer>
+      next:
+        docs: The ID to provide in the query to get the next set of results
+        type: optional<string>
+      prev:
+        docs: The ID to provide in the query to get the previous set of results
+        type: optional<string>
