@@ -130,7 +130,7 @@ components:
         The configurations for an issue trigger. Different issue types, i.e.
         'delivery', 'transformation' and 'backpressure have different
         configurations.
-    'IssueTrigger ':
+    'IssueTrigger':
       type: object
       properties:
         id:
@@ -164,7 +164,7 @@ components:
         - updated_at
         - created_at
       additionalProperties: false
-    IssueTrigger PaginatedResult:
+    IssueTriggerPaginatedResult:
       type: object
       properties:
         pagination:
@@ -174,7 +174,7 @@ components:
         models:
           type: array
           items:
-            $ref: '#/components/schemas/IssueTrigger '
+            $ref: '#/components/schemas/IssueTrigger'
       additionalProperties: false
     APIErrorResponse:
       type: object
@@ -1976,7 +1976,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/IssueTrigger PaginatedResult'
+                $ref: '#/components/schemas/IssueTriggerPaginatedResult'
         '400':
           description: Bad Request
           content:
@@ -2098,7 +2098,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/IssueTrigger '
+                $ref: '#/components/schemas/IssueTrigger'
         '400':
           description: Bad Request
           content:
@@ -2144,7 +2144,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/IssueTrigger '
+                $ref: '#/components/schemas/IssueTrigger'
         '400':
           description: Bad Request
           content:
@@ -2191,7 +2191,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/IssueTrigger '
+                $ref: '#/components/schemas/IssueTrigger'
         '404':
           description: Not Found
           content:
@@ -2216,7 +2216,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/IssueTrigger '
+                $ref: '#/components/schemas/IssueTrigger'
         '400':
           description: Bad Request
           content:
@@ -2293,7 +2293,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/IssueTrigger '
+                $ref: '#/components/schemas/IssueTrigger'
         '404':
           description: Not Found
           content:
@@ -2319,7 +2319,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/IssueTrigger '
+                $ref: '#/components/schemas/IssueTrigger'
         '404':
           description: Not Found
           content:
