@@ -84,6 +84,14 @@ components:
         - warn
         - error
         - fatal
+    TransformationContentEnv: 
+      type: object
+      properties: {}
+      additionalProperties:
+        anyOf:
+          - type: string
+          - type: number
+            format: float
     IssueTriggerTransformationConfigs:
       type: object
       properties:
@@ -176,10 +184,21 @@ components:
           items:
             $ref: "#/components/schemas/IssueTrigger"
       additionalProperties: false
+    UpdateIssueRequestBodyStatus: 
+      type: string
+      enum:
+        - OPENED
+        - IGNORED
+        - ACKNOWLEDGED
+        - RESOLVED
+      description: New status
     APIErrorResponseData:
       type: object
       properties: {}
       nullable: true
+    APIErrorResponseMessage:
+      type: string
+      description: Error description
     APIErrorResponse:
       type: object
       properties:
@@ -191,8 +210,7 @@ components:
           format: float
           description: Status code
         message:
-          type: string
-          description: Error description
+          $ref: "#/components/schemas/APIErrorResponseMessage"
         data:
           $ref: "#/components/schemas/APIErrorResponseData"
       required:
@@ -260,6 +278,10 @@ components:
       type: object
       properties: {}
       nullable: true
+    AttemptNumber: 
+      type: number
+      format: float
+      nullable: true
     EventAttempt:
       type: object
       properties:
@@ -274,9 +296,7 @@ components:
           format: float
           nullable: true
         attempt_number:
-          type: number
-          format: float
-          nullable: true
+          $ref: "#/components/schemas/AttemptNumber"
         trigger:
           $ref: "#/components/schemas/AttemptTrigger"
         error_code:
@@ -383,6 +403,11 @@ components:
         - path
       additionalProperties: false
       nullable: true
+    BookmarkTriggerPropertiesTarget:
+      type: string
+      enum:
+        - http
+        - cli
     Bookmark:
       type: object
       properties:
@@ -512,6 +537,95 @@ components:
       type: array
       items:
         $ref: "#/components/schemas/Event"
+    CreateEventsBulkInclude:
+      enum:
+        - data
+    CreateEventsBulkStatus:
+      maxLength: 255
+      enum:
+        - SCHEDULED
+        - QUEUED
+        - HOLD
+        - FAILED
+        - SUCCESSFUL
+    CreateEventsBulkAttempts:
+      type: object
+      properties:
+        ge:
+          type: integer
+          minimum: 0
+        gte:
+          type: integer
+          minimum: 0
+        le:
+          type: integer
+          minimum: 0
+        lte:
+          type: integer
+          minimum: 0
+        any:
+          type: boolean
+        contains:
+          type: integer
+          minimum: 0
+    
+    CreateEventsBulkSuccessAt:
+      type: object
+      properties:
+        ge:
+          type: integer
+          minimum: 200
+          maximum: 600
+        gte:
+          type: integer
+          minimum: 200
+          maximum: 600
+        le:
+          type: integer
+          minimum: 200
+          maximum: 600
+        lte:
+          type: integer
+          minimum: 200
+          maximum: 600
+        any:
+          type: boolean
+        contains:
+          type: integer
+          minimum: 200
+          maximum: 600
+    CreateEventsBulkResponseCreatedOrLastAttemptAt:
+      type: object
+      properties:
+        ge:
+          type: string
+          format: date-time
+        gte:
+          type: string
+          format: date-time
+        le:
+          type: string
+          format: date-time
+        lte:
+          type: string
+          format: date-time
+        any:
+          type: boolean
+        contains:
+          type: string
+          format: date-time
+    CreateEventsBulkResponseOrderBy:
+      type: string
+      maxLength: 255
+      enum:
+        - last_attempt_at
+        - next_attempt_at
+        - created_at
+    CreateEventsBulkResponseDir:
+      type: string
+      enum:
+        - asc
+        - desc
     DeletedBookmarkResponse:
       type: object
       properties:
@@ -527,6 +641,55 @@ components:
         - minute
         - hour
       nullable: true
+    CreateDestinationRateLimitPeriod:
+      type: string
+      enum:
+        - second
+        - minute
+        - hour
+    CreateDestinationRateLimit: 
+      type: integer
+      minimum: 1
+      oneOf:
+        - type: integer
+          maximum: 100
+        - type: integer
+          maximum: 6000
+        - type: integer
+          maximum: 360000
+      nullable: true
+    UpsertDestinationRateLimitPeriod:
+      type: string
+      enum:
+        - second
+        - minute
+        - hour
+    UpsertDestinationRateLimit: 
+      type: integer
+      minimum: 1
+      oneOf:
+        - type: integer
+          maximum: 100
+        - type: integer
+          maximum: 6000
+        - type: integer
+          maximum: 360000
+      nullable: true
+    UpdateDestinationRateLimitPeriod: 
+      type: string
+      enum:
+        - second
+        - minute
+        - hour
+    RequestBodySource:
+      properties:
+        name:
+          type: string
+          pattern: ^[A-z0-9-_]+$
+          maxLength: 155
+      required:
+        - name
+      additionalProperties: false
     Destination:
       type: object
       properties:
@@ -720,6 +883,10 @@ components:
         - VERIFICATION
         - HANDSHAKE
         - POLLING
+    CreateIntegrationConfig:
+      type: object
+      properties: {}
+      additionalProperties: false
     APIKeyIntegrationConfigs:
       type: object
       properties:
@@ -815,6 +982,26 @@ components:
         - $ref: "#/components/schemas/HMACIntegrationConfigs"
         - $ref: "#/components/schemas/BasicAuthIntegrationConfigs"
         - $ref: "#/components/schemas/ShopifyIntegrationConfigs"
+    SourceIntegration: 
+      type: object
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+        provider:
+          $ref: "#/components/schemas/IntegrationProvider"
+        features:
+          type: array
+          items:
+            $ref: "#/components/schemas/IntegrationFeature"
+      required:
+        - id
+        - label
+        - provider
+        - features
+      additionalProperties: false
+      nullable: true
     Source:
       type: object
       properties:
@@ -830,25 +1017,7 @@ components:
           type: string
           nullable: true
         integration:
-          type: object
-          properties:
-            id:
-              type: string
-            label:
-              type: string
-            provider:
-              $ref: "#/components/schemas/IntegrationProvider"
-            features:
-              type: array
-              items:
-                $ref: "#/components/schemas/IntegrationFeature"
-          required:
-            - id
-            - label
-            - provider
-            - features
-          additionalProperties: false
-          nullable: true
+          $ref: "#/components/schemas/SourceIntegration"
         archived_at:
           type: string
           format: date-time
@@ -989,6 +1158,10 @@ components:
       additionalProperties: false
       nullable: true
       description: Delivery issue data
+    DeliveryIssueWithDataType:
+      type: string
+      enum:
+        - delivery
     DeliveryIssueWithData:
       type: object
       properties:
@@ -1028,9 +1201,7 @@ components:
         created_at:
           type: string
         type:
-          type: string
-          enum:
-            - delivery
+          $ref: "#/components/schemas/DeliveryIssueWithDataType"
         aggregation_keys:
           $ref: "#/components/schemas/DeliveryIssueAggregationKeys"
         reference:
@@ -1080,17 +1251,19 @@ components:
       description: >-
         Reference to the event request transformation an issue is being
         created for.
+    ConsoleLinePropertiesType:
+      type: string
+      enum:
+        - error
+        - log
+        - warn
+        - info
+        - debug
     ConsoleLine:
       type: object
       properties:
         type:
-          type: string
-          enum:
-            - error
-            - log
-            - warn
-            - info
-            - debug
+          $ref: "#/components/schemas/ConsoleLinePropertiesType"
         message:
           type: string
       required:
@@ -1155,6 +1328,10 @@ components:
       additionalProperties: false
       nullable: true
       description: Transformation issue data
+    TransformationIssueWithDataType:
+      type: string
+      enum:
+        - transformation
     TransformationIssueWithData:
       type: object
       properties:
@@ -1194,9 +1371,7 @@ components:
         created_at:
           type: string
         type:
-          type: string
-          enum:
-            - transformation
+          $ref: "#/components/schemas/TransformationIssueWithDataType"
         aggregation_keys:
           $ref: "#/components/schemas/TransformationIssueAggregationKeys"
         reference:
@@ -1243,6 +1418,10 @@ components:
       required:
         - count
       additionalProperties: false
+    DeliveryIssueType:
+      type: string
+      enum:
+        - delivery
     DeliveryIssue:
       type: object
       properties:
@@ -1282,9 +1461,7 @@ components:
         created_at:
           type: string
         type:
-          type: string
-          enum:
-            - delivery
+          $ref: "#/components/schemas/DeliveryIssueType"
         aggregation_keys:
           $ref: "#/components/schemas/DeliveryIssueAggregationKeys"
         reference:
@@ -1303,6 +1480,10 @@ components:
         - reference
       additionalProperties: false
       description: Delivery issue
+    TransformationIssueType:
+      type: string
+      enum:
+        - transformation
     TransformationIssue:
       type: object
       properties:
@@ -1342,9 +1523,7 @@ components:
         created_at:
           type: string
         type:
-          type: string
-          enum:
-            - transformation
+          $ref: "#/components/schemas/TransformationIssueType"
         aggregation_keys:
           $ref: "#/components/schemas/TransformationIssueAggregationKeys"
         reference:
@@ -1381,6 +1560,12 @@ components:
         - INGESTION_FATAL
         - UNKNOWN
       nullable: true
+    RequestInjestPriority:
+      type: string
+      enum:
+        - NORMAL
+        - LOW
+      nullable: true
     Request:
       type: object
       properties:
@@ -1404,11 +1589,7 @@ components:
         rejection_cause:
           $ref: "#/components/schemas/RequestRejectionCause"
         ingest_priority:
-          type: string
-          enum:
-            - NORMAL
-            - LOW
-          nullable: true
+          $ref: "#/components/schemas/RequestInjestPriority"
         ingested_at:
           type: string
           format: date-time
@@ -1453,6 +1634,174 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Request"
+      additionalProperties: false
+    CreateBulkRetryRequestStatus:
+      type: string
+      enum:
+      - accepted
+      - rejected
+    CreateBulkRetryRequestOrderBy:
+      type: string
+      maxLength: 255
+      enum:
+        - ingested_at
+        - created_at
+    CreateBulkRetryProperties:
+      properties:
+        id:
+          type: string
+          maxLength: 255
+        status:
+          $ref: "#/components/schemas/CreateBulkRetryRequestStatus"
+        rejection_cause:
+          type: string
+          maxLength: 255
+          nullable: true
+        ignored_count:
+          $ref: "#/components/schemas/CreateEventsBulkAttempts"
+        events_count:
+          $ref: "#/components/schemas/CreateEventsBulkAttempts"
+        source_id:
+          type: string
+          maxLength: 255
+        verified:
+          type: boolean
+        headers:
+          type: string
+        body:
+          type: string
+        parsed_query:
+          type: string
+        path:
+          type: string
+        created_at:
+          $ref: "#/components/schemas/CreateEventsBulkResponseCreatedOrLastAttemptAt"
+        ingested_at:
+          $ref: "#/components/schemas/CreateEventsBulkResponseCreatedOrLastAttemptAt"
+        bulk_retry_id:
+          type: string
+          maxLength: 255
+        order_by:
+          $ref: "#/components/schemas/CreateEventsBulkResponseCreatedOrLastAttemptAt"
+          description: Sort key(s)
+        dir:
+          $ref: "#/components/schemas/CreateEventsBulkResponseDir"
+        limit:
+          type: integer
+          minimum: 0
+          maximum: 255
+          description: Result set size
+        next:
+          type: string
+          maxLength: 255
+          description: >-
+            The ID to provide in the query to get the next set of results
+        prev:
+          type: string
+          maxLength: 255
+          description: >-
+            The ID to provide in the query to get the previous set of results
+    IgnoreBulkRetryQueryProperties:
+      properties:
+        cause:
+          type: string
+          maxLength: 255
+        webhook_id:
+          type: string
+          maxLength: 255
+        transformation_id:
+          type: string
+          maxLength: 255
+    BulkRetryRequestProperties:
+      properties:
+        include:
+          type: string
+          $ref: "#/components/schemas/CreateEventsBulkInclude"
+        id:
+          type: string
+        status:
+          type: string
+        issue_id:
+          type: string
+          maxLength: 255
+        webhook_id:
+          type: string
+          maxLength: 255
+        destination_id:
+          type: string
+          maxLength: 255
+        source_id:
+          type: string
+          maxLength: 255
+        attempts:
+          $ref: "#/components/schemas/CreateEventsBulkAttempts"
+          additionalProperties: false
+        response_status:
+          type: integer
+          minimum: 200
+          maximum: 600
+          nullable: true
+        successful_at:
+          $ref: "#/components/schemas/CreateEventsBulkSuccessAt"
+          additionalProperties: false
+          nullable: true
+        created_at:
+          $ref: "#/components/schemas/CreateEventsBulkResponseCreatedOrLastAttemptAt"
+          additionalProperties: false
+        error_code:
+          type: string
+          maxLength: 255
+        cli_id:
+          type: string
+          nullable: true
+        cli_user_id:
+          type: string
+          nullable: true
+        last_attempt_at:
+          $ref: "#/components/schemas/CreateEventsBulkResponseCreatedOrLastAttemptAt"
+          additionalProperties: false
+          nullable: true
+        event_data_id:    
+          type: string
+          maxLength: 255
+        headers:
+          type: string
+        body:
+          type: string
+        parsed_query:
+          type: string
+        bulk_retry_id:
+          type: string
+          maxLength: 255
+        path:
+          type: string
+        order_by:
+          $ref: "#/components/schemas/CreateBulkRetryRequestOrderBy"
+          description: Sort key(s)
+        dir:
+          $ref: "#/components/schemas/CreateEventsBulkResponseDir"
+          description: Sort direction
+        limit:
+          type: integer
+          minimum: 0
+          maximum: 255
+          description: Result set size
+        next:
+          type: string
+          maxLength: 255
+          description: >-
+            The ID to provide in the query to get the next set of results
+        prev:
+          type: string
+          maxLength: 255
+          description: >-
+            The ID to provide in the query to get the previous set of results
+    BulkRetryRequest: 
+      properties:
+        query:
+          type: object
+          $ref: "#/components/schemas/BulkRetryRequestProperties"
+          additionalProperties: false
       additionalProperties: false
     RetryRequest:
       type: object
@@ -1539,13 +1888,15 @@ components:
       enum:
         - linear
         - exponential
+    RetryRulePropertiesType:
+      type: string
+      enum:
+        - retry
     RetryRule:
       type: object
       properties:
         type:
-          type: string
-          enum:
-            - retry
+          $ref: "#/components/schemas/RetryRulePropertiesType"
         strategy:
           $ref: "#/components/schemas/RetryStrategy"
         interval:
@@ -1565,13 +1916,15 @@ components:
       enum:
         - each_attempt
         - last_attempt
+    AlertRulePropertiesType:
+      type: string
+      enum:
+        - alert
     AlertRule:
       type: object
       properties:
         type:
-          type: string
-          enum:
-            - alert
+          $ref: "#/components/schemas/AlertRulePropertiesType"
         strategy:
           $ref: "#/components/schemas/AlertStrategy"
       required:
@@ -1589,13 +1942,15 @@ components:
           properties: {}
           additionalProperties: false
       nullable: true
+    FilterRulePropertiesType:
+      type: string
+      enum:
+        - filter
     FilterRule:
       type: object
       properties:
         type:
-          type: string
-          enum:
-            - filter
+          $ref: "#/components/schemas/FilterRulePropertiesType"
         headers:
           $ref: "#/components/schemas/ConnectionFilterProperty"
         body:
@@ -1607,26 +1962,95 @@ components:
       required:
         - type
       additionalProperties: false
+    TransformReferencePropertiesType:
+      type: string
+      enum:
+        - transform
     TransformReference:
       type: object
       properties:
         type:
-          type: string
-          enum:
-            - transform
+          $ref: "#/components/schemas/TransformReferencePropertiesType"
         transformation_id:
           type: string
       required:
         - type
         - transformation_id
       additionalProperties: false
+    EmptyProperties:
+      properties: {}
+    SchemaRequestProperties:
+      properties:
+        headers:
+          type: object
+          $ref: "#/components/schemas/EmptyProperties"
+          additionalProperties:
+            type: string
+        body:
+          anyOf:
+            - type: object
+              properties: {}
+              additionalProperties: false
+            - type: string
+            - type: array
+              items: {}
+          nullable: true
+        path:
+          type: string
+          nullable: true
+        query:
+          type: string
+          nullable: true
+        parsed_query:
+          type: object
+          $ref: "#/components/schemas/EmptyProperties"
+          additionalProperties: false
+    RequestDestinationProperties:
+      properties:
+        name:
+          type: string
+          pattern: ^[A-z0-9-_]+$
+          maxLength: 155
+        url:
+          type: string
+          nullable: true
+        cli_path:
+          type: string
+          nullable: true
+        rate_limit_period:
+          type: string
+          enum:
+            - second
+            - minute
+            - hour
+        rate_limit:
+          type: integer
+          minimum: 1
+          oneOf:
+            - type: integer
+              maximum: 100
+            - type: integer
+              maximum: 6000
+            - type: integer
+              maximum: 360000
+          nullable: true
+        path_forwarding_disabled:
+          type: boolean
+    RequestSourceProperties:
+      properties:
+        name:
+          type: string
+          pattern: ^[A-z0-9-_]+$
+          maxLength: 155
+    DelayRulePropertiesType:
+      type: string
+      enum:
+        - delay
     DelayRule:
       type: object
       properties:
         type:
-          type: string
-          enum:
-            - delay
+          $ref: "#/components/schemas/DelayRulePropertiesType"
         delay:
           type: number
           format: float
@@ -1641,7 +2065,19 @@ components:
         - $ref: "#/components/schemas/FilterRule"
         - $ref: "#/components/schemas/TransformReference"
         - $ref: "#/components/schemas/DelayRule"
-    Ruleset:
+    RequestRulesetProperties:
+      properties:
+        name:
+          type: string
+          pattern: ^[A-z0-9-_]+$
+          maxLength: 155
+        rules:
+          type: array
+          items: {}
+          uniqueItems: true
+        is_team_default:
+          type: boolean
+    Ruleset:  
       type: object
       properties:
         id:
@@ -1728,6 +2164,12 @@ components:
         - enabled
         - source_id
       additionalProperties: false
+    TransformationEnv:
+      type: object
+      properties: {}
+      additionalProperties:
+        type: string
+      nullable: true
     Transformation:
       type: object
       properties:
@@ -1746,11 +2188,7 @@ components:
           type: string
           nullable: true
         env:
-          type: object
-          properties: {}
-          additionalProperties:
-            type: string
-          nullable: true
+         $ref: "#/components/schemas/TransformationEnv"
         updated_at:
           type: string
           format: date-time
@@ -1777,6 +2215,47 @@ components:
           items:
             $ref: "#/components/schemas/Transformation"
       additionalProperties: false
+    TransformationExecutorOutputPropertiesRequest:
+      type: object
+      properties:
+        headers:
+          anyOf:
+            - type: string
+            - type: object
+              properties: {}
+              additionalProperties:
+                nullable: true
+          nullable: true
+        path:
+          type: string
+        query:
+          anyOf:
+            - type: object
+              properties: {}
+              additionalProperties: false
+              nullable: true
+            - type: string
+          nullable: true
+        parsed_query:
+          anyOf:
+            - type: string
+              nullable: true
+            - type: object
+              properties: {}
+              additionalProperties: false
+          nullable: true
+        body:
+          anyOf:
+            - type: string
+              nullable: true
+            - type: object
+              properties: {}
+              additionalProperties: false
+          nullable: true
+      required:
+        - path
+      additionalProperties: false
+      nullable: true
     TransformationExecutorOutput:
       type: object
       properties:
@@ -1792,46 +2271,7 @@ components:
         log_level:
           $ref: "#/components/schemas/TransformationExecutionLogLevel"
         request:
-          type: object
-          properties:
-            headers:
-              anyOf:
-                - type: string
-                - type: object
-                  properties: {}
-                  additionalProperties:
-                    nullable: true
-              nullable: true
-            path:
-              type: string
-            query:
-              anyOf:
-                - type: object
-                  properties: {}
-                  additionalProperties: false
-                  nullable: true
-                - type: string
-              nullable: true
-            parsed_query:
-              anyOf:
-                - type: string
-                  nullable: true
-                - type: object
-                  properties: {}
-                  additionalProperties: false
-              nullable: true
-            body:
-              anyOf:
-                - type: string
-                  nullable: true
-                - type: object
-                  properties: {}
-                  additionalProperties: false
-              nullable: true
-          required:
-            - path
-          additionalProperties: false
-          nullable: true
+          $ref: "#/components/schemas/TransformationExecutorOutputPropertiesRequest"
         console:
           type: array
           items:
@@ -2490,6 +2930,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/APIErrorResponse"
+      x-request-name: GetBookmarksRequest
       parameters:
         - in: query
           name: id
@@ -2834,10 +3275,8 @@ paths:
               type: object
               properties:
                 target:
-                  type: string
-                  enum:
-                    - http
-                    - cli
+                  $ref: "#/components/schemas/BookmarkTriggerPropertiesTarget"
+
               additionalProperties: false
   /destinations:
     get:
@@ -2865,6 +3304,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/APIErrorResponse"
+      x-request-name: GetDestinationsRequest
       parameters:
         - in: query
           name: id
@@ -3065,22 +3505,9 @@ paths:
                   type: string
                   nullable: true
                 rate_limit_period:
-                  type: string
-                  enum:
-                    - second
-                    - minute
-                    - hour
+                  $ref: "#/components/schemas/CreateDestinationRateLimitPeriod"
                 rate_limit:
-                  type: integer
-                  minimum: 1
-                  oneOf:
-                    - type: integer
-                      maximum: 100
-                    - type: integer
-                      maximum: 6000
-                    - type: integer
-                      maximum: 360000
-                  nullable: true
+                  $ref: "#/components/schemas/CreateDestinationRateLimit"
                 path_forwarding_disabled:
                   type: boolean
               required:
@@ -3130,22 +3557,9 @@ paths:
                   type: string
                   nullable: true
                 rate_limit_period:
-                  type: string
-                  enum:
-                    - second
-                    - minute
-                    - hour
+                  $ref: "#/components/schemas/UpsertDestinationRateLimitPeriod"
                 rate_limit:
-                  type: integer
-                  minimum: 1
-                  oneOf:
-                    - type: integer
-                      maximum: 100
-                    - type: integer
-                      maximum: 6000
-                    - type: integer
-                      maximum: 360000
-                  nullable: true
+                  $ref: "#/components/schemas/UpsertDestinationRateLimit"
                 path_forwarding_disabled:
                   type: boolean
               required:
@@ -3236,11 +3650,7 @@ paths:
                   minimum: 1
                   nullable: true
                 rate_limit_period:
-                  type: string
-                  enum:
-                    - second
-                    - minute
-                    - hour
+                  $ref: "#/components/schemas/UpdateDestinationRateLimitPeriod"
                 archived_at:
                   nullable: true
                 path_forwarding_disabled:
@@ -3324,6 +3734,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/APIErrorResponse"
+      x-request-name: GetEventRequest
       parameters:
         - in: query
           name: include
@@ -3791,6 +4202,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/APIErrorResponse"
+      x-request-name: GetEventBulkRetriesRequest
       parameters:
         - in: query
           name: cancelled_at
@@ -4307,325 +4719,8 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                query:
-                  type: object
-                  properties:
-                    include:
-                      type: string
-                      enum:
-                        - data
-                    id:
-                      anyOf:
-                        - type: string
-                          maxLength: 255
-                        - type: array
-                          items:
-                            type: string
-                            maxLength: 255
-                    status:
-                      anyOf:
-                        - type: string
-                          maxLength: 255
-                          enum:
-                            - SCHEDULED
-                            - QUEUED
-                            - HOLD
-                            - FAILED
-                            - SUCCESSFUL
-                        - type: array
-                          items:
-                            type: string
-                            maxLength: 255
-                            enum:
-                              - SCHEDULED
-                              - QUEUED
-                              - HOLD
-                              - FAILED
-                              - SUCCESSFUL
-                    issue_id:
-                      anyOf:
-                        - type: string
-                          maxLength: 255
-                        - type: array
-                          items:
-                            type: string
-                            maxLength: 255
-                    webhook_id:
-                      anyOf:
-                        - type: string
-                          maxLength: 255
-                        - type: array
-                          items:
-                            type: string
-                            maxLength: 255
-                    destination_id:
-                      anyOf:
-                        - type: string
-                          maxLength: 255
-                        - type: array
-                          items:
-                            type: string
-                            maxLength: 255
-                    source_id:
-                      anyOf:
-                        - type: string
-                          maxLength: 255
-                        - type: array
-                          items:
-                            type: string
-                            maxLength: 255
-                    attempts:
-                      anyOf:
-                        - type: integer
-                          minimum: 0
-                        - type: object
-                          properties:
-                            ge:
-                              type: integer
-                              minimum: 0
-                            gte:
-                              type: integer
-                              minimum: 0
-                            le:
-                              type: integer
-                              minimum: 0
-                            lte:
-                              type: integer
-                              minimum: 0
-                            any:
-                              type: boolean
-                            contains:
-                              type: integer
-                              minimum: 0
-                          additionalProperties: false
-                    response_status:
-                      anyOf:
-                        - anyOf:
-                            - type: integer
-                              minimum: 200
-                              maximum: 600
-                            - type: object
-                              properties:
-                                ge:
-                                  type: integer
-                                  minimum: 200
-                                  maximum: 600
-                                gte:
-                                  type: integer
-                                  minimum: 200
-                                  maximum: 600
-                                le:
-                                  type: integer
-                                  minimum: 200
-                                  maximum: 600
-                                lte:
-                                  type: integer
-                                  minimum: 200
-                                  maximum: 600
-                                any:
-                                  type: boolean
-                                contains:
-                                  type: integer
-                                  minimum: 200
-                                  maximum: 600
-                              additionalProperties: false
-                        - type: array
-                          items:
-                            type: integer
-                            minimum: 200
-                            maximum: 600
-                      nullable: true
-                    successful_at:
-                      anyOf:
-                        - type: string
-                          format: date-time
-                        - type: object
-                          properties:
-                            ge:
-                              type: string
-                              format: date-time
-                            gte:
-                              type: string
-                              format: date-time
-                            le:
-                              type: string
-                              format: date-time
-                            lte:
-                              type: string
-                              format: date-time
-                            any:
-                              type: boolean
-                            contains:
-                              type: string
-                              format: date-time
-                          additionalProperties: false
-                      nullable: true
-                    created_at:
-                      anyOf:
-                        - type: string
-                          format: date-time
-                        - type: object
-                          properties:
-                            ge:
-                              type: string
-                              format: date-time
-                            gte:
-                              type: string
-                              format: date-time
-                            le:
-                              type: string
-                              format: date-time
-                            lte:
-                              type: string
-                              format: date-time
-                            any:
-                              type: boolean
-                            contains:
-                              type: string
-                              format: date-time
-                          additionalProperties: false
-                    error_code:
-                      anyOf:
-                        - type: string
-                          maxLength: 255
-                        - type: array
-                          items:
-                            type: string
-                            maxLength: 255
-                    cli_id:
-                      anyOf:
-                        - anyOf:
-                            - type: string
-                            - type: object
-                              properties:
-                                any:
-                                  type: boolean
-                              additionalProperties: false
-                        - type: array
-                          items:
-                            type: string
-                      nullable: true
-                    cli_user_id:
-                      anyOf:
-                        - type: string
-                        - type: array
-                          items:
-                            type: string
-                      nullable: true
-                    last_attempt_at:
-                      anyOf:
-                        - type: string
-                          format: date-time
-                        - type: object
-                          properties:
-                            ge:
-                              type: string
-                              format: date-time
-                            gte:
-                              type: string
-                              format: date-time
-                            le:
-                              type: string
-                              format: date-time
-                            lte:
-                              type: string
-                              format: date-time
-                            any:
-                              type: boolean
-                            contains:
-                              type: string
-                              format: date-time
-                          additionalProperties: false
-                      nullable: true
-                    event_data_id:
-                      anyOf:
-                        - type: string
-                          maxLength: 255
-                        - type: array
-                          items:
-                            type: string
-                            maxLength: 255
-                    headers:
-                      anyOf:
-                        - type: string
-                        - type: object
-                          properties: {}
-                          additionalProperties: false
-                    body:
-                      anyOf:
-                        - type: string
-                        - type: object
-                          properties: {}
-                          additionalProperties: false
-                    parsed_query:
-                      anyOf:
-                        - type: string
-                        - type: object
-                          properties: {}
-                          additionalProperties: false
-                    bulk_retry_id:
-                      anyOf:
-                        - type: string
-                          maxLength: 255
-                        - type: array
-                          items:
-                            type: string
-                            maxLength: 255
-                    path:
-                      type: string
-                    order_by:
-                      anyOf:
-                        - type: string
-                          maxLength: 255
-                          enum:
-                            - last_attempt_at
-                            - next_attempt_at
-                            - created_at
-                        - type: array
-                          items:
-                            type: string
-                            maxLength: 255
-                            enum:
-                              - last_attempt_at
-                              - next_attempt_at
-                              - created_at
-                          minItems: 2
-                          maxItems: 2
-                      description: Sort key(s)
-                    dir:
-                      anyOf:
-                        - type: string
-                          enum:
-                            - asc
-                            - desc
-                        - type: array
-                          items:
-                            type: string
-                            enum:
-                              - asc
-                              - desc
-                          minItems: 2
-                          maxItems: 2
-                      description: Sort direction
-                    limit:
-                      type: integer
-                      minimum: 0
-                      maximum: 255
-                      description: Result set size
-                    next:
-                      type: string
-                      maxLength: 255
-                      description: >-
-                        The ID to provide in the query to get the next set of results
-                    prev:
-                      type: string
-                      maxLength: 255
-                      description: >-
-                        The ID to provide in the query to get the previous set of results
-                  additionalProperties: false
-              additionalProperties: false
+              $ref: "#/components/schemas/BulkRetryRequest"
+              
   /bulk/events/retry/plan:
     get:
       operationId: generateEventBulkRetryPlan
@@ -4652,6 +4747,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/APIErrorResponse"
+      x-request-name: GenerateEventBulkRetryPlanRequest
       parameters:
         - in: query
           name: query
@@ -5048,6 +5144,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/APIErrorResponse"
+      x-request-name: GetIgnoredEventsBulkRetriesRequest
       parameters:
         - in: query
           name: cancelled_at
@@ -5276,26 +5373,7 @@ paths:
               properties:
                 query:
                   type: object
-                  properties:
-                    cause:
-                      anyOf:
-                        - type: string
-                          maxLength: 255
-                        - type: array
-                          items:
-                            type: string
-                            maxLength: 255
-                    webhook_id:
-                      anyOf:
-                        - type: string
-                          maxLength: 255
-                        - type: array
-                          items:
-                            type: string
-                            maxLength: 255
-                    transformation_id:
-                      type: string
-                      maxLength: 255
+                  $ref: "#/components/schemas/IgnoreBulkRetryQueryProperties"
                   additionalProperties: false
               additionalProperties: false
   /bulk/ignored-events/retry/plan:
@@ -5324,6 +5402,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/APIErrorResponse"
+      x-request-name: GenerateIgnoredEventBulkRetryPlanRequest
       parameters:
         - in: query
           name: query
@@ -5428,6 +5507,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/APIErrorResponse"
+      x-request-name: GetIntegrationsRequest
       parameters:
         - in: query
           name: label
@@ -5473,9 +5553,7 @@ paths:
                 label:
                   type: string
                 configs:
-                  type: object
-                  properties: {}
-                  additionalProperties: false
+                  $ref: "#/components/schemas/CreateIntegrationConfig"
                 provider:
                   $ref: "#/components/schemas/IntegrationProvider"
                 features:
@@ -5561,9 +5639,7 @@ paths:
                 label:
                   type: string
                 configs:
-                  type: object
-                  properties: {}
-                  additionalProperties: false
+                  $ref: "#/components/schemas/CreateIntegrationConfig"
                 provider:
                   type: string
                 features:
@@ -5661,6 +5737,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/APIErrorResponse"
+      x-request-name: DetachIntegrationFromSourceRequest
       parameters:
         - in: path
           name: id
@@ -5698,6 +5775,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/APIErrorResponse"
+      x-request-name: GetIssuesRequest
       parameters:
         - in: query
           name: id
@@ -6017,6 +6095,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/APIErrorResponse"
+      x-request-name: GetIssueCountRequest
       parameters:
         - in: query
           name: id
@@ -6381,13 +6460,7 @@ paths:
               type: object
               properties:
                 status:
-                  type: string
-                  enum:
-                    - OPENED
-                    - IGNORED
-                    - ACKNOWLEDGED
-                    - RESOLVED
-                  description: New status
+                  $ref: "#/components/schemas/UpdateIssueRequestBodyStatus"
               required:
                 - status
               additionalProperties: false
@@ -6442,6 +6515,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/APIErrorResponse"
+      x-request-name: GetListofRequestsRequest
       parameters:
         - in: query
           name: id
@@ -6824,6 +6898,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/APIErrorResponse"
+      x-request-name: GetRequestEventsRequest
       parameters:
         - in: query
           name: include
@@ -7224,6 +7299,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/APIErrorResponse"
+      x-request-name: GetRequestIgnoredEventsRequest
       parameters:
         - in: query
           name: id
@@ -7319,6 +7395,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/APIErrorResponse"
+      x-request-name: GetRequestBulkRetriesRequest
       parameters:
         - in: query
           name: cancelled_at
@@ -7761,241 +7838,7 @@ paths:
               properties:
                 query:
                   type: object
-                  properties:
-                    id:
-                      anyOf:
-                        - type: string
-                          maxLength: 255
-                        - type: array
-                          items:
-                            type: string
-                            maxLength: 255
-                    status:
-                      type: string
-                      enum:
-                        - accepted
-                        - rejected
-                    rejection_cause:
-                      anyOf:
-                        - anyOf:
-                            - type: string
-                              maxLength: 255
-                            - type: object
-                              properties:
-                                ge:
-                                  type: string
-                                  maxLength: 255
-                                gte:
-                                  type: string
-                                  maxLength: 255
-                                le:
-                                  type: string
-                                  maxLength: 255
-                                lte:
-                                  type: string
-                                  maxLength: 255
-                                any:
-                                  type: boolean
-                                contains:
-                                  type: string
-                                  maxLength: 255
-                              additionalProperties: false
-                        - type: array
-                          items:
-                            type: string
-                            maxLength: 255
-                      nullable: true
-                    ignored_count:
-                      anyOf:
-                        - anyOf:
-                            - type: integer
-                              minimum: 0
-                            - type: object
-                              properties:
-                                ge:
-                                  type: integer
-                                  minimum: 0
-                                gte:
-                                  type: integer
-                                  minimum: 0
-                                le:
-                                  type: integer
-                                  minimum: 0
-                                lte:
-                                  type: integer
-                                  minimum: 0
-                                any:
-                                  type: boolean
-                                contains:
-                                  type: integer
-                                  minimum: 0
-                              additionalProperties: false
-                        - type: array
-                          items:
-                            type: integer
-                            minimum: 0
-                    events_count:
-                      anyOf:
-                        - anyOf:
-                            - type: integer
-                              minimum: 0
-                            - type: object
-                              properties:
-                                ge:
-                                  type: integer
-                                  minimum: 0
-                                gte:
-                                  type: integer
-                                  minimum: 0
-                                le:
-                                  type: integer
-                                  minimum: 0
-                                lte:
-                                  type: integer
-                                  minimum: 0
-                                any:
-                                  type: boolean
-                                contains:
-                                  type: integer
-                                  minimum: 0
-                              additionalProperties: false
-                        - type: array
-                          items:
-                            type: integer
-                            minimum: 0
-                    source_id:
-                      anyOf:
-                        - type: string
-                          maxLength: 255
-                        - type: array
-                          items:
-                            type: string
-                            maxLength: 255
-                    verified:
-                      type: boolean
-                    headers:
-                      anyOf:
-                        - type: string
-                        - type: object
-                          properties: {}
-                          additionalProperties: false
-                    body:
-                      anyOf:
-                        - type: string
-                        - type: object
-                          properties: {}
-                          additionalProperties: false
-                    parsed_query:
-                      anyOf:
-                        - type: string
-                        - type: object
-                          properties: {}
-                          additionalProperties: false
-                    path:
-                      type: string
-                    created_at:
-                      anyOf:
-                        - type: string
-                          format: date-time
-                        - type: object
-                          properties:
-                            ge:
-                              type: string
-                              format: date-time
-                            gte:
-                              type: string
-                              format: date-time
-                            le:
-                              type: string
-                              format: date-time
-                            lte:
-                              type: string
-                              format: date-time
-                            any:
-                              type: boolean
-                            contains:
-                              type: string
-                              format: date-time
-                          additionalProperties: false
-                    ingested_at:
-                      anyOf:
-                        - type: string
-                          format: date-time
-                        - type: object
-                          properties:
-                            ge:
-                              type: string
-                              format: date-time
-                            gte:
-                              type: string
-                              format: date-time
-                            le:
-                              type: string
-                              format: date-time
-                            lte:
-                              type: string
-                              format: date-time
-                            any:
-                              type: boolean
-                            contains:
-                              type: string
-                              format: date-time
-                          additionalProperties: false
-                    bulk_retry_id:
-                      anyOf:
-                        - type: string
-                          maxLength: 255
-                        - type: array
-                          items:
-                            type: string
-                            maxLength: 255
-                    order_by:
-                      anyOf:
-                        - type: string
-                          maxLength: 255
-                          enum:
-                            - ingested_at
-                            - created_at
-                        - type: array
-                          items:
-                            type: string
-                            maxLength: 255
-                            enum:
-                              - ingested_at
-                              - created_at
-                          minItems: 2
-                          maxItems: 2
-                      description: Sort key(s)
-                    dir:
-                      anyOf:
-                        - type: string
-                          enum:
-                            - asc
-                            - desc
-                        - type: array
-                          items:
-                            type: string
-                            enum:
-                              - asc
-                              - desc
-                          minItems: 2
-                          maxItems: 2
-                      description: Sort direction
-                    limit:
-                      type: integer
-                      minimum: 0
-                      maximum: 255
-                      description: Result set size
-                    next:
-                      type: string
-                      maxLength: 255
-                      description: >-
-                        The ID to provide in the query to get the next set of results
-                    prev:
-                      type: string
-                      maxLength: 255
-                      description: >-
-                        The ID to provide in the query to get the previous set of results
+                  $ref: "#/components/schemas/CreateBulkRetryProperties"
                   additionalProperties: false
               additionalProperties: false
   /bulk/requests/retry/plan:
@@ -8024,6 +7867,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/APIErrorResponse"
+      x-request-name: GenerateRequestBulkRetryPlanRequest
       parameters:
         - in: query
           name: query
@@ -8342,6 +8186,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/APIErrorResponse"
+      x-request-name: GetRulesetsRequest
       parameters:
         - in: query
           name: id
@@ -8775,6 +8620,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/APIErrorResponse"
+      x-request-name: GetSourcesRequest
       parameters:
         - in: query
           name: id
@@ -9225,13 +9071,7 @@ paths:
                 code:
                   type: string
                 env:
-                  type: object
-                  properties: {}
-                  additionalProperties:
-                    anyOf:
-                      - type: string
-                      - type: number
-                        format: float
+                  $ref: "#/components/schemas/TransformationContentEnv"
               required:
                 - name
                 - code
@@ -9276,13 +9116,7 @@ paths:
                 code:
                   type: string
                 env:
-                  type: object
-                  properties: {}
-                  additionalProperties:
-                    anyOf:
-                      - type: string
-                      - type: number
-                        format: float
+                  $ref: "#/components/schemas/TransformationContentEnv"
               required:
                 - name
                 - code
@@ -9364,13 +9198,7 @@ paths:
                 code:
                   type: string
                 env:
-                  type: object
-                  properties: {}
-                  additionalProperties:
-                    anyOf:
-                      - type: string
-                      - type: number
-                        format: float
+                  $ref: "#/components/schemas/TransformationContentEnv"
               additionalProperties: false
   /transformations/run:
     put:
@@ -9408,7 +9236,7 @@ paths:
               properties:
                 env:
                   type: object
-                  properties: {}
+                  $ref: "#/components/schemas/EmptyProperties"
                   additionalProperties: false
                 webhook_id:
                   type: string
@@ -9418,31 +9246,7 @@ paths:
                   type: string
                 request:
                   type: object
-                  properties:
-                    headers:
-                      type: object
-                      properties: {}
-                      additionalProperties:
-                        type: string
-                    body:
-                      anyOf:
-                        - type: object
-                          properties: {}
-                          additionalProperties: false
-                        - type: string
-                        - type: array
-                          items: {}
-                      nullable: true
-                    path:
-                      type: string
-                      nullable: true
-                    query:
-                      type: string
-                      nullable: true
-                    parsed_query:
-                      type: object
-                      properties: {}
-                      additionalProperties: false
+                  $ref: "#/components/schemas/SchemaRequestProperties"
                   required:
                     - headers
                   additionalProperties: false
@@ -9475,6 +9279,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/APIErrorResponse"
+      x-request-name: GetTransformationExecutionsRequest
       parameters:
         - in: query
           name: log_level
@@ -9659,6 +9464,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/APIErrorResponse"
+      x-request-name: GetConnectionsRequest
       parameters:
         - in: query
           name: id
@@ -9896,62 +9702,19 @@ paths:
                   nullable: true
                 destination:
                   type: object
-                  properties:
-                    name:
-                      type: string
-                      pattern: ^[A-z0-9-_]+$
-                      maxLength: 155
-                    url:
-                      type: string
-                      nullable: true
-                    cli_path:
-                      type: string
-                      nullable: true
-                    rate_limit_period:
-                      type: string
-                      enum:
-                        - second
-                        - minute
-                        - hour
-                    rate_limit:
-                      type: integer
-                      minimum: 1
-                      oneOf:
-                        - type: integer
-                          maximum: 100
-                        - type: integer
-                          maximum: 6000
-                        - type: integer
-                          maximum: 360000
-                      nullable: true
-                    path_forwarding_disabled:
-                      type: boolean
+                  $ref: "#/components/schemas/RequestDestinationProperties"
                   required:
                     - name
                   additionalProperties: false
                 source:
                   type: object
-                  properties:
-                    name:
-                      type: string
-                      pattern: ^[A-z0-9-_]+$
-                      maxLength: 155
+                  $ref: "#/components/schemas/RequestSourceProperties"
                   required:
                     - name
                   additionalProperties: false
                 ruleset:
                   type: object
-                  properties:
-                    name:
-                      type: string
-                      pattern: ^[A-z0-9-_]+$
-                      maxLength: 155
-                    rules:
-                      type: array
-                      items: {}
-                      uniqueItems: true
-                    is_team_default:
-                      type: boolean
+                  $ref: "#/components/schemas/RequestRulesetProperties"
                   required:
                     - name
                   additionalProperties: false
@@ -10012,63 +9775,19 @@ paths:
                   maxLength: 255
                   nullable: true
                 destination:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                      pattern: ^[A-z0-9-_]+$
-                      maxLength: 155
-                    url:
-                      type: string
-                      nullable: true
-                    cli_path:
-                      type: string
-                      nullable: true
-                    rate_limit_period:
-                      type: string
-                      enum:
-                        - second
-                        - minute
-                        - hour
-                    rate_limit:
-                      type: integer
-                      minimum: 1
-                      oneOf:
-                        - type: integer
-                          maximum: 100
-                        - type: integer
-                          maximum: 6000
-                        - type: integer
-                          maximum: 360000
-                      nullable: true
-                    path_forwarding_disabled:
-                      type: boolean
+                  $ref: "#/components/schemas/RequestDestinationProperties"
                   required:
                     - name
                   additionalProperties: false
                 source:
                   type: object
-                  properties:
-                    name:
-                      type: string
-                      pattern: ^[A-z0-9-_]+$
-                      maxLength: 155
+                  $ref: "#/components/schemas/RequestSourceProperties"
                   required:
                     - name
                   additionalProperties: false
                 ruleset:
                   type: object
-                  properties:
-                    name:
-                      type: string
-                      pattern: ^[A-z0-9-_]+$
-                      maxLength: 155
-                    rules:
-                      type: array
-                      items: {}
-                      uniqueItems: true
-                    is_team_default:
-                      type: boolean
+                  $ref: "#/components/schemas/RequestRulesetProperties"
                   required:
                     - name
                   additionalProperties: false
@@ -10162,17 +9881,7 @@ paths:
                   maxLength: 255
                 ruleset:
                   type: object
-                  properties:
-                    name:
-                      type: string
-                      pattern: ^[A-z0-9-_]+$
-                      maxLength: 155
-                    rules:
-                      type: array
-                      items: {}
-                      uniqueItems: true
-                    is_team_default:
-                      type: boolean
+                  $ref: "#/components/schemas/RequestRulesetProperties"
                   required:
                     - name
                   additionalProperties: false
