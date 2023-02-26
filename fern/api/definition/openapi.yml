@@ -634,53 +634,15 @@ components:
       required:
         - id
       additionalProperties: false
-    DestinationRateLimitPeriod:
+    RateLimitPeriod:
       type: string
       enum:
         - second
         - minute
         - hour
       nullable: true
-    CreateDestinationRateLimitPeriod:
-      type: string
-      enum:
-        - second
-        - minute
-        - hour
-    CreateDestinationRateLimit: 
-      type: integer
-      minimum: 1
-      oneOf:
-        - type: integer
-          maximum: 100
-        - type: integer
-          maximum: 6000
-        - type: integer
-          maximum: 360000
-      nullable: true
-    UpsertDestinationRateLimitPeriod:
-      type: string
-      enum:
-        - second
-        - minute
-        - hour
-    UpsertDestinationRateLimit: 
-      type: integer
-      minimum: 1
-      oneOf:
-        - type: integer
-          maximum: 100
-        - type: integer
-          maximum: 6000
-        - type: integer
-          maximum: 360000
-      nullable: true
-    UpdateDestinationRateLimitPeriod: 
-      type: string
-      enum:
-        - second
-        - minute
-        - hour
+    RateLimit: 
+      $ref: "#/components/schemas/RateLimit"
     RequestBodySource:
       properties:
         name:
@@ -712,7 +674,7 @@ components:
           type: integer
           nullable: true
         rate_limit_period:
-          $ref: "#/components/schemas/DestinationRateLimitPeriod"
+          $ref: "#/components/schemas/RateLimitPeriod"
         archived_at:
           type: string
           format: date-time
@@ -2018,22 +1980,9 @@ components:
           type: string
           nullable: true
         rate_limit_period:
-          type: string
-          enum:
-            - second
-            - minute
-            - hour
+          $ref: "#/components/schemas/RateLimitPeriod"
         rate_limit:
-          type: integer
-          minimum: 1
-          oneOf:
-            - type: integer
-              maximum: 100
-            - type: integer
-              maximum: 6000
-            - type: integer
-              maximum: 360000
-          nullable: true
+          $ref: "#/components/schemas/RateLimit"
         path_forwarding_disabled:
           type: boolean
     RequestSourceProperties:
@@ -3505,9 +3454,9 @@ paths:
                   type: string
                   nullable: true
                 rate_limit_period:
-                  $ref: "#/components/schemas/CreateDestinationRateLimitPeriod"
+                  $ref: "#/components/schemas/RateLimitPeriod"
                 rate_limit:
-                  $ref: "#/components/schemas/CreateDestinationRateLimit"
+                  $ref: "#/components/schemas/RateLimit"
                 path_forwarding_disabled:
                   type: boolean
               required:
@@ -3557,9 +3506,9 @@ paths:
                   type: string
                   nullable: true
                 rate_limit_period:
-                  $ref: "#/components/schemas/UpsertDestinationRateLimitPeriod"
+                  $ref: "#/components/schemas/RateLimitPeriod"
                 rate_limit:
-                  $ref: "#/components/schemas/UpsertDestinationRateLimit"
+                  $ref: "#/components/schemas/RateLimit"
                 path_forwarding_disabled:
                   type: boolean
               required:
@@ -3650,7 +3599,7 @@ paths:
                   minimum: 1
                   nullable: true
                 rate_limit_period:
-                  $ref: "#/components/schemas/UpdateDestinationRateLimitPeriod"
+                  $ref: "#/components/schemas/RateLimitPeriod"
                 archived_at:
                   nullable: true
                 path_forwarding_disabled:
