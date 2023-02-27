@@ -1,1 +1,0 @@
-export { UpdateIssueRequest } from "./UpdateIssueRequest";
