@@ -82,7 +82,7 @@ components:
         - fatal
     TransformationContentEnv:
       type: object
-      $ref: "#/components/schemas/EmptyProperties"
+      properties: {}
       additionalProperties:
         type: string
     IssueTriggerTransformationConfigs:
@@ -252,7 +252,7 @@ components:
       nullable: true
     AttemptErrorBody:
       type: object
-      $ref: "#/components/schemas/EmptyProperties"
+      properties: {}
       nullable: true
     AttemptNumber:
       type: number
@@ -831,7 +831,7 @@ components:
         - POLLING
     CreateIntegrationConfig:
       type: object
-      $ref: "#/components/schemas/EmptyProperties"
+      properties: {}
       additionalProperties: false
     APIKeyIntegrationConfigs:
       type: object
@@ -1035,7 +1035,7 @@ components:
       additionalProperties: false
     DetachedIntegrationFromSource:
       type: object
-      $ref: "#/components/schemas/EmptyProperties"
+      properties: {}
       additionalProperties: false
     DeletedIntegration:
       type: object
@@ -2059,7 +2059,7 @@ components:
       additionalProperties: false
     TransformationEnv:
       type: object
-      $ref: "#/components/schemas/EmptyProperties"
+      properties: {}
       additionalProperties:
         type: string
       nullable: true
