@@ -1,5 +1,5 @@
 groups:
-  external:
+  publish:
     generators:
       - name: fernapi/fern-typescript-sdk
         version: 0.2.0
