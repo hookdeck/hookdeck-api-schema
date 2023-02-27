@@ -1,0 +1,3883 @@
+openapi: 3.0.1
+info:
+  title: Hookdeck Admin REST API
+  version: ''
+paths:
+  /issue-triggers:
+    get:
+      description: ''
+      operationId: issueTriggers_getIssueTriggers
+      tags:
+        - IssueTriggers
+      parameters:
+        - name: name
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: type
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/IssueType'
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: next
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: prev
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IssueTriggerPaginatedResult'
+      summary: Get issue triggers
+    put:
+      description: ''
+      operationId: issueTriggers_upsertIssueTrigger
+      tags:
+        - IssueTriggers
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IssueTrigger'
+      summary: Create or update an issue trigger
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  $ref: '#/components/schemas/IssueType'
+                name:
+                  type: string
+              required:
+                - type
+    post:
+      description: ''
+      operationId: issueTriggers_createIssueTrigger
+      tags:
+        - IssueTriggers
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IssueTrigger'
+      summary: Create an issue trigger
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  $ref: '#/components/schemas/IssueType'
+                name:
+                  type: string
+              required:
+                - type
+  /issue-triggers/{id}:
+    get:
+      description: ''
+      operationId: issueTriggers_getIssueTrigger
+      tags:
+        - IssueTriggers
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IssueTrigger'
+      summary: Get a single issue trigger
+    put:
+      description: ''
+      operationId: issueTriggers_updateIssueTrigger
+      tags:
+        - IssueTriggers
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IssueTrigger'
+      summary: Update an issue trigger
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                disabled_at:
+                  type: string
+                name:
+                  type: string
+    delete:
+      description: ''
+      operationId: issueTriggers_deleteIssueTrigger
+      tags:
+        - IssueTriggers
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletedIssueTriggerResponse'
+      summary: Delete an issue trigger
+  /issue-triggers/{id}/disable:
+    put:
+      description: ''
+      operationId: issueTriggers_disableIssueTrigger
+      tags:
+        - IssueTriggers
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IssueTrigger'
+      summary: Disable an issue trigger
+  /issue-triggers/{id}/enable:
+    put:
+      description: ''
+      operationId: issueTriggers_enableIssueTrigger
+      tags:
+        - IssueTriggers
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IssueTrigger'
+      summary: Enable an issue trigger
+  /attempts:
+    get:
+      description: ''
+      operationId: attempts_getAttempts
+      tags:
+        - Attempts
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: next
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: prev
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventAttemptPaginatedResult'
+      summary: Get attempts
+  /attempts/{id}:
+    get:
+      description: ''
+      operationId: attempts_getAttempt
+      tags:
+        - Attempts
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventAttempt'
+      summary: Get a single attempt
+  /bookmarks:
+    get:
+      description: ''
+      operationId: bookmarks_getBookmarks
+      tags:
+        - Bookmarks
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: next
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: prev
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookmarkPaginatedResult'
+      summary: Get bookmarks
+    post:
+      description: ''
+      operationId: bookmarks_createBookmark
+      tags:
+        - Bookmarks
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bookmark'
+      summary: Create a bookmark
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                event_data_id:
+                  type: string
+                webhook_id:
+                  type: string
+                label:
+                  type: string
+                name:
+                  type: string
+              required:
+                - event_data_id
+                - webhook_id
+                - label
+  /bookmarks/{id}:
+    get:
+      description: ''
+      operationId: bookmarks_getBookmark
+      tags:
+        - Bookmarks
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bookmark'
+      summary: Get a single bookmark
+    put:
+      description: ''
+      operationId: bookmarks_updateBookmark
+      tags:
+        - Bookmarks
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bookmark'
+      summary: Update a bookmark
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                event_data_id:
+                  type: string
+                webhook_id:
+                  type: string
+                label:
+                  type: string
+                name:
+                  type: string
+    delete:
+      description: ''
+      operationId: bookmarks_deleteBookmark
+      tags:
+        - Bookmarks
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletedBookmarkResponse'
+      summary: Delete a bookmark
+  /bookmarks/{id}/trigger:
+    post:
+      description: ''
+      operationId: bookmarks_triggerBookmark
+      tags:
+        - Bookmarks
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventArray'
+      summary: Trigger a bookmark
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                target:
+                  $ref: '#/components/schemas/BookmarkTriggerPropertiesTarget'
+  /destinations:
+    get:
+      description: ''
+      operationId: destinations_getDestinations
+      tags:
+        - Destinations
+      parameters:
+        - name: archived
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: next
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: prev
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DestinationPaginatedResult'
+      summary: Get destinations
+    put:
+      description: ''
+      operationId: destinations_upsertDestination
+      tags:
+        - Destinations
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Destination'
+      summary: Update or create a destination
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                url:
+                  type: string
+                cli_path:
+                  type: string
+                rate_limit_period:
+                  $ref: '#/components/schemas/RateLimitPeriod'
+                rate_limit:
+                  $ref: '#/components/schemas/RateLimit'
+                path_forwarding_disabled:
+                  type: boolean
+              required:
+                - name
+    post:
+      description: ''
+      operationId: destinations_createDestination
+      tags:
+        - Destinations
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Destination'
+      summary: Create a destination
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                url:
+                  type: string
+                cli_path:
+                  type: string
+                rate_limit_period:
+                  $ref: '#/components/schemas/RateLimitPeriod'
+                rate_limit:
+                  $ref: '#/components/schemas/RateLimit'
+                path_forwarding_disabled:
+                  type: boolean
+              required:
+                - name
+  /destinations/{id}:
+    get:
+      description: ''
+      operationId: destinations_getDestination
+      tags:
+        - Destinations
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Destination'
+      summary: Get a destination
+    put:
+      description: ''
+      operationId: destinations_updateDestination
+      tags:
+        - Destinations
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Destination'
+      summary: Update a destination
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                url:
+                  type: string
+                cli_path:
+                  type: string
+                rate_limit:
+                  type: integer
+                rate_limit_period:
+                  $ref: '#/components/schemas/RateLimitPeriod'
+                path_forwarding_disabled:
+                  type: boolean
+  /destinations/{id}/archive:
+    put:
+      description: ''
+      operationId: destinations_archiveDestination
+      tags:
+        - Destinations
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Destination'
+      summary: Archive a destination
+  /destinations/{id}/unarchive:
+    put:
+      description: ''
+      operationId: destinations_unarchiveDestination
+      tags:
+        - Destinations
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Destination'
+      summary: Unarchive a destination
+  /events:
+    get:
+      description: ''
+      operationId: events_getEvents
+      tags:
+        - Events
+      parameters:
+        - name: include
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/QueryParametersInclude'
+        - name: path
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: next
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: prev
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventPaginatedResult'
+      summary: Get events
+  /events/{id}:
+    get:
+      description: ''
+      operationId: events_getEvent
+      tags:
+        - Events
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+      summary: Get an event
+  /events/{id}/retry:
+    post:
+      description: ''
+      operationId: events_retryEvent
+      tags:
+        - Events
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetriedEvent'
+      summary: Retry an event
+  /events/{id}/mute:
+    put:
+      description: ''
+      operationId: events_muteEvent
+      tags:
+        - Events
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+      summary: Mute an event
+  /bulk/events/retry:
+    get:
+      description: ''
+      operationId: bulkRetryEvents_getEventBulkRetries
+      tags:
+        - BulkRetryEvents
+      parameters:
+        - name: in_progress
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: query_partial_match
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: next
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: prev
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchOperationPaginatedResult'
+      summary: Get events bulk retries
+    post:
+      description: ''
+      operationId: bulkRetryEvents_createEventBulkRetry
+      tags:
+        - BulkRetryEvents
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchOperation'
+      summary: Create an events bulk retry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRetryRequest'
+  /bulk/events/retry/plan:
+    get:
+      description: ''
+      operationId: bulkRetryEvents_generateEventBulkRetryPlan
+      tags:
+        - BulkRetryEvents
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchOperationPlan'
+      summary: Generate an events bulk retry plan
+  /bulk/events/retry/{id}:
+    get:
+      description: ''
+      operationId: bulkRetryEvents_getEventBulkRetry
+      tags:
+        - BulkRetryEvents
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchOperation'
+      summary: Get an events bulk retry
+  /bulk/events/retry/{id}/cancel:
+    post:
+      description: ''
+      operationId: bulkRetryEvents_cancelEventBulkRetry
+      tags:
+        - BulkRetryEvents
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchOperation'
+      summary: Cancel an events bulk retry
+  /bulk/ignored-events/retry:
+    get:
+      description: ''
+      operationId: bulkRetryIgnoredEvents_getIgnoredEventBulkRetries
+      tags:
+        - BulkRetryIgnoredEvents
+      parameters:
+        - name: in_progress
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: query_partial_match
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: next
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: prev
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchOperationPaginatedResult'
+      summary: Get ignored events bulk retries
+    post:
+      description: ''
+      operationId: bulkRetryIgnoredEvents_createIgnoredEventBulkRetry
+      tags:
+        - BulkRetryIgnoredEvents
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchOperation'
+      summary: Create an ignored events bulk retry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  $ref: '#/components/schemas/IgnoreBulkRetryQueryProperties'
+  /bulk/ignored-events/retry/plan:
+    get:
+      description: ''
+      operationId: bulkRetryIgnoredEvents_generateIgnoredEventBulkRetryPlan
+      tags:
+        - BulkRetryIgnoredEvents
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchOperationPlan'
+      summary: Generate an ignored events bulk retry plan
+  /bulk/ignored-events/retry/{id}:
+    get:
+      description: ''
+      operationId: bulkRetryIgnoredEvents_getIgnoredEventBulkRetry
+      tags:
+        - BulkRetryIgnoredEvents
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchOperation'
+      summary: Get an ignored events bulk retry
+  /bulk/ignored-events/retry/{id}/cancel:
+    post:
+      description: ''
+      operationId: bulkRetryIgnoredEvents_cancelIgnoredEventBulkRetry
+      tags:
+        - BulkRetryIgnoredEvents
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchOperation'
+      summary: Cancel an ignored events bulk retry
+  /integrations:
+    get:
+      description: ''
+      operationId: integrations_getIntegrations
+      tags:
+        - Integrations
+      parameters:
+        - name: label
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: provider
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/IntegrationProvider'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationPaginatedResult'
+      summary: Get integrations
+    post:
+      description: ''
+      operationId: integrations_createIntegration
+      tags:
+        - Integrations
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration'
+      summary: Create an integration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                label:
+                  type: string
+                configs:
+                  $ref: '#/components/schemas/CreateIntegrationConfig'
+                provider:
+                  $ref: '#/components/schemas/IntegrationProvider'
+                features:
+                  type: array
+                  items:
+                    type: string
+              required:
+                - label
+                - configs
+                - provider
+                - features
+  /integrations/{id}:
+    get:
+      description: ''
+      operationId: integrations_getIntegration
+      tags:
+        - Integrations
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration'
+      summary: Get an integration
+    put:
+      description: ''
+      operationId: integrations_updateIntegration
+      tags:
+        - Integrations
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration'
+      summary: Update an integration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                label:
+                  type: string
+                configs:
+                  $ref: '#/components/schemas/CreateIntegrationConfig'
+                provider:
+                  type: string
+                features:
+                  type: array
+                  items:
+                    type: string
+              required:
+                - features
+    delete:
+      description: ''
+      operationId: integrations_deleteIntegration
+      tags:
+        - Integrations
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletedIntegration'
+      summary: Delete an integration
+  /integrations/{id}/attach/{source_id}:
+    put:
+      description: ''
+      operationId: integrations_attachIntegrationToSource
+      tags:
+        - Integrations
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: source_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttachedIntegrationToSource'
+      summary: Attach an integration to a source
+  /integrations/{id}/detach/{source_id}:
+    put:
+      description: ''
+      operationId: integrations_detachIntegrationToSource
+      tags:
+        - Integrations
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: source_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DetachedIntegrationFromSource'
+      summary: Detach an integration from a source
+  /issues:
+    get:
+      description: ''
+      operationId: issues_getIssues
+      tags:
+        - Issues
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: next
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: prev
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IssueWithDataPaginatedResult'
+      summary: Get issues
+  /issues/count:
+    get:
+      description: ''
+      operationId: issues_getIssueCount
+      tags:
+        - Issues
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: next
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: prev
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IssueCount'
+      summary: Get the number of issues
+  /issues/{id}:
+    get:
+      description: ''
+      operationId: issues_getIssue
+      tags:
+        - Issues
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeliveryIssueWithData'
+      summary: Get a single issue
+    put:
+      description: ''
+      operationId: issues_updateIssue
+      tags:
+        - Issues
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeliveryIssue'
+      summary: Update issue
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  $ref: '#/components/schemas/UpdateIssueRequestBodyStatus'
+              required:
+                - status
+    delete:
+      description: ''
+      operationId: issues_dismissIssue
+      tags:
+        - Issues
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeliveryIssue'
+      summary: Dismiss an issue
+  /requests:
+    get:
+      description: ''
+      operationId: requests_getRequests
+      tags:
+        - Requests
+      parameters:
+        - name: status
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/RequestStatus'
+        - name: verified
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: path
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: next
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: prev
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestPaginatedResult'
+      summary: Get requests
+  /requests/{id}:
+    get:
+      description: ''
+      operationId: requests_getRequest
+      tags:
+        - Requests
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Request'
+      summary: Get a request
+  /requests/{id}/retry:
+    post:
+      description: ''
+      operationId: requests_retryRequest
+      tags:
+        - Requests
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetryRequest'
+      summary: Retry a request
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                webhook_ids:
+                  type: array
+                  items:
+                    type: string
+              required:
+                - webhook_ids
+  /requests/{id}/events:
+    get:
+      description: ''
+      operationId: requests_getRequestEvents
+      tags:
+        - Requests
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: include
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/QueryParametersInclude'
+        - name: path
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: next
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: prev
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventPaginatedResult'
+      summary: Get request events
+  /requests/{id}/ignored_events:
+    get:
+      description: ''
+      operationId: requests_getRequestIgnoredEvents
+      tags:
+        - Requests
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: next
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: prev
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IgnoredEventPaginatedResult'
+      summary: Get request ignored events
+  /bulk/requests/retry:
+    get:
+      description: ''
+      operationId: bulkRetryRequests_getRequestBulkRetries
+      tags:
+        - BulkRetryRequests
+      parameters:
+        - name: in_progress
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: query_partial_match
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: next
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: prev
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchOperationPaginatedResult'
+      summary: Get request bulk retries
+    post:
+      description: ''
+      operationId: bulkRetryRequests_createRequestBulkRetry
+      tags:
+        - BulkRetryRequests
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchOperation'
+      summary: Create a requests bulk retry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  $ref: '#/components/schemas/CreateBulkRetryProperties'
+  /bulk/requests/retry/plan:
+    get:
+      description: ''
+      operationId: bulkRetryRequests_generateRequestBulkRetryPlan
+      tags:
+        - BulkRetryRequests
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchOperationPlan'
+      summary: Generate a requests bulk retry plan
+  /bulk/requests/retry/{id}:
+    get:
+      description: ''
+      operationId: bulkRetryRequests_getRequestBulkRetry
+      tags:
+        - BulkRetryRequests
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchOperation'
+      summary: Get a requests bulk retry
+  /bulk/requests/retry/{id}/cancel:
+    post:
+      description: ''
+      operationId: bulkRetryRequests_cancelRequestBulkRetry
+      tags:
+        - BulkRetryRequests
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchOperation'
+      summary: Cancel a requests bulk retry
+  /rulesets:
+    get:
+      description: ''
+      operationId: rulesets_getRulesets
+      tags:
+        - Rulesets
+      parameters:
+        - name: archived
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: next
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: prev
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RulesetPaginatedResult'
+      summary: Get rulesets
+    put:
+      description: ''
+      operationId: rulesets_upsertRuleset
+      tags:
+        - Rulesets
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ruleset'
+      summary: Update or create a ruleset
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                rules:
+                  type: array
+                  items: {}
+                is_team_default:
+                  type: boolean
+              required:
+                - name
+    post:
+      description: ''
+      operationId: rulesets_createRuleset
+      tags:
+        - Rulesets
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ruleset'
+      summary: Create a ruleset
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                rules:
+                  type: array
+                  items: {}
+                is_team_default:
+                  type: boolean
+              required:
+                - name
+  /rulesets/{id}:
+    get:
+      description: ''
+      operationId: rulesets_getRuleset
+      tags:
+        - Rulesets
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ruleset'
+      summary: Get a ruleset
+    put:
+      description: ''
+      operationId: rulesets_updateRuleset
+      tags:
+        - Rulesets
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ruleset'
+      summary: Update a ruleset
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                rules:
+                  type: array
+                  items: {}
+                is_team_default:
+                  type: boolean
+  /rulesets/{id}/archive:
+    put:
+      description: ''
+      operationId: rulesets_archiveRuleset
+      tags:
+        - Rulesets
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ruleset'
+      summary: Archive a ruleset
+  /rulesets/{id}/unarchive:
+    put:
+      description: ''
+      operationId: rulesets_unarchiveRuleset
+      tags:
+        - Rulesets
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ruleset'
+      summary: Unarchive a ruleset
+  /sources:
+    get:
+      description: ''
+      operationId: sources_getSources
+      tags:
+        - Sources
+      parameters:
+        - name: archived
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: next
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: prev
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SourcePaginatedResult'
+      summary: Get sources
+    put:
+      description: ''
+      operationId: sources_upsertSource
+      tags:
+        - Sources
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Source'
+      summary: Update or create a source
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+                - name
+    post:
+      description: ''
+      operationId: sources_createSource
+      tags:
+        - Sources
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Source'
+      summary: Create a source
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+                - name
+  /sources/{id}:
+    get:
+      description: ''
+      operationId: sources_getSource
+      tags:
+        - Sources
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Source'
+      summary: Get a source
+    put:
+      description: ''
+      operationId: sources_updateSource
+      tags:
+        - Sources
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Source'
+      summary: Update a source
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+  /sources/{id}/archive:
+    put:
+      description: ''
+      operationId: sources_archiveSource
+      tags:
+        - Sources
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Source'
+      summary: Archive a source
+  /sources/{id}/unarchive:
+    put:
+      description: ''
+      operationId: sources_unarchiveSource
+      tags:
+        - Sources
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Source'
+      summary: Unarchive a source
+  /notifications/webhooks:
+    put:
+      description: ''
+      operationId: notifications_toggleWebhookNotifications
+      tags:
+        - Notifications
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToggleWebhookNotifications'
+      summary: Toggle webhook notifications for the workspace
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                enabled:
+                  type: boolean
+                topics:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/TopicsValue'
+                source_id:
+                  type: string
+  /transformations:
+    get:
+      description: ''
+      operationId: transformations_getTransformations
+      tags:
+        - Transformations
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransformationPaginatedResult'
+      summary: Get transformations
+    put:
+      description: ''
+      operationId: transformations_upsertTransformation
+      tags:
+        - Transformations
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transformation'
+      summary: Update or create a transformation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                code:
+                  type: string
+                env:
+                  $ref: '#/components/schemas/TransformationContentEnv'
+              required:
+                - name
+                - code
+    post:
+      description: ''
+      operationId: transformations_createTransformation
+      tags:
+        - Transformations
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transformation'
+      summary: Create a transformation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                code:
+                  type: string
+                env:
+                  $ref: '#/components/schemas/TransformationContentEnv'
+              required:
+                - name
+                - code
+  /transformations/{id}:
+    get:
+      description: ''
+      operationId: transformations_getTransformation
+      tags:
+        - Transformations
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transformation'
+      summary: Get a transformation
+    put:
+      description: ''
+      operationId: transformations_updateTransformation
+      tags:
+        - Transformations
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transformation'
+      summary: Update a transformation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                code:
+                  type: string
+                env:
+                  $ref: '#/components/schemas/TransformationContentEnv'
+  /transformations/run:
+    put:
+      description: ''
+      operationId: transformations_testTransformation
+      tags:
+        - Transformations
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransformationExecutorOutput'
+      summary: Test a transformation code
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                env:
+                  $ref: '#/components/schemas/EmptyProperties'
+                webhook_id:
+                  type: string
+                code:
+                  type: string
+                transformation_id:
+                  type: string
+                request:
+                  $ref: '#/components/schemas/SchemaRequestProperties'
+                event_id:
+                  type: string
+  /transformations/{id}/executions:
+    get:
+      description: ''
+      operationId: transformations_getTransformationExecutions
+      tags:
+        - Transformations
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: next
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: prev
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransformationExecutionPaginatedResult'
+      summary: Get transformation executions
+  /transformations/{id}/executions/{execution_id}:
+    get:
+      description: ''
+      operationId: transformations_getTransformationExecution
+      tags:
+        - Transformations
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: execution_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransformationExecution'
+      summary: Get a transformation execution
+  /webhooks:
+    get:
+      description: ''
+      operationId: connections_getConnections
+      tags:
+        - Connections
+      parameters:
+        - name: archived
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: full_name
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: next
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: prev
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectionPaginatedResult'
+      summary: Get connections
+    put:
+      description: ''
+      operationId: connections_upsertConnection
+      tags:
+        - Connections
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connection'
+      summary: Update or create a connection
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                destination_id:
+                  type: string
+                source_id:
+                  type: string
+                destination:
+                  $ref: '#/components/schemas/RequestDestinationProperties'
+                source:
+                  $ref: '#/components/schemas/RequestSourceProperties'
+                ruleset:
+                  $ref: '#/components/schemas/RequestRulesetProperties'
+                ruleset_id:
+                  type: string
+                rules:
+                  type: array
+                  items: {}
+              required:
+                - name
+    post:
+      description: ''
+      operationId: connections_createConnection
+      tags:
+        - Connections
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connection'
+      summary: Create a connection
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                destination_id:
+                  type: string
+                source_id:
+                  type: string
+                destination:
+                  $ref: '#/components/schemas/RequestDestinationProperties'
+                source:
+                  $ref: '#/components/schemas/RequestSourceProperties'
+                ruleset:
+                  $ref: '#/components/schemas/RequestRulesetProperties'
+                ruleset_id:
+                  type: string
+                rules:
+                  type: array
+                  items: {}
+              required:
+                - name
+  /webhooks/{id}:
+    get:
+      description: ''
+      operationId: connections_getConnection
+      tags:
+        - Connections
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connection'
+      summary: Get a single connection
+    put:
+      description: ''
+      operationId: connections_updateConnection
+      tags:
+        - Connections
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connection'
+      summary: Update a connection
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                url:
+                  type: string
+                ruleset:
+                  $ref: '#/components/schemas/RequestRulesetProperties'
+                ruleset_id:
+                  type: string
+                rules:
+                  type: array
+                  items: {}
+  /webhooks/{id}/archive:
+    put:
+      description: ''
+      operationId: connections_archiveConnection
+      tags:
+        - Connections
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connection'
+      summary: Archive a connection
+  /webhooks/{id}/unarchive:
+    put:
+      description: ''
+      operationId: connections_unarchiveConnection
+      tags:
+        - Connections
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connection'
+      summary: Unarchive a connection
+  /webhooks/{id}/pause:
+    put:
+      description: ''
+      operationId: connections_pauseConnection
+      tags:
+        - Connections
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connection'
+      summary: Pause a connection
+  /webhooks/{id}/unpause:
+    put:
+      description: ''
+      operationId: connections_unpauseConnection
+      tags:
+        - Connections
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connection'
+      summary: Unpause a connection
+components:
+  schemas:
+    IssueTriggerPaginatedResult:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/SeekPagination'
+        count:
+          type: integer
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/IssueTrigger'
+    DeletedIssueTriggerResponse:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+        - id
+    EventAttemptPaginatedResult:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/SeekPagination'
+        count:
+          type: integer
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventAttempt'
+    BookmarkPaginatedResult:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/SeekPagination'
+        count:
+          type: integer
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/Bookmark'
+    DeletedBookmarkResponse:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+        - id
+    EventArray:
+      type: array
+      items:
+        $ref: '#/components/schemas/Event'
+    BookmarkTriggerPropertiesTarget:
+      type: string
+      enum:
+        - http
+        - cli
+    DestinationPaginatedResult:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/SeekPagination'
+        count:
+          type: integer
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/Destination'
+    RetriedEvent:
+      type: object
+      properties:
+        event:
+          $ref: '#/components/schemas/Event'
+        attempt:
+          $ref: '#/components/schemas/EventAttempt'
+      required:
+        - event
+        - attempt
+    BulkRetryRequest:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/BulkRetryRequestProperties'
+    IntegrationPaginatedResult:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/SeekPagination'
+        count:
+          type: integer
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/Integration'
+    DeletedIntegration:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+        - id
+    AttachedIntegrationToSource:
+      type: object
+      properties:
+        success:
+          type: boolean
+      required:
+        - success
+    DetachedIntegrationFromSource:
+      type: object
+      properties: {}
+    IssueWithDataPaginatedResult:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/SeekPagination'
+        count:
+          type: integer
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryIssueWithData'
+    IssueCount:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Number of issues
+      required:
+        - count
+    RequestPaginatedResult:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/SeekPagination'
+        count:
+          type: integer
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/Request'
+    RetryRequest:
+      type: object
+      properties:
+        request:
+          $ref: '#/components/schemas/Request'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+      required:
+        - request
+    IgnoredEventPaginatedResult:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/SeekPagination'
+        count:
+          type: integer
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/IgnoredEvent'
+    IgnoredEvent:
+      type: object
+      properties:
+        id:
+          type: string
+        team_id:
+          type: string
+        webhook_id:
+          type: string
+        cause:
+          $ref: '#/components/schemas/IgnoredEventCause'
+        request_id:
+          type: string
+        updated_at:
+          type: string
+        created_at:
+          type: string
+      required:
+        - id
+        - team_id
+        - webhook_id
+        - cause
+        - request_id
+        - updated_at
+        - created_at
+    IgnoredEventCause:
+      type: string
+      enum:
+        - ARCHIVED
+        - FILTERED
+        - TRANSFORMATION_FAILED
+        - CLI_DISCONNECTED
+    RulesetPaginatedResult:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/SeekPagination'
+        count:
+          type: integer
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ruleset'
+    SourcePaginatedResult:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/SeekPagination'
+        count:
+          type: integer
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/Source'
+    ToggleWebhookNotifications:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        topics:
+          type: array
+          items:
+            $ref: '#/components/schemas/TopicsValue'
+        source_id:
+          type: string
+      required:
+        - enabled
+        - source_id
+    TransformationPaginatedResult:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/SeekPagination'
+        count:
+          type: integer
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transformation'
+    TransformationExecutorOutput:
+      type: object
+      properties:
+        request_id:
+          type: string
+        transformation_id:
+          type: string
+        execution_id:
+          type: string
+        log_level:
+          $ref: '#/components/schemas/TransformationExecutionLogLevel'
+        request:
+          $ref: '#/components/schemas/TransformationExecutorOutputPropertiesRequest'
+        console:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConsoleLine'
+      required:
+        - log_level
+    TransformationExecutionPaginatedResult:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/SeekPagination'
+        count:
+          type: integer
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransformationExecution'
+    ConnectionPaginatedResult:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/SeekPagination'
+        count:
+          type: integer
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/Connection'
+    SeekPagination:
+      type: object
+      properties:
+        limit:
+          type: integer
+        prev:
+          type: string
+        next:
+          type: string
+    IssueTrigger:
+      type: object
+      properties:
+        id:
+          type: string
+        team_id:
+          type: string
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/IssueType'
+        configs:
+          $ref: '#/components/schemas/IssueTriggerDeliveryConfigs'
+        disabled_at:
+          type: string
+        updated_at:
+          type: string
+        created_at:
+          type: string
+        deleted_at:
+          type: string
+      required:
+        - id
+        - type
+        - configs
+        - updated_at
+        - created_at
+    IssueType:
+      type: string
+      enum:
+        - delivery
+        - transformation
+        - backpressure
+      description: List of valid Issue types
+    IssueTriggerDeliveryConfigs:
+      type: object
+      description: Configs for a 'delivery' issue trigger
+      properties:
+        strategy:
+          $ref: '#/components/schemas/IssueTriggerStrategy'
+        connections:
+          type: string
+      required:
+        - strategy
+        - connections
+    IssueTriggerStrategy:
+      type: string
+      enum:
+        - first_attempt
+        - final_attempt
+    EventAttempt:
+      type: object
+      properties:
+        id:
+          type: string
+        team_id:
+          type: string
+        event_id:
+          type: string
+        response_status:
+          type: number
+          format: double
+        attempt_number:
+          $ref: '#/components/schemas/AttemptNumber'
+        trigger:
+          $ref: '#/components/schemas/AttemptTrigger'
+        error_code:
+          $ref: '#/components/schemas/AttemptErrorCodes'
+        body:
+          $ref: '#/components/schemas/AttemptErrorBody'
+        requested_url:
+          type: string
+        bulk_retry_id:
+          type: string
+        status:
+          $ref: '#/components/schemas/AttemptStatus'
+        successful_at:
+          type: string
+        delivered_at:
+          type: string
+        responded_at:
+          type: string
+        delivery_latency:
+          type: number
+          format: double
+        response_latency:
+          type: number
+          format: double
+        updated_at:
+          type: string
+        created_at:
+          type: string
+        state:
+          $ref: '#/components/schemas/AttemptState'
+        archived_at:
+          type: string
+        destination_id:
+          type: string
+      required:
+        - id
+        - team_id
+        - event_id
+        - status
+        - updated_at
+        - created_at
+    AttemptNumber:
+      type: number
+      format: double
+    AttemptTrigger:
+      type: string
+      enum:
+        - INITIAL
+        - MANUAL
+        - BULK_RETRY
+        - UNPAUSE
+        - AUTOMATIC
+    AttemptErrorCodes:
+      type: string
+      enum:
+        - TIMEOUT
+        - NOT_FOUND
+        - CONNECTION_REFUSED
+        - CONNECTION_RESET
+        - MISSING_URL
+        - CLI
+        - CLI_UNAVAILABLE
+        - SELF_SIGNED_CERT
+        - ERR_TLS_CERT_ALTNAME_INVALID
+        - SSL_ERROR_CA_UNKNOWN
+        - TTL_EXPIRED
+        - DATA_ARCHIVED
+        - SSL_CERT_EXPIRED
+        - BULK_RETRY_CANCELLED
+        - DNS_LOOKUP_FAILED
+        - HOST_UNREACHABLE
+        - PROTOCOL_ERROR
+        - SOCKET_CLOSED
+        - UNKNOWN
+    AttemptErrorBody:
+      type: object
+      properties: {}
+    AttemptStatus:
+      type: string
+      enum:
+        - QUEUED
+        - FAILED
+        - SUCCESSFUL
+        - HOLD
+    AttemptState:
+      type: string
+      enum:
+        - DELIVERING
+        - QUEUED
+        - PENDING
+        - COMPLETED
+        - HOLD
+    Bookmark:
+      type: object
+      properties:
+        id:
+          type: string
+        team_id:
+          type: string
+        webhook_id:
+          type: string
+        event_data_id:
+          type: string
+        label:
+          type: string
+        type:
+          type: string
+        last_used_at:
+          type: string
+        updated_at:
+          type: string
+        created_at:
+          type: string
+      required:
+        - id
+        - team_id
+        - webhook_id
+        - event_data_id
+        - label
+        - updated_at
+        - created_at
+    Event:
+      type: object
+      properties:
+        id:
+          type: string
+        team_id:
+          type: string
+        webhook_id:
+          type: string
+        source_id:
+          type: string
+        destination_id:
+          type: string
+        event_data_id:
+          type: string
+        request_id:
+          type: string
+        attempts:
+          type: number
+          format: double
+        last_attempt_at:
+          type: string
+        next_attempt_at:
+          type: string
+        response_status:
+          type: number
+          format: double
+        status:
+          $ref: '#/components/schemas/EventStatus'
+        successful_at:
+          type: string
+        cli_id:
+          type: string
+        updated_at:
+          type: string
+        created_at:
+          type: string
+      required:
+        - id
+        - team_id
+        - webhook_id
+        - source_id
+        - destination_id
+        - event_data_id
+        - request_id
+        - attempts
+        - status
+        - updated_at
+        - created_at
+    EventStatus:
+      type: string
+      enum:
+        - SCHEDULED
+        - QUEUED
+        - HOLD
+        - SUCCESSFUL
+        - FAILED
+    Destination:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        team_id:
+          type: string
+        path_forwarding_disabled:
+          type: boolean
+        url:
+          type: string
+        cli_path:
+          type: string
+        rate_limit:
+          type: integer
+        rate_limit_period:
+          $ref: '#/components/schemas/RateLimitPeriod'
+        archived_at:
+          type: string
+        updated_at:
+          type: string
+        created_at:
+          type: string
+      required:
+        - id
+        - name
+        - team_id
+        - updated_at
+        - created_at
+    RateLimitPeriod:
+      type: string
+      enum:
+        - second
+        - minute
+        - hour
+    RateLimit:
+      type: integer
+    EventPaginatedResult:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/SeekPagination'
+        count:
+          type: integer
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+    BatchOperationPaginatedResult:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/SeekPagination'
+        count:
+          type: integer
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/BatchOperation'
+    BatchOperation:
+      type: object
+      properties:
+        id:
+          type: string
+        team_id:
+          type: string
+        created_at:
+          type: string
+        updated_at:
+          type: string
+        cancelled_at:
+          type: string
+        completed_at:
+          type: string
+        estimated_batch:
+          type: number
+          format: double
+        estimated_count:
+          type: number
+          format: double
+        processed_batch:
+          type: number
+          format: double
+        completed_count:
+          type: number
+          format: double
+        in_progress:
+          type: boolean
+        progress:
+          type: number
+          format: double
+        failed_count:
+          type: number
+          format: double
+        number:
+          type: number
+          format: double
+      required:
+        - id
+        - team_id
+        - created_at
+        - updated_at
+        - in_progress
+    BulkRetryRequestProperties:
+      type: object
+      properties:
+        include:
+          $ref: '#/components/schemas/QueryParametersInclude'
+        id:
+          type: string
+        status:
+          type: string
+        issue_id:
+          type: string
+        webhook_id:
+          type: string
+        destination_id:
+          type: string
+        source_id:
+          type: string
+        attempts:
+          $ref: '#/components/schemas/CreateEventsBulkAttempts'
+        response_status:
+          type: integer
+        successful_at:
+          $ref: '#/components/schemas/CreateEventsBulkSuccessAt'
+        created_at:
+          $ref: '#/components/schemas/CreateEventsBulkResponseCreatedOrLastAttemptAt'
+        error_code:
+          type: string
+        cli_id:
+          type: string
+        cli_user_id:
+          type: string
+        last_attempt_at:
+          $ref: '#/components/schemas/CreateEventsBulkResponseCreatedOrLastAttemptAt'
+        event_data_id:
+          type: string
+        headers:
+          type: string
+        body:
+          type: string
+        parsed_query:
+          type: string
+        bulk_retry_id:
+          type: string
+        path:
+          type: string
+        order_by:
+          $ref: '#/components/schemas/CreateBulkRetryRequestOrderBy'
+        dir:
+          $ref: '#/components/schemas/CreateEventsBulkResponseDir'
+        limit:
+          type: integer
+          description: Result set size
+        next:
+          type: string
+          description: The ID to provide in the query to get the next set of results
+        prev:
+          type: string
+          description: The ID to provide in the query to get the previous set of results
+    QueryParametersInclude:
+      type: string
+      enum:
+        - data
+    CreateEventsBulkAttempts:
+      type: object
+      properties:
+        ge:
+          type: integer
+        gte:
+          type: integer
+        le:
+          type: integer
+        lte:
+          type: integer
+        any:
+          type: boolean
+        contains:
+          type: integer
+    CreateEventsBulkSuccessAt:
+      type: object
+      properties:
+        ge:
+          type: integer
+        gte:
+          type: integer
+        le:
+          type: integer
+        lte:
+          type: integer
+        any:
+          type: boolean
+        contains:
+          type: integer
+    CreateEventsBulkResponseCreatedOrLastAttemptAt:
+      type: object
+      properties:
+        ge:
+          type: string
+        gte:
+          type: string
+        le:
+          type: string
+        lte:
+          type: string
+        any:
+          type: boolean
+        contains:
+          type: string
+    CreateBulkRetryRequestOrderBy:
+      type: string
+      enum:
+        - ingested_at
+        - created_at
+    CreateEventsBulkResponseDir:
+      type: string
+      enum:
+        - asc
+        - desc
+    BatchOperationPlan:
+      type: object
+      properties:
+        estimated_batch:
+          type: number
+          format: double
+        estimated_count:
+          type: number
+          format: double
+        progress:
+          type: number
+          format: double
+    IgnoreBulkRetryQueryProperties:
+      type: object
+      properties:
+        cause:
+          type: string
+        webhook_id:
+          type: string
+        transformation_id:
+          type: string
+    Integration:
+      type: object
+      properties:
+        id:
+          type: string
+        team_id:
+          type: string
+        label:
+          type: string
+        provider:
+          $ref: '#/components/schemas/IntegrationProvider'
+        features:
+          type: array
+          items:
+            $ref: '#/components/schemas/IntegrationFeature'
+        configs:
+          $ref: '#/components/schemas/ApiKeyIntegrationConfigs'
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/Source'
+        updated_at:
+          type: string
+        created_at:
+          type: string
+      required:
+        - id
+        - team_id
+        - label
+        - provider
+        - features
+        - configs
+        - sources
+        - updated_at
+        - created_at
+    IntegrationProvider:
+      type: string
+      enum:
+        - twitter
+        - stripe
+        - recharge
+        - github
+        - shopify
+        - postmark
+        - hmac
+        - basic_auth
+        - api_key
+        - xero
+        - svix
+        - zoom
+        - akeneo
+        - adyen
+    IntegrationFeature:
+      type: string
+      enum:
+        - VERIFICATION
+        - HANDSHAKE
+        - POLLING
+    ApiKeyIntegrationConfigs:
+      type: object
+      properties:
+        header_key:
+          type: string
+        api_key:
+          type: string
+      required:
+        - header_key
+        - api_key
+    Source:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        team_id:
+          type: string
+        url:
+          type: string
+        integration_id:
+          type: string
+        integration:
+          $ref: '#/components/schemas/SourceIntegration'
+        archived_at:
+          type: string
+        updated_at:
+          type: string
+        created_at:
+          type: string
+      required:
+        - id
+        - name
+        - team_id
+        - url
+        - updated_at
+        - created_at
+    SourceIntegration:
+      type: object
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+        provider:
+          $ref: '#/components/schemas/IntegrationProvider'
+        features:
+          type: array
+          items:
+            $ref: '#/components/schemas/IntegrationFeature'
+      required:
+        - id
+        - label
+        - provider
+        - features
+    CreateIntegrationConfig:
+      type: object
+      properties: {}
+    DeliveryIssueWithData:
+      type: object
+      description: Delivery issue
+      properties:
+        id:
+          type: string
+          description: Issue ID
+        team_id:
+          type: string
+        status:
+          $ref: '#/components/schemas/IssueStatus'
+        opened_at:
+          type: string
+        first_seen_at:
+          type: string
+        last_seen_at:
+          type: string
+        last_updated_by:
+          type: string
+        dismissed_at:
+          type: string
+        auto_resolved_at:
+          type: string
+        merged_with:
+          type: string
+        updated_at:
+          type: string
+        created_at:
+          type: string
+        type:
+          $ref: '#/components/schemas/DeliveryIssueWithDataType'
+        aggregation_keys:
+          $ref: '#/components/schemas/DeliveryIssueAggregationKeys'
+        reference:
+          $ref: '#/components/schemas/DeliveryIssueReference'
+        data:
+          $ref: '#/components/schemas/DeliveryIssueData'
+      required:
+        - id
+        - team_id
+        - status
+        - opened_at
+        - first_seen_at
+        - last_seen_at
+        - updated_at
+        - created_at
+        - type
+        - aggregation_keys
+        - reference
+    IssueStatus:
+      type: string
+      enum:
+        - OPENED
+        - IGNORED
+        - ACKNOWLEDGED
+        - RESOLVED
+      description: List of valid Issue statuses
+    DeliveryIssueWithDataType:
+      type: string
+      enum:
+        - delivery
+    DeliveryIssueAggregationKeys:
+      type: object
+      description: Keys used as the aggregation keys a 'delivery' type issue
+      properties:
+        webhook_id:
+          type: array
+          items:
+            type: string
+        response_status:
+          type: array
+          items:
+            type: number
+            format: double
+        error_code:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttemptErrorCodes'
+      required:
+        - webhook_id
+        - response_status
+        - error_code
+    DeliveryIssueReference:
+      type: object
+      description: Reference to the event and attempt an issue is being created for.
+      properties:
+        event_id:
+          type: string
+        attempt_id:
+          type: string
+      required:
+        - event_id
+        - attempt_id
+    DeliveryIssueData:
+      type: object
+      description: Delivery issue data
+      properties:
+        trigger_event:
+          $ref: '#/components/schemas/Event'
+        trigger_attempt:
+          $ref: '#/components/schemas/EventAttempt'
+    DeliveryIssue:
+      type: object
+      description: Delivery issue
+      properties:
+        id:
+          type: string
+          description: Issue ID
+        team_id:
+          type: string
+        status:
+          $ref: '#/components/schemas/IssueStatus'
+        opened_at:
+          type: string
+        first_seen_at:
+          type: string
+        last_seen_at:
+          type: string
+        last_updated_by:
+          type: string
+        dismissed_at:
+          type: string
+        auto_resolved_at:
+          type: string
+        merged_with:
+          type: string
+        updated_at:
+          type: string
+        created_at:
+          type: string
+        type:
+          $ref: '#/components/schemas/DeliveryIssueType'
+        aggregation_keys:
+          $ref: '#/components/schemas/DeliveryIssueAggregationKeys'
+        reference:
+          $ref: '#/components/schemas/DeliveryIssueReference'
+      required:
+        - id
+        - team_id
+        - status
+        - opened_at
+        - first_seen_at
+        - last_seen_at
+        - updated_at
+        - created_at
+        - type
+        - aggregation_keys
+        - reference
+    UpdateIssueRequestBodyStatus:
+      type: string
+      enum:
+        - OPENED
+        - IGNORED
+        - ACKNOWLEDGED
+        - RESOLVED
+      description: New status
+    DeliveryIssueType:
+      type: string
+      enum:
+        - delivery
+    Request:
+      type: object
+      properties:
+        id:
+          type: string
+        team_id:
+          type: string
+        verified:
+          type: boolean
+        original_event_data_id:
+          type: string
+        duplicate_hash:
+          type: string
+        duplicate_hits:
+          type: number
+          format: double
+        rejection_cause:
+          $ref: '#/components/schemas/RequestRejectionCause'
+        ingest_priority:
+          $ref: '#/components/schemas/RequestInjestPriority'
+        ingested_at:
+          type: string
+        source_id:
+          type: string
+        events_count:
+          type: number
+          format: double
+        cli_events_count:
+          type: number
+          format: double
+        ignored_count:
+          type: number
+          format: double
+        data:
+          $ref: '#/components/schemas/ShortEventData'
+        updated_at:
+          type: string
+        created_at:
+          type: string
+      required:
+        - id
+        - team_id
+        - source_id
+        - updated_at
+        - created_at
+    RequestRejectionCause:
+      type: string
+      enum:
+        - SOURCE_ARCHIVED
+        - NO_WEBHOOK
+        - VERIFICATION_FAILED
+        - UNSUPPORTED_HTTP_METHOD
+        - UNSUPPORTED_CONTENT_TYPE
+        - UNPARSABLE_JSON
+        - PAYLOAD_TOO_LARGE
+        - INGESTION_FATAL
+        - UNKNOWN
+    RequestInjestPriority:
+      type: string
+      enum:
+        - NORMAL
+        - LOW
+    ShortEventData:
+      type: object
+      properties:
+        path:
+          type: string
+        query:
+          type: string
+        is_large_payload:
+          type: boolean
+      required:
+        - path
+    CreateBulkRetryProperties:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          $ref: '#/components/schemas/RequestStatus'
+        rejection_cause:
+          type: string
+        ignored_count:
+          $ref: '#/components/schemas/CreateEventsBulkAttempts'
+        events_count:
+          $ref: '#/components/schemas/CreateEventsBulkAttempts'
+        source_id:
+          type: string
+        verified:
+          type: boolean
+        headers:
+          type: string
+        body:
+          type: string
+        parsed_query:
+          type: string
+        path:
+          type: string
+        created_at:
+          $ref: '#/components/schemas/CreateEventsBulkResponseCreatedOrLastAttemptAt'
+        ingested_at:
+          $ref: '#/components/schemas/CreateEventsBulkResponseCreatedOrLastAttemptAt'
+        bulk_retry_id:
+          type: string
+        order_by:
+          $ref: '#/components/schemas/CreateEventsBulkResponseCreatedOrLastAttemptAt'
+        dir:
+          $ref: '#/components/schemas/CreateEventsBulkResponseDir'
+        limit:
+          type: integer
+          description: Result set size
+        next:
+          type: string
+          description: The ID to provide in the query to get the next set of results
+        prev:
+          type: string
+          description: The ID to provide in the query to get the previous set of results
+    RequestStatus:
+      type: string
+      enum:
+        - accepted
+        - rejected
+    Ruleset:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        team_id:
+          type: string
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/RetryRule'
+        is_team_default:
+          type: boolean
+        archived_at:
+          type: string
+        updated_at:
+          type: string
+        created_at:
+          type: string
+      required:
+        - id
+        - name
+        - team_id
+        - rules
+        - is_team_default
+        - updated_at
+        - created_at
+    RetryRule:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/RetryRulePropertiesType'
+        strategy:
+          $ref: '#/components/schemas/RetryStrategy'
+        interval:
+          type: number
+          format: double
+        count:
+          type: number
+          format: double
+      required:
+        - type
+        - strategy
+    RetryRulePropertiesType:
+      type: string
+      enum:
+        - retry
+    RetryStrategy:
+      type: string
+      enum:
+        - linear
+        - exponential
+    TopicsValue:
+      type: string
+      enum:
+        - issue.opened
+        - issue.updated
+        - deprecated.attempt-failed
+        - event.successful
+    Transformation:
+      type: object
+      properties:
+        id:
+          type: string
+        team_id:
+          type: string
+        name:
+          type: string
+        code:
+          type: string
+        encrypted_env:
+          type: string
+        iv:
+          type: string
+        env:
+          $ref: '#/components/schemas/TransformationEnv'
+        updated_at:
+          type: string
+        created_at:
+          type: string
+      required:
+        - id
+        - team_id
+        - name
+        - code
+        - updated_at
+        - created_at
+    TransformationEnv:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/InlinedType4'
+    InlinedType4:
+      type: string
+    TransformationContentEnv:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/InlinedType5'
+    InlinedType5:
+      type: string
+    EmptyProperties:
+      type: object
+      properties: {}
+    SchemaRequestProperties:
+      type: object
+      properties:
+        headers:
+          $ref: '#/components/schemas/EmptyProperties'
+        body:
+          $ref: '#/components/schemas/EmptyProperties'
+        path:
+          type: string
+        query:
+          type: string
+        parsed_query:
+          $ref: '#/components/schemas/EmptyProperties'
+    TransformationExecutionLogLevel:
+      type: string
+      enum:
+        - debug
+        - info
+        - warn
+        - error
+        - fatal
+    TransformationExecutorOutputPropertiesRequest:
+      type: object
+      properties:
+        path:
+          type: string
+      required:
+        - path
+    ConsoleLine:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/ConsoleLinePropertiesType'
+        message:
+          type: string
+      required:
+        - type
+        - message
+    ConsoleLinePropertiesType:
+      type: string
+      enum:
+        - error
+        - log
+        - warn
+        - info
+        - debug
+    TransformationExecution:
+      type: object
+      properties:
+        id:
+          type: string
+        transformed_event_data_id:
+          type: string
+        original_event_data_id:
+          type: string
+        transformation_id:
+          type: string
+        team_id:
+          type: string
+        webhook_id:
+          type: string
+        log_level:
+          $ref: '#/components/schemas/TransformationExecutionLogLevel'
+        logs:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConsoleLine'
+        updated_at:
+          type: string
+        created_at:
+          type: string
+        original_event_data:
+          $ref: '#/components/schemas/ShortEventData'
+        transformed_event_data:
+          $ref: '#/components/schemas/ShortEventData'
+        issue_id:
+          type: string
+      required:
+        - id
+        - transformed_event_data_id
+        - original_event_data_id
+        - transformation_id
+        - team_id
+        - webhook_id
+        - log_level
+        - logs
+        - updated_at
+        - created_at
+    Connection:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        team_id:
+          type: string
+        destination:
+          $ref: '#/components/schemas/Destination'
+        source:
+          $ref: '#/components/schemas/Source'
+        ruleset:
+          $ref: '#/components/schemas/Ruleset'
+        resolved_rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/RetryRule'
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/RetryRule'
+        archived_at:
+          type: string
+        paused_at:
+          type: string
+        updated_at:
+          type: string
+        created_at:
+          type: string
+      required:
+        - id
+        - name
+        - team_id
+        - destination
+        - source
+        - updated_at
+        - created_at
+    RequestDestinationProperties:
+      type: object
+      properties:
+        name:
+          type: string
+        url:
+          type: string
+        cli_path:
+          type: string
+        rate_limit_period:
+          $ref: '#/components/schemas/RateLimitPeriod'
+        rate_limit:
+          $ref: '#/components/schemas/RateLimit'
+        path_forwarding_disabled:
+          type: boolean
+    RequestSourceProperties:
+      type: object
+      properties:
+        name:
+          type: string
+    RequestRulesetProperties:
+      type: object
+      properties:
+        name:
+          type: string
+        rules:
+          type: array
+          items: {}
+        is_team_default:
+          type: boolean
+  securitySchemes: {}
+servers:
+  - url: https://api.hookdeck.com/{version}
+    description: Production (Production API)

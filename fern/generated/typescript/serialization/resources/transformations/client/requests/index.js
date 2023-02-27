@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.TestTransformationRequest = exports.UpdateTransformationRequest = exports.CreateTransformationRequest = exports.UpsertTransformationRequest = void 0;
+var UpsertTransformationRequest_1 = require("./UpsertTransformationRequest");
+Object.defineProperty(exports, "UpsertTransformationRequest", { enumerable: true, get: function () { return UpsertTransformationRequest_1.UpsertTransformationRequest; } });
+var CreateTransformationRequest_1 = require("./CreateTransformationRequest");
+Object.defineProperty(exports, "CreateTransformationRequest", { enumerable: true, get: function () { return CreateTransformationRequest_1.CreateTransformationRequest; } });
+var UpdateTransformationRequest_1 = require("./UpdateTransformationRequest");
+Object.defineProperty(exports, "UpdateTransformationRequest", { enumerable: true, get: function () { return UpdateTransformationRequest_1.UpdateTransformationRequest; } });
+var TestTransformationRequest_1 = require("./TestTransformationRequest");
+Object.defineProperty(exports, "TestTransformationRequest", { enumerable: true, get: function () { return TestTransformationRequest_1.TestTransformationRequest; } });
