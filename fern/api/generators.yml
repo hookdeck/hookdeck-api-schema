@@ -2,7 +2,7 @@ groups:
   publish:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.6.4
+        version: 0.7.1-rc0
         output:
           location: npm
           package-name: '@fern-api/hookdeck'
