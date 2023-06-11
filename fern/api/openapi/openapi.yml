@@ -2299,7 +2299,7 @@ components:
             $ref: '#/components/schemas/Connection'
       additionalProperties: false
 servers:
-  - url: https://api.hookdeck.com/{version}
+  - url: https://api.hookdeck.com/2023-01-01
     description: Production API
     variables:
       version:
