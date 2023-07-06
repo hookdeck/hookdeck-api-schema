@@ -12,6 +12,6 @@ groups:
         config: 
           namespaceExport: Hookdeck
       - name: fernapi/fern-go-sdk
-        version: 0.0.9
+        version: 0.0.10
         github:
           repository: fern-hookdeck/hookdeck-go
