@@ -3,6 +3,7 @@
 Tagging a release on this repository will:
 
 - Update the [TypeScript SDK Github Repo](https://github.com/fern-hookdeck/hookdeck-node)
+- Update the [Go SDK GitHub Repo](https://github.com/fern-hookdeck/hookdeck-go)
 - _More SDKs to come..._
 
 ## What is in this repository?
