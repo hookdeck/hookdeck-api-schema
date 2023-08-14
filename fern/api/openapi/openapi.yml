@@ -11263,6 +11263,148 @@ paths:
                   items:
                     $ref: '#/components/schemas/Rule'
               additionalProperties: false
+  '/connections/{id}':
+    get:
+      operationId: getConnection
+      summary: Get a single connection
+      description: ''
+      tags:
+        - Connections
+      responses:
+        '200':
+          description: A single connection
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connection'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIErrorResponse'
+        '410':
+          description: Gone
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIErrorResponse'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            description: Connection ID
+          required: true
+        - in: path
+          name: id
+          schema:
+            type: string
+            description: Connection ID
+          required: true
+    put:
+      operationId: updateConnection
+      summary: Update a connection
+      description: ''
+      tags:
+        - Connections
+      responses:
+        '200':
+          description: A single connection
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connection'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIErrorResponse'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            description: Connection ID
+          required: true
+        - in: path
+          name: id
+          schema:
+            type: string
+            description: Connection ID
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  pattern: '^[A-z0-9-_]+$'
+                  maxLength: 155
+                  nullable: true
+                description:
+                  type: string
+                  maxLength: 500
+                  nullable: true
+                  description: Description for the connection
+                rules:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Rule'
+              additionalProperties: false
+    delete:
+      operationId: deleteConnection
+      summary: Delete a connection
+      description: ''
+      tags:
+        - Connections
+      responses:
+        '200':
+          description: A single connection
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: ID of the connection
+                required:
+                  - id
+                additionalProperties: false
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIErrorResponse'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
   '/connections/{id}/archive':
     put:
       operationId: archiveConnection
