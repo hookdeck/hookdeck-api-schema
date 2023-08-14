@@ -2,7 +2,7 @@
 
 Tagging a release on this repository will:
 
-- Update the [Go SDK GitHub Repo](https://github.com/fern-hookdeck/hookdeck-go)
+- Update the [Go SDK GitHub Repo](https://github.com/hookdeck/hookdeck-go-sdk)
 - _More SDKs to come..._
 
 ## What is in this repository?
