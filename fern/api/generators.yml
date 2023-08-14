@@ -4,4 +4,4 @@ groups:
       - name: fernapi/fern-go-sdk
         version: 0.1.0
         github:
-          repository: fern-hookdeck/hookdeck-go
+          repository: hookdeck/hookdeck-go-sdk
