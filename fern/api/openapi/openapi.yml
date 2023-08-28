@@ -2975,7 +2975,7 @@ components:
         - type: boolean
         - type: object
           properties: {}
-          additionalProperties: false
+          additionalProperties: true
       nullable: true
       description: JSON using our filter syntax to filter on request headers
       x-docs-type: JSON
@@ -2988,14 +2988,10 @@ components:
           enum:
             - filter
           description: A filter rule must be of type `filter`
-        headers:
-          $ref: '#/components/schemas/ConnectionFilterProperty'
-        body:
-          $ref: '#/components/schemas/ConnectionFilterProperty'
-        query:
-          $ref: '#/components/schemas/ConnectionFilterProperty'
-        path:
-          $ref: '#/components/schemas/ConnectionFilterProperty'
+        headers: {}
+        body: {}
+        query: {}
+        path: {}
       required:
         - type
       additionalProperties: false
