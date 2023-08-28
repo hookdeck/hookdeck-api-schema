@@ -2975,7 +2975,7 @@ components:
         - type: boolean
         - type: object
           properties: {}
-          additionalProperties: true
+          additionalProperties: false
       nullable: true
       description: JSON using our filter syntax to filter on request headers
       x-docs-type: JSON
