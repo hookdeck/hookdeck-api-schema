@@ -8,7 +8,7 @@ groups:
             path: github.com/hookdeck/hookdeck-go-sdk
         output:
           location: local-file-system
-          path: ../../generated/hookdeck-go-sdk
+          path: ../../local/generated/hookdeck-go-sdk
   publish:
     generators:
       - name: fernapi/fern-go-sdk
