@@ -1,1 +1,4 @@
 .DS_Store
+
+local/go/generated/hookdeck-go-sdk/
+local/go/go
