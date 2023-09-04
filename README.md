@@ -27,6 +27,16 @@ fern check # Checks if the definition is valid
 
 Generators read in your API Definition and output files or code (i.e. the TypeScript SDK Generator) and are tracked in [generators.yml](./fern/api/generators.yml).
 
+### Local preview
+
+You can preview the generated code in the `./local/go/generated/hookdeck-go-sdk` directory by running the following command:
+
+```sh
+fern generate --group local
+```
+
+### Publishing
+
 To trigger the generators run:
 
 ```bash

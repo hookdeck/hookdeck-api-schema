@@ -1,4 +1,4 @@
-module github.com/hookdeck/hookdeck-api-schema/local
+module github.com/hookdeck/hookdeck-api-schema/local/go
 
 go 1.19
 
