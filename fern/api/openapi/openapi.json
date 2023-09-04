@@ -1909,7 +1909,8 @@
           "encoding"
         ],
         "additionalProperties": false,
-        "description": "The verification configs for HMAC. Only included if the ?include=verification.configs query param is present"
+        "description": "The verification configs for HMAC. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "HMACConfigs"
       },
       "VerificationHMAC": {
         "type": "object",
@@ -1918,7 +1919,8 @@
           "configs": { "$ref": "#/components/schemas/VerificationHMACConfigs" }
         },
         "required": ["type"],
-        "additionalProperties": false
+        "additionalProperties": false,
+        "x-docs-type": "HMAC"
       },
       "VerificationBasicAuthConfigs": {
         "type": "object",
@@ -1928,7 +1930,8 @@
         },
         "required": ["name", "password"],
         "additionalProperties": false,
-        "description": "The verification configs for Basic Auth. Only included if the ?include=verification.configs query param is present"
+        "description": "The verification configs for Basic Auth. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "BasicAuthConfigs"
       },
       "VerificationBasicAuth": {
         "type": "object",
@@ -1939,7 +1942,8 @@
           }
         },
         "required": ["type"],
-        "additionalProperties": false
+        "additionalProperties": false,
+        "x-docs-type": "Basic Auth"
       },
       "VerificationAPIKeyConfigs": {
         "type": "object",
@@ -1949,7 +1953,8 @@
         },
         "required": ["header_key", "api_key"],
         "additionalProperties": false,
-        "description": "The verification configs for API Key. Only included if the ?include=verification.configs query param is present"
+        "description": "The verification configs for API Key. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "APIKeyConfigs"
       },
       "VerificationAPIKey": {
         "type": "object",
@@ -1960,14 +1965,16 @@
           }
         },
         "required": ["type"],
-        "additionalProperties": false
+        "additionalProperties": false,
+        "x-docs-type": "API Key"
       },
       "VerificationTwitterConfigs": {
         "type": "object",
         "properties": { "api_key": { "type": "string" } },
         "required": ["api_key"],
         "additionalProperties": false,
-        "description": "The verification configs for Twitter. Only included if the ?include=verification.configs query param is present"
+        "description": "The verification configs for Twitter. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "TwitterConfigs"
       },
       "VerificationTwitter": {
         "type": "object",
@@ -1978,14 +1985,16 @@
           }
         },
         "required": ["type"],
-        "additionalProperties": false
+        "additionalProperties": false,
+        "x-docs-type": "Twitter"
       },
       "VerificationStripeConfigs": {
         "type": "object",
         "properties": { "webhook_secret_key": { "type": "string" } },
         "required": ["webhook_secret_key"],
         "additionalProperties": false,
-        "description": "The verification configs for Stripe. Only included if the ?include=verification.configs query param is present"
+        "description": "The verification configs for Stripe. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "StripeConfigs"
       },
       "VerificationStripe": {
         "type": "object",
@@ -1996,7 +2005,8 @@
           }
         },
         "required": ["type"],
-        "additionalProperties": false
+        "additionalProperties": false,
+        "x-docs-type": "Stripe"
       },
       "VerificationRechargeConfigs": {
         "type": "object",
@@ -2013,7 +2023,8 @@
           "encoding"
         ],
         "additionalProperties": false,
-        "description": "The verification configs for Recharge. Only included if the ?include=verification.configs query param is present"
+        "description": "The verification configs for Recharge. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "RechargeConfigs"
       },
       "VerificationRecharge": {
         "type": "object",
@@ -2024,14 +2035,16 @@
           }
         },
         "required": ["type"],
-        "additionalProperties": false
+        "additionalProperties": false,
+        "x-docs-type": "Recharge"
       },
       "VerificationGitHubConfigs": {
         "type": "object",
         "properties": { "webhook_secret_key": { "type": "string" } },
         "required": ["webhook_secret_key"],
         "additionalProperties": false,
-        "description": "The verification configs for GitHub. Only included if the ?include=verification.configs query param is present"
+        "description": "The verification configs for GitHub. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "GitHubConfigs"
       },
       "VerificationGitHub": {
         "type": "object",
@@ -2042,7 +2055,8 @@
           }
         },
         "required": ["type"],
-        "additionalProperties": false
+        "additionalProperties": false,
+        "x-docs-type": "GitHub"
       },
       "VerificationShopifyConfigs": {
         "type": "object",
@@ -2064,7 +2078,8 @@
         },
         "required": ["webhook_secret_key"],
         "additionalProperties": false,
-        "description": "The verification configs for Shopify. Only included if the ?include=verification.configs query param is present"
+        "description": "The verification configs for Shopify. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "ShopifyConfigs"
       },
       "VerificationShopify": {
         "type": "object",
@@ -2075,14 +2090,16 @@
           }
         },
         "required": ["type"],
-        "additionalProperties": false
+        "additionalProperties": false,
+        "x-docs-type": "Shopify"
       },
       "VerificationPostmarkConfigs": {
         "type": "object",
         "properties": { "webhook_secret_key": { "type": "string" } },
         "required": ["webhook_secret_key"],
         "additionalProperties": false,
-        "description": "The verification configs for Postmark. Only included if the ?include=verification.configs query param is present"
+        "description": "The verification configs for Postmark. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "PostmarkConfigs"
       },
       "VerificationPostmark": {
         "type": "object",
@@ -2093,14 +2110,16 @@
           }
         },
         "required": ["type"],
-        "additionalProperties": false
+        "additionalProperties": false,
+        "x-docs-type": "Postmark"
       },
       "VerificationTypeformConfigs": {
         "type": "object",
         "properties": { "webhook_secret_key": { "type": "string" } },
         "required": ["webhook_secret_key"],
         "additionalProperties": false,
-        "description": "The verification configs for Typeform. Only included if the ?include=verification.configs query param is present"
+        "description": "The verification configs for Typeform. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "TypeformConfigs"
       },
       "VerificationTypeform": {
         "type": "object",
@@ -2111,14 +2130,16 @@
           }
         },
         "required": ["type"],
-        "additionalProperties": false
+        "additionalProperties": false,
+        "x-docs-type": "Typeform"
       },
       "VerificationXeroConfigs": {
         "type": "object",
         "properties": { "webhook_secret_key": { "type": "string" } },
         "required": ["webhook_secret_key"],
         "additionalProperties": false,
-        "description": "The verification configs for Xero. Only included if the ?include=verification.configs query param is present"
+        "description": "The verification configs for Xero. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "XeroConfigs"
       },
       "VerificationXero": {
         "type": "object",
@@ -2127,14 +2148,16 @@
           "configs": { "$ref": "#/components/schemas/VerificationXeroConfigs" }
         },
         "required": ["type"],
-        "additionalProperties": false
+        "additionalProperties": false,
+        "x-docs-type": "Xero"
       },
       "VerificationSvixConfigs": {
         "type": "object",
         "properties": { "webhook_secret_key": { "type": "string" } },
         "required": ["webhook_secret_key"],
         "additionalProperties": false,
-        "description": "The verification configs for Svix. Only included if the ?include=verification.configs query param is present"
+        "description": "The verification configs for Svix. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "SvixConfigs"
       },
       "VerificationSvix": {
         "type": "object",
@@ -2143,14 +2166,16 @@
           "configs": { "$ref": "#/components/schemas/VerificationSvixConfigs" }
         },
         "required": ["type"],
-        "additionalProperties": false
+        "additionalProperties": false,
+        "x-docs-type": "Svix"
       },
       "VerificationZoomConfigs": {
         "type": "object",
         "properties": { "webhook_secret_key": { "type": "string" } },
         "required": ["webhook_secret_key"],
         "additionalProperties": false,
-        "description": "The verification configs for Zoom. Only included if the ?include=verification.configs query param is present"
+        "description": "The verification configs for Zoom. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "ZoomConfigs"
       },
       "VerificationZoom": {
         "type": "object",
@@ -2159,14 +2184,16 @@
           "configs": { "$ref": "#/components/schemas/VerificationZoomConfigs" }
         },
         "required": ["type"],
-        "additionalProperties": false
+        "additionalProperties": false,
+        "x-docs-type": "Zoom"
       },
       "VerificationAkeneoConfigs": {
         "type": "object",
         "properties": { "webhook_secret_key": { "type": "string" } },
         "required": ["webhook_secret_key"],
         "additionalProperties": false,
-        "description": "The verification configs for Akeneo. Only included if the ?include=verification.configs query param is present"
+        "description": "The verification configs for Akeneo. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "AkeneoConfigs"
       },
       "VerificationAkeneo": {
         "type": "object",
@@ -2177,14 +2204,16 @@
           }
         },
         "required": ["type"],
-        "additionalProperties": false
+        "additionalProperties": false,
+        "x-docs-type": "Akeneo"
       },
       "VerificationAdyenConfigs": {
         "type": "object",
         "properties": { "webhook_secret_key": { "type": "string" } },
         "required": ["webhook_secret_key"],
         "additionalProperties": false,
-        "description": "The verification configs for Adyen. Only included if the ?include=verification.configs query param is present"
+        "description": "The verification configs for Adyen. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "AdyenConfigs"
       },
       "VerificationAdyen": {
         "type": "object",
@@ -2193,14 +2222,16 @@
           "configs": { "$ref": "#/components/schemas/VerificationAdyenConfigs" }
         },
         "required": ["type"],
-        "additionalProperties": false
+        "additionalProperties": false,
+        "x-docs-type": "Adyen"
       },
       "VerificationGitLabConfigs": {
         "type": "object",
         "properties": { "api_key": { "type": "string" } },
         "required": ["api_key"],
         "additionalProperties": false,
-        "description": "The verification configs for GitLab. Only included if the ?include=verification.configs query param is present"
+        "description": "The verification configs for GitLab. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "GitLabConfigs"
       },
       "VerificationGitLab": {
         "type": "object",
@@ -2211,14 +2242,16 @@
           }
         },
         "required": ["type"],
-        "additionalProperties": false
+        "additionalProperties": false,
+        "x-docs-type": "GitLab"
       },
       "VerificationPropertyFinderConfigs": {
         "type": "object",
         "properties": { "webhook_secret_key": { "type": "string" } },
         "required": ["webhook_secret_key"],
         "additionalProperties": false,
-        "description": "The verification configs for Property Finder. Only included if the ?include=verification.configs query param is present"
+        "description": "The verification configs for Property Finder. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "PropertyFinderConfigs"
       },
       "VerificationPropertyFinder": {
         "type": "object",
@@ -2229,14 +2262,16 @@
           }
         },
         "required": ["type"],
-        "additionalProperties": false
+        "additionalProperties": false,
+        "x-docs-type": "Property Finder"
       },
       "VerificationWooCommerceConfigs": {
         "type": "object",
         "properties": { "webhook_secret_key": { "type": "string" } },
         "required": ["webhook_secret_key"],
         "additionalProperties": false,
-        "description": "The verification configs for WooCommerce. Only included if the ?include=verification.configs query param is present"
+        "description": "The verification configs for WooCommerce. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "WooCommerceConfigs"
       },
       "VerificationWooCommerce": {
         "type": "object",
@@ -2247,14 +2282,16 @@
           }
         },
         "required": ["type"],
-        "additionalProperties": false
+        "additionalProperties": false,
+        "x-docs-type": "WooCommerce"
       },
       "VerificationOuraConfigs": {
         "type": "object",
         "properties": { "webhook_secret_key": { "type": "string" } },
         "required": ["webhook_secret_key"],
         "additionalProperties": false,
-        "description": "The verification configs for Oura. Only included if the ?include=verification.configs query param is present"
+        "description": "The verification configs for Oura. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "OuraConfigs"
       },
       "VerificationOura": {
         "type": "object",
@@ -2263,14 +2300,16 @@
           "configs": { "$ref": "#/components/schemas/VerificationOuraConfigs" }
         },
         "required": ["type"],
-        "additionalProperties": false
+        "additionalProperties": false,
+        "x-docs-type": "Oura"
       },
       "VerificationCommercelayerConfigs": {
         "type": "object",
         "properties": { "webhook_secret_key": { "type": "string" } },
         "required": ["webhook_secret_key"],
         "additionalProperties": false,
-        "description": "The verification configs for Commercelayer. Only included if the ?include=verification.configs query param is present"
+        "description": "The verification configs for Commercelayer. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "CommercelayerConfigs"
       },
       "VerificationCommercelayer": {
         "type": "object",
@@ -2281,14 +2320,16 @@
           }
         },
         "required": ["type"],
-        "additionalProperties": false
+        "additionalProperties": false,
+        "x-docs-type": "Commercelayer"
       },
       "VerificationMailgunConfigs": {
         "type": "object",
         "properties": { "webhook_secret_key": { "type": "string" } },
         "required": ["webhook_secret_key"],
         "additionalProperties": false,
-        "description": "The verification configs for Mailgun. Only included if the ?include=verification.configs query param is present"
+        "description": "The verification configs for Mailgun. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "MailgunConfigs"
       },
       "VerificationMailgun": {
         "type": "object",
@@ -2299,7 +2340,8 @@
           }
         },
         "required": ["type"],
-        "additionalProperties": false
+        "additionalProperties": false,
+        "x-docs-type": "Mailgun"
       },
       "VerificationPipedriveConfigs": {
         "type": "object",
@@ -2309,7 +2351,8 @@
         },
         "required": ["name", "password"],
         "additionalProperties": false,
-        "description": "The verification configs for Pipedrive. Only included if the ?include=verification.configs query param is present"
+        "description": "The verification configs for Pipedrive. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "PipedriveConfigs"
       },
       "VerificationPipedrive": {
         "type": "object",
@@ -2320,14 +2363,16 @@
           }
         },
         "required": ["type"],
-        "additionalProperties": false
+        "additionalProperties": false,
+        "x-docs-type": "Pipedrive"
       },
       "VerificationSendGridConfigs": {
         "type": "object",
         "properties": { "webhook_secret_key": { "type": "string" } },
         "required": ["webhook_secret_key"],
         "additionalProperties": false,
-        "description": "The verification configs for SendGrid. Only included if the ?include=verification.configs query param is present"
+        "description": "The verification configs for SendGrid. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "SendGridConfigs"
       },
       "VerificationSendGrid": {
         "type": "object",
@@ -2338,14 +2383,16 @@
           }
         },
         "required": ["type"],
-        "additionalProperties": false
+        "additionalProperties": false,
+        "x-docs-type": "SendGrid"
       },
       "VerificationWorkOSConfigs": {
         "type": "object",
         "properties": { "webhook_secret_key": { "type": "string" } },
         "required": ["webhook_secret_key"],
         "additionalProperties": false,
-        "description": "The verification configs for WorkOS. Only included if the ?include=verification.configs query param is present"
+        "description": "The verification configs for WorkOS. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "WorkOSConfigs"
       },
       "VerificationWorkOS": {
         "type": "object",
@@ -2356,14 +2403,16 @@
           }
         },
         "required": ["type"],
-        "additionalProperties": false
+        "additionalProperties": false,
+        "x-docs-type": "WorkOS"
       },
       "VerificationSyncteraConfigs": {
         "type": "object",
         "properties": { "webhook_secret_key": { "type": "string" } },
         "required": ["webhook_secret_key"],
         "additionalProperties": false,
-        "description": "The verification configs for Synctera. Only included if the ?include=verification.configs query param is present"
+        "description": "The verification configs for Synctera. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "SyncteraConfigs"
       },
       "VerificationSynctera": {
         "type": "object",
@@ -2374,13 +2423,15 @@
           }
         },
         "required": ["type"],
-        "additionalProperties": false
+        "additionalProperties": false,
+        "x-docs-type": "Synctera"
       },
       "VerificationAWSSNSConfigs": {
         "type": "object",
         "properties": {},
         "additionalProperties": false,
-        "description": "The verification configs for AWS SNS. Only included if the ?include=verification.configs query param is present"
+        "description": "The verification configs for AWS SNS. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "AWSSNSConfigs"
       },
       "VerificationAWSSNS": {
         "type": "object",
@@ -2391,14 +2442,16 @@
           }
         },
         "required": ["type"],
-        "additionalProperties": false
+        "additionalProperties": false,
+        "x-docs-type": "AWS SNS"
       },
       "Verification3dEyeConfigs": {
         "type": "object",
         "properties": { "webhook_secret_key": { "type": "string" } },
         "required": ["webhook_secret_key"],
         "additionalProperties": false,
-        "description": "The verification configs for 3dEye. Only included if the ?include=verification.configs query param is present"
+        "description": "The verification configs for 3dEye. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "3dEyeConfigs"
       },
       "Verification3dEye": {
         "type": "object",
@@ -2407,7 +2460,8 @@
           "configs": { "$ref": "#/components/schemas/Verification3dEyeConfigs" }
         },
         "required": ["type"],
-        "additionalProperties": false
+        "additionalProperties": false,
+        "x-docs-type": "3dEye"
       },
       "VerificationConfig": {
         "oneOf": [
@@ -12176,14 +12230,8 @@
                   "env": {
                     "type": "object",
                     "properties": {},
-                    "additionalProperties": {
-                      "anyOf": [
-                        { "type": "string" },
-                        { "type": "number", "format": "float" }
-                      ]
-                    },
-                    "description": "Key-value environment variables to be passed to the transformation",
-                    "x-docs-force-simple-type": true
+                    "additionalProperties": { "type": "string" },
+                    "description": "Key-value environment variables to be passed to the transformation"
                   }
                 },
                 "required": ["name", "code"],
@@ -12247,14 +12295,8 @@
                   "env": {
                     "type": "object",
                     "properties": {},
-                    "additionalProperties": {
-                      "anyOf": [
-                        { "type": "string" },
-                        { "type": "number", "format": "float" }
-                      ]
-                    },
-                    "description": "Key-value environment variables to be passed to the transformation",
-                    "x-docs-force-simple-type": true
+                    "additionalProperties": { "type": "string" },
+                    "description": "Key-value environment variables to be passed to the transformation"
                   }
                 },
                 "required": ["name", "code"],
@@ -12369,14 +12411,8 @@
                   "env": {
                     "type": "object",
                     "properties": {},
-                    "additionalProperties": {
-                      "anyOf": [
-                        { "type": "string" },
-                        { "type": "number", "format": "float" }
-                      ]
-                    },
-                    "description": "Key-value environment variables to be passed to the transformation",
-                    "x-docs-force-simple-type": true
+                    "additionalProperties": { "type": "string" },
+                    "description": "Key-value environment variables to be passed to the transformation"
                   }
                 },
                 "additionalProperties": false
@@ -12433,9 +12469,8 @@
                   "env": {
                     "type": "object",
                     "properties": {},
-                    "additionalProperties": false,
-                    "description": "Key-value environment variables to be passed to the transformation",
-                    "x-docs-force-simple-type": true
+                    "additionalProperties": { "type": "string" },
+                    "description": "Key-value environment variables to be passed to the transformation"
                   },
                   "webhook_id": {
                     "type": "string",
