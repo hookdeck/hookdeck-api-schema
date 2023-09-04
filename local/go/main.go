@@ -18,8 +18,8 @@ func main() {
 
 func run() error {
 	client := hookdeckclient.NewClient(
-		hookdeckclient.ClientWithBaseURL("http://localhost:9000/2023-07-01"),
-		hookdeckclient.ClientWithAuthToken(os.Getenv("HOOKDECK_AUTH_TOKEN")),
+		hookdeckclient.WithBaseURL("http://localhost:9000/2023-07-01"),
+		hookdeckclient.WithAuthToken(os.Getenv("HOOKDECK_API_KEY")),
 	)
 	issueTriggersResponse, err := client.IssueTrigger.List(
 		context.TODO(),
