@@ -4,11 +4,12 @@ groups:
       - name: fernapi/fern-go-sdk
         version: 0.4.1
         config:
+          enableExplicitNull: true
           module:
             path: github.com/hookdeck/hookdeck-go-sdk
         output:
           location: local-file-system
-          path: ../../local/go/generated/hookdeck-go-sdk
+          path: ../local/go/generated/hookdeck-go-sdk
   publish:
     generators:
       - name: fernapi/fern-go-sdk
