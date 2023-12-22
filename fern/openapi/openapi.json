@@ -12920,6 +12920,7 @@
     },
     "/bulk/requests/retry": {
       "get": {
+        "x-fern-ignore": true,
         "operationId": "getRequestBulkRetries",
         "summary": "Get request bulk retries",
         "description": "",
@@ -13833,6 +13834,7 @@
     },
     "/bulk/requests/retry/plan": {
       "get": {
+        "x-fern-ignore": true,
         "operationId": "generateRequestBulkRetryPlan",
         "summary": "Generate a requests bulk retry plan",
         "description": "",
