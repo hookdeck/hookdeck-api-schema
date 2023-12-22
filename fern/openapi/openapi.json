@@ -25,24 +25,16 @@
       "OrderByDirection": {
         "anyOf": [
           {
-            "enum": [
-              "asc"
-            ]
+            "enum": ["asc"]
           },
           {
-            "enum": [
-              "desc"
-            ]
+            "enum": ["desc"]
           },
           {
-            "enum": [
-              "ASC"
-            ]
+            "enum": ["ASC"]
           },
           {
-            "enum": [
-              "DESC"
-            ]
+            "enum": ["DESC"]
           }
         ]
       },
@@ -89,19 +81,12 @@
       },
       "IssueType": {
         "type": "string",
-        "enum": [
-          "delivery",
-          "transformation",
-          "backpressure"
-        ],
+        "enum": ["delivery", "transformation", "backpressure"],
         "description": "Issue type"
       },
       "IssueTriggerStrategy": {
         "type": "string",
-        "enum": [
-          "first_attempt",
-          "final_attempt"
-        ],
+        "enum": ["first_attempt", "final_attempt"],
         "description": "The strategy uses to open the issue"
       },
       "IssueTriggerDeliveryConfigs": {
@@ -126,22 +111,13 @@
             "x-docs-force-simple-type": true
           }
         },
-        "required": [
-          "strategy",
-          "connections"
-        ],
+        "required": ["strategy", "connections"],
         "additionalProperties": false,
         "description": "Configurations for a 'delivery' issue trigger"
       },
       "TransformationExecutionLogLevel": {
         "type": "string",
-        "enum": [
-          "debug",
-          "info",
-          "warn",
-          "error",
-          "fatal"
-        ],
+        "enum": ["debug", "info", "warn", "error", "fatal"],
         "description": "The minimum log level to open the issue on"
       },
       "IssueTriggerTransformationConfigs": {
@@ -166,10 +142,7 @@
             "x-docs-force-simple-type": true
           }
         },
-        "required": [
-          "log_level",
-          "transformations"
-        ],
+        "required": ["log_level", "transformations"],
         "additionalProperties": false,
         "description": "Configurations for a 'Transformation' issue trigger"
       },
@@ -202,10 +175,7 @@
             "x-docs-force-simple-type": true
           }
         },
-        "required": [
-          "delay",
-          "destinations"
-        ],
+        "required": ["delay", "destinations"],
         "additionalProperties": false,
         "description": "Configurations for a 'Backpressure' issue trigger"
       },
@@ -231,9 +201,7 @@
             "description": "Channel name"
           }
         },
-        "required": [
-          "channel_name"
-        ],
+        "required": ["channel_name"],
         "additionalProperties": false,
         "description": "Slack channel for an issue trigger",
         "x-docs-type": "object"
@@ -318,13 +286,7 @@
             "description": "ISO timestamp for when the issue trigger was deleted"
           }
         },
-        "required": [
-          "id",
-          "type",
-          "configs",
-          "updated_at",
-          "created_at"
-        ],
+        "required": ["id", "type", "configs", "updated_at", "created_at"],
         "additionalProperties": false
       },
       "IssueTriggerPaginatedResult": {
@@ -367,11 +329,7 @@
             "nullable": true
           }
         },
-        "required": [
-          "code",
-          "status",
-          "message"
-        ],
+        "required": ["code", "status", "message"],
         "additionalProperties": false,
         "description": "Error response model"
       },
@@ -382,20 +340,12 @@
             "type": "string"
           }
         },
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "additionalProperties": false
       },
       "AttemptTrigger": {
         "type": "string",
-        "enum": [
-          "INITIAL",
-          "MANUAL",
-          "BULK_RETRY",
-          "UNPAUSE",
-          "AUTOMATIC"
-        ],
+        "enum": ["INITIAL", "MANUAL", "BULK_RETRY", "UNPAUSE", "AUTOMATIC"],
         "nullable": true,
         "description": "How the attempt was triggered"
       },
@@ -428,23 +378,12 @@
       },
       "AttemptStatus": {
         "type": "string",
-        "enum": [
-          "QUEUED",
-          "FAILED",
-          "SUCCESSFUL",
-          "HOLD"
-        ],
+        "enum": ["QUEUED", "FAILED", "SUCCESSFUL", "HOLD"],
         "description": "Attempt status"
       },
       "AttemptState": {
         "type": "string",
-        "enum": [
-          "DELIVERING",
-          "QUEUED",
-          "PENDING",
-          "COMPLETED",
-          "HOLD"
-        ],
+        "enum": ["DELIVERING", "QUEUED", "PENDING", "COMPLETED", "HOLD"],
         "nullable": true,
         "x-docs-hide": true
       },
@@ -501,13 +440,7 @@
           },
           "http_method": {
             "type": "string",
-            "enum": [
-              "GET",
-              "POST",
-              "PUT",
-              "PATCH",
-              "DELETE"
-            ],
+            "enum": ["GET", "POST", "PUT", "PATCH", "DELETE"],
             "nullable": true,
             "description": "HTTP method used to deliver the attempt"
           },
@@ -666,13 +599,7 @@
             "description": "Whether the payload is considered large payload and not searchable"
           }
         },
-        "required": [
-          "path",
-          "query",
-          "parsed_query",
-          "headers",
-          "body"
-        ],
+        "required": ["path", "query", "parsed_query", "headers", "body"],
         "additionalProperties": false,
         "nullable": true,
         "description": "Request data"
@@ -761,20 +688,12 @@
             "type": "string"
           }
         },
-        "required": [
-          "body"
-        ],
+        "required": ["body"],
         "additionalProperties": false
       },
       "EventStatus": {
         "type": "string",
-        "enum": [
-          "SCHEDULED",
-          "QUEUED",
-          "HOLD",
-          "SUCCESSFUL",
-          "FAILED"
-        ]
+        "enum": ["SCHEDULED", "QUEUED", "HOLD", "SUCCESSFUL", "FAILED"]
       },
       "Event": {
         "type": "object",
@@ -892,32 +811,19 @@
             "description": "Bookmark ID"
           }
         },
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "additionalProperties": false
       },
       "DestinationRateLimitPeriod": {
         "type": "string",
-        "enum": [
-          "second",
-          "minute",
-          "hour",
-          "concurrent"
-        ],
+        "enum": ["second", "minute", "hour", "concurrent"],
         "nullable": true,
         "description": "Period to rate limit attempts",
         "default": "second"
       },
       "DestinationHTTPMethod": {
         "type": "string",
-        "enum": [
-          "GET",
-          "POST",
-          "PUT",
-          "PATCH",
-          "DELETE"
-        ],
+        "enum": ["GET", "POST", "PUT", "PATCH", "DELETE"],
         "nullable": true,
         "description": "HTTP method used on requests sent to the destination, overrides the method used on requests sent to the source."
       },
@@ -932,18 +838,14 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "HOOKDECK_SIGNATURE"
-            ],
+            "enum": ["HOOKDECK_SIGNATURE"],
             "description": "Type of auth method"
           },
           "config": {
             "$ref": "#/components/schemas/DestinationAuthMethodSignatureConfig"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "description": "Hookdeck Signature",
         "x-docs-type": "Hookdeck Signature"
@@ -960,10 +862,7 @@
             "description": "Password for basic auth"
           }
         },
-        "required": [
-          "username",
-          "password"
-        ],
+        "required": ["username", "password"],
         "additionalProperties": false,
         "description": "Basic auth config for the destination's auth method"
       },
@@ -972,18 +871,14 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "BASIC_AUTH"
-            ],
+            "enum": ["BASIC_AUTH"],
             "description": "Type of auth method"
           },
           "config": {
             "$ref": "#/components/schemas/DestinationAuthMethodBasicAuthConfig"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "description": "Basic Auth",
         "x-docs-type": "Basic Auth"
@@ -1001,18 +896,12 @@
           },
           "to": {
             "type": "string",
-            "enum": [
-              "header",
-              "query"
-            ],
+            "enum": ["header", "query"],
             "description": "Whether the API key should be sent as a header or a query parameter",
             "default": "header"
           }
         },
-        "required": [
-          "key",
-          "api_key"
-        ],
+        "required": ["key", "api_key"],
         "additionalProperties": false,
         "description": "API key config for the destination's auth method"
       },
@@ -1021,18 +910,14 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "API_KEY"
-            ],
+            "enum": ["API_KEY"],
             "description": "Type of auth method"
           },
           "config": {
             "$ref": "#/components/schemas/DestinationAuthMethodApiKeyConfig"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "description": "API Key",
         "x-docs-type": "API Key"
@@ -1045,9 +930,7 @@
             "description": "Token for the bearer token auth"
           }
         },
-        "required": [
-          "token"
-        ],
+        "required": ["token"],
         "additionalProperties": false,
         "description": "Bearer token config for the destination's auth method"
       },
@@ -1056,18 +939,14 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "BEARER_TOKEN"
-            ],
+            "enum": ["BEARER_TOKEN"],
             "description": "Type of auth method"
           },
           "config": {
             "$ref": "#/components/schemas/DestinationAuthMethodBearerTokenConfig"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "description": "Bearer Token",
         "x-docs-type": "Bearer Token"
@@ -1084,9 +963,7 @@
             "description": "Signing secret for the custom signature auth. If left empty a secret will be generated for you."
           }
         },
-        "required": [
-          "key"
-        ],
+        "required": ["key"],
         "additionalProperties": false,
         "description": "Custom signature config for the destination's auth method"
       },
@@ -1095,19 +972,14 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "CUSTOM_SIGNATURE"
-            ],
+            "enum": ["CUSTOM_SIGNATURE"],
             "description": "Type of auth method"
           },
           "config": {
             "$ref": "#/components/schemas/DestinationAuthMethodCustomSignatureConfig"
           }
         },
-        "required": [
-          "type",
-          "config"
-        ],
+        "required": ["type", "config"],
         "additionalProperties": false,
         "description": "Custom Signature",
         "x-docs-type": "Custom Signature"
@@ -1200,13 +1072,7 @@
             "description": "Date the destination was created"
           }
         },
-        "required": [
-          "id",
-          "name",
-          "team_id",
-          "updated_at",
-          "created_at"
-        ],
+        "required": ["id", "name", "team_id", "updated_at", "created_at"],
         "additionalProperties": false,
         "description": "Associated [Destination](#destination-object) object"
       },
@@ -1377,10 +1243,7 @@
             "$ref": "#/components/schemas/EventAttempt"
           }
         },
-        "required": [
-          "event",
-          "attempt"
-        ],
+        "required": ["event", "attempt"],
         "additionalProperties": false
       },
       "IntegrationProvider": {
@@ -1427,20 +1290,11 @@
       },
       "IntegrationFeature": {
         "type": "string",
-        "enum": [
-          "VERIFICATION",
-          "HANDSHAKE",
-          "POLLING"
-        ]
+        "enum": ["VERIFICATION", "HANDSHAKE", "POLLING"]
       },
       "HMACAlgorithms": {
         "type": "string",
-        "enum": [
-          "md5",
-          "sha1",
-          "sha256",
-          "sha512"
-        ]
+        "enum": ["md5", "sha1", "sha256", "sha512"]
       },
       "HMACIntegrationConfigs": {
         "type": "object",
@@ -1456,10 +1310,7 @@
           },
           "encoding": {
             "type": "string",
-            "enum": [
-              "base64",
-              "hex"
-            ]
+            "enum": ["base64", "hex"]
           }
         },
         "required": [
@@ -1480,10 +1331,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "header_key",
-          "api_key"
-        ],
+        "required": ["header_key", "api_key"],
         "additionalProperties": false
       },
       "HandledAPIKeyIntegrationConfigs": {
@@ -1493,9 +1341,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "api_key"
-        ],
+        "required": ["api_key"],
         "additionalProperties": false
       },
       "HandledHMACConfigs": {
@@ -1505,9 +1351,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "webhook_secret_key"
-        ],
+        "required": ["webhook_secret_key"],
         "additionalProperties": false
       },
       "BasicAuthIntegrationConfigs": {
@@ -1520,10 +1364,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "name",
-          "password"
-        ],
+        "required": ["name", "password"],
         "additionalProperties": false
       },
       "ShopifyIntegrationConfigs": {
@@ -1534,10 +1375,7 @@
           },
           "rate_limit_period": {
             "type": "string",
-            "enum": [
-              "minute",
-              "second"
-            ],
+            "enum": ["minute", "second"],
             "nullable": true
           },
           "rate_limit": {
@@ -1558,9 +1396,7 @@
             "nullable": true
           }
         },
-        "required": [
-          "webhook_secret_key"
-        ],
+        "required": ["webhook_secret_key"],
         "additionalProperties": false
       },
       "Integration": {
@@ -1677,9 +1513,7 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "success"
-        ],
+        "required": ["success"],
         "additionalProperties": false
       },
       "DetachedIntegrationFromSource": {
@@ -1694,19 +1528,12 @@
             "type": "string"
           }
         },
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "additionalProperties": false
       },
       "IssueStatus": {
         "type": "string",
-        "enum": [
-          "OPENED",
-          "IGNORED",
-          "ACKNOWLEDGED",
-          "RESOLVED"
-        ],
+        "enum": ["OPENED", "IGNORED", "ACKNOWLEDGED", "RESOLVED"],
         "description": "Issue status"
       },
       "DeliveryIssueAggregationKeys": {
@@ -1732,11 +1559,7 @@
             }
           }
         },
-        "required": [
-          "webhook_id",
-          "response_status",
-          "error_code"
-        ],
+        "required": ["webhook_id", "response_status", "error_code"],
         "additionalProperties": false,
         "description": "Keys used as the aggregation keys a 'delivery' type issue"
       },
@@ -1750,10 +1573,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "event_id",
-          "attempt_id"
-        ],
+        "required": ["event_id", "attempt_id"],
         "additionalProperties": false,
         "description": "Reference to the event and attempt an issue is being created for."
       },
@@ -1833,9 +1653,7 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "delivery"
-            ]
+            "enum": ["delivery"]
           },
           "aggregation_keys": {
             "$ref": "#/components/schemas/DeliveryIssueAggregationKeys"
@@ -1876,10 +1694,7 @@
             "$ref": "#/components/schemas/TransformationExecutionLogLevel"
           }
         },
-        "required": [
-          "transformation_id",
-          "log_level"
-        ],
+        "required": ["transformation_id", "log_level"],
         "additionalProperties": false,
         "description": "Keys used as the aggregation keys a 'transformation' type issue"
       },
@@ -1895,9 +1710,7 @@
             "description": "Deprecated but still found on historical issues"
           }
         },
-        "required": [
-          "transformation_execution_id"
-        ],
+        "required": ["transformation_execution_id"],
         "additionalProperties": false,
         "description": "Reference to the event request transformation an issue is being created for."
       },
@@ -1906,22 +1719,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "error",
-              "log",
-              "warn",
-              "info",
-              "debug"
-            ]
+            "enum": ["error", "log", "warn", "info", "debug"]
           },
           "message": {
             "type": "string"
           }
         },
-        "required": [
-          "type",
-          "message"
-        ],
+        "required": ["type", "message"],
         "additionalProperties": false
       },
       "TransformationExecution": {
@@ -1997,9 +1801,7 @@
             "$ref": "#/components/schemas/EventAttempt"
           }
         },
-        "required": [
-          "transformation_execution"
-        ],
+        "required": ["transformation_execution"],
         "additionalProperties": false,
         "nullable": true,
         "description": "Transformation issue data"
@@ -2066,9 +1868,7 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "transformation"
-            ]
+            "enum": ["transformation"]
           },
           "aggregation_keys": {
             "$ref": "#/components/schemas/TransformationIssueAggregationKeys"
@@ -2133,9 +1933,7 @@
             "example": 5
           }
         },
-        "required": [
-          "count"
-        ],
+        "required": ["count"],
         "additionalProperties": false
       },
       "DeliveryIssue": {
@@ -2200,9 +1998,7 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "delivery"
-            ]
+            "enum": ["delivery"]
           },
           "aggregation_keys": {
             "$ref": "#/components/schemas/DeliveryIssueAggregationKeys"
@@ -2289,9 +2085,7 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "transformation"
-            ]
+            "enum": ["transformation"]
           },
           "aggregation_keys": {
             "$ref": "#/components/schemas/TransformationIssueAggregationKeys"
@@ -2368,10 +2162,7 @@
           },
           "ingest_priority": {
             "type": "string",
-            "enum": [
-              "NORMAL",
-              "LOW"
-            ],
+            "enum": ["NORMAL", "LOW"],
             "nullable": true,
             "description": "The priority attributed to the request when received"
           },
@@ -2463,9 +2254,7 @@
             "nullable": true
           }
         },
-        "required": [
-          "request"
-        ],
+        "required": ["request"],
         "additionalProperties": false
       },
       "IgnoredEventCause": {
@@ -2479,12 +2268,7 @@
       },
       "FilteredMeta": {
         "type": "string",
-        "enum": [
-          "body",
-          "headers",
-          "path",
-          "query"
-        ]
+        "enum": ["body", "headers", "path", "query"]
       },
       "TransformationFailedMeta": {
         "type": "object",
@@ -2493,9 +2277,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "transformation_id"
-        ],
+        "required": ["transformation_id"],
         "additionalProperties": false
       },
       "IgnoredEvent": {
@@ -2579,11 +2361,7 @@
           },
           "encoding": {
             "type": "string",
-            "enum": [
-              "base64",
-              "base64url",
-              "hex"
-            ]
+            "enum": ["base64", "base64url", "hex"]
           }
         },
         "required": [
@@ -2601,17 +2379,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "hmac"
-            ]
+            "enum": ["hmac"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationHMACConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "HMAC"
       },
@@ -2625,10 +2399,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "name",
-          "password"
-        ],
+        "required": ["name", "password"],
         "additionalProperties": false,
         "description": "The verification configs for Basic Auth. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "BasicAuthConfigs"
@@ -2638,17 +2409,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "basic_auth"
-            ]
+            "enum": ["basic_auth"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationBasicAuthConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "Basic Auth"
       },
@@ -2662,10 +2429,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "header_key",
-          "api_key"
-        ],
+        "required": ["header_key", "api_key"],
         "additionalProperties": false,
         "description": "The verification configs for API Key. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "APIKeyConfigs"
@@ -2675,17 +2439,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "api_key"
-            ]
+            "enum": ["api_key"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationAPIKeyConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "API Key"
       },
@@ -2696,9 +2456,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "api_key"
-        ],
+        "required": ["api_key"],
         "additionalProperties": false,
         "description": "The verification configs for Twitter. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "TwitterConfigs"
@@ -2708,17 +2466,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "twitter"
-            ]
+            "enum": ["twitter"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationTwitterConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "Twitter"
       },
@@ -2729,9 +2483,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "webhook_secret_key"
-        ],
+        "required": ["webhook_secret_key"],
         "additionalProperties": false,
         "description": "The verification configs for Stripe. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "StripeConfigs"
@@ -2741,17 +2493,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "stripe"
-            ]
+            "enum": ["stripe"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationStripeConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "Stripe"
       },
@@ -2769,11 +2517,7 @@
           },
           "encoding": {
             "type": "string",
-            "enum": [
-              "base64",
-              "base64url",
-              "hex"
-            ]
+            "enum": ["base64", "base64url", "hex"]
           }
         },
         "required": [
@@ -2791,17 +2535,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "recharge"
-            ]
+            "enum": ["recharge"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationRechargeConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "Recharge"
       },
@@ -2812,9 +2552,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "webhook_secret_key"
-        ],
+        "required": ["webhook_secret_key"],
         "additionalProperties": false,
         "description": "The verification configs for GitHub. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "GitHubConfigs"
@@ -2824,17 +2562,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "github"
-            ]
+            "enum": ["github"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationGitHubConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "GitHub"
       },
@@ -2846,10 +2580,7 @@
           },
           "rate_limit_period": {
             "type": "string",
-            "enum": [
-              "minute",
-              "second"
-            ],
+            "enum": ["minute", "second"],
             "nullable": true
           },
           "rate_limit": {
@@ -2870,9 +2601,7 @@
             "nullable": true
           }
         },
-        "required": [
-          "webhook_secret_key"
-        ],
+        "required": ["webhook_secret_key"],
         "additionalProperties": false,
         "description": "The verification configs for Shopify. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "ShopifyConfigs"
@@ -2882,17 +2611,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "shopify"
-            ]
+            "enum": ["shopify"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationShopifyConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "Shopify"
       },
@@ -2903,9 +2628,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "webhook_secret_key"
-        ],
+        "required": ["webhook_secret_key"],
         "additionalProperties": false,
         "description": "The verification configs for Postmark. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "PostmarkConfigs"
@@ -2915,17 +2638,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "postmark"
-            ]
+            "enum": ["postmark"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationPostmarkConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "Postmark"
       },
@@ -2936,9 +2655,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "webhook_secret_key"
-        ],
+        "required": ["webhook_secret_key"],
         "additionalProperties": false,
         "description": "The verification configs for Typeform. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "TypeformConfigs"
@@ -2948,17 +2665,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "typeform"
-            ]
+            "enum": ["typeform"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationTypeformConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "Typeform"
       },
@@ -2969,9 +2682,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "webhook_secret_key"
-        ],
+        "required": ["webhook_secret_key"],
         "additionalProperties": false,
         "description": "The verification configs for Xero. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "XeroConfigs"
@@ -2981,17 +2692,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "xero"
-            ]
+            "enum": ["xero"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationXeroConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "Xero"
       },
@@ -3002,9 +2709,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "webhook_secret_key"
-        ],
+        "required": ["webhook_secret_key"],
         "additionalProperties": false,
         "description": "The verification configs for Svix. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "SvixConfigs"
@@ -3014,17 +2719,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "svix"
-            ]
+            "enum": ["svix"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationSvixConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "Svix"
       },
@@ -3035,9 +2736,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "webhook_secret_key"
-        ],
+        "required": ["webhook_secret_key"],
         "additionalProperties": false,
         "description": "The verification configs for Zoom. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "ZoomConfigs"
@@ -3047,17 +2746,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "zoom"
-            ]
+            "enum": ["zoom"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationZoomConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "Zoom"
       },
@@ -3068,9 +2763,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "webhook_secret_key"
-        ],
+        "required": ["webhook_secret_key"],
         "additionalProperties": false,
         "description": "The verification configs for Akeneo. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "AkeneoConfigs"
@@ -3080,17 +2773,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "akeneo"
-            ]
+            "enum": ["akeneo"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationAkeneoConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "Akeneo"
       },
@@ -3101,9 +2790,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "webhook_secret_key"
-        ],
+        "required": ["webhook_secret_key"],
         "additionalProperties": false,
         "description": "The verification configs for Adyen. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "AdyenConfigs"
@@ -3113,17 +2800,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "adyen"
-            ]
+            "enum": ["adyen"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationAdyenConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "Adyen"
       },
@@ -3134,9 +2817,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "api_key"
-        ],
+        "required": ["api_key"],
         "additionalProperties": false,
         "description": "The verification configs for GitLab. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "GitLabConfigs"
@@ -3146,17 +2827,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "gitlab"
-            ]
+            "enum": ["gitlab"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationGitLabConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "GitLab"
       },
@@ -3167,9 +2844,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "webhook_secret_key"
-        ],
+        "required": ["webhook_secret_key"],
         "additionalProperties": false,
         "description": "The verification configs for Property Finder. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "PropertyFinderConfigs"
@@ -3179,17 +2854,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "property-finder"
-            ]
+            "enum": ["property-finder"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationPropertyFinderConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "Property Finder"
       },
@@ -3200,9 +2871,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "webhook_secret_key"
-        ],
+        "required": ["webhook_secret_key"],
         "additionalProperties": false,
         "description": "The verification configs for WooCommerce. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "WooCommerceConfigs"
@@ -3212,17 +2881,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "woocommerce"
-            ]
+            "enum": ["woocommerce"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationWooCommerceConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "WooCommerce"
       },
@@ -3233,9 +2898,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "webhook_secret_key"
-        ],
+        "required": ["webhook_secret_key"],
         "additionalProperties": false,
         "description": "The verification configs for Oura. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "OuraConfigs"
@@ -3245,17 +2908,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "oura"
-            ]
+            "enum": ["oura"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationOuraConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "Oura"
       },
@@ -3266,9 +2925,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "webhook_secret_key"
-        ],
+        "required": ["webhook_secret_key"],
         "additionalProperties": false,
         "description": "The verification configs for Commercelayer. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "CommercelayerConfigs"
@@ -3278,17 +2935,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "commercelayer"
-            ]
+            "enum": ["commercelayer"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationCommercelayerConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "Commercelayer"
       },
@@ -3299,9 +2952,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "webhook_secret_key"
-        ],
+        "required": ["webhook_secret_key"],
         "additionalProperties": false,
         "description": "The verification configs for Hubspot. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "HubspotConfigs"
@@ -3311,17 +2962,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "hubspot"
-            ]
+            "enum": ["hubspot"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationHubspotConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "Hubspot"
       },
@@ -3332,9 +2979,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "webhook_secret_key"
-        ],
+        "required": ["webhook_secret_key"],
         "additionalProperties": false,
         "description": "The verification configs for Mailgun. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "MailgunConfigs"
@@ -3344,17 +2989,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "mailgun"
-            ]
+            "enum": ["mailgun"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationMailgunConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "Mailgun"
       },
@@ -3365,9 +3006,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "webhook_secret_key"
-        ],
+        "required": ["webhook_secret_key"],
         "additionalProperties": false,
         "description": "The verification configs for Persona. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "PersonaConfigs"
@@ -3377,17 +3016,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "persona"
-            ]
+            "enum": ["persona"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationPersonaConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "Persona"
       },
@@ -3401,10 +3036,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "name",
-          "password"
-        ],
+        "required": ["name", "password"],
         "additionalProperties": false,
         "description": "The verification configs for Pipedrive. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "PipedriveConfigs"
@@ -3414,17 +3046,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "pipedrive"
-            ]
+            "enum": ["pipedrive"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationPipedriveConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "Pipedrive"
       },
@@ -3435,9 +3063,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "webhook_secret_key"
-        ],
+        "required": ["webhook_secret_key"],
         "additionalProperties": false,
         "description": "The verification configs for SendGrid. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "SendGridConfigs"
@@ -3447,17 +3073,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "sendgrid"
-            ]
+            "enum": ["sendgrid"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationSendGridConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "SendGrid"
       },
@@ -3468,9 +3090,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "webhook_secret_key"
-        ],
+        "required": ["webhook_secret_key"],
         "additionalProperties": false,
         "description": "The verification configs for WorkOS. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "WorkOSConfigs"
@@ -3480,17 +3100,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "workos"
-            ]
+            "enum": ["workos"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationWorkOSConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "WorkOS"
       },
@@ -3501,9 +3117,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "webhook_secret_key"
-        ],
+        "required": ["webhook_secret_key"],
         "additionalProperties": false,
         "description": "The verification configs for Synctera. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "SyncteraConfigs"
@@ -3513,17 +3127,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "synctera"
-            ]
+            "enum": ["synctera"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationSyncteraConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "Synctera"
       },
@@ -3539,17 +3149,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "aws_sns"
-            ]
+            "enum": ["aws_sns"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationAWSSNSConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "AWS SNS"
       },
@@ -3560,9 +3166,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "webhook_secret_key"
-        ],
+        "required": ["webhook_secret_key"],
         "additionalProperties": false,
         "description": "The verification configs for 3dEye. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "3dEyeConfigs"
@@ -3572,17 +3176,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "three_d_eye"
-            ]
+            "enum": ["three_d_eye"]
           },
           "configs": {
             "$ref": "#/components/schemas/Verification3dEyeConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "3dEye"
       },
@@ -3593,9 +3193,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "webhook_secret_key"
-        ],
+        "required": ["webhook_secret_key"],
         "additionalProperties": false,
         "description": "The verification configs for Twitch. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "TwitchConfigs"
@@ -3605,17 +3203,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "twitch"
-            ]
+            "enum": ["twitch"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationTwitchConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "Twitch"
       },
@@ -3629,10 +3223,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "webhook_secret_key",
-          "url"
-        ],
+        "required": ["webhook_secret_key", "url"],
         "additionalProperties": false,
         "description": "The verification configs for Favro. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "FavroConfigs"
@@ -3642,17 +3233,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "favro"
-            ]
+            "enum": ["favro"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationFavroConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "Favro"
       },
@@ -3663,9 +3250,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "webhook_secret_key"
-        ],
+        "required": ["webhook_secret_key"],
         "additionalProperties": false,
         "description": "The verification configs for Wix. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "WixConfigs"
@@ -3675,17 +3260,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "wix"
-            ]
+            "enum": ["wix"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationWixConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "Wix"
       },
@@ -3696,9 +3277,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "webhook_secret_key"
-        ],
+        "required": ["webhook_secret_key"],
         "additionalProperties": false,
         "description": "The verification configs for NMI Payment Gateway. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "NMIPaymentGatewayConfigs"
@@ -3708,17 +3287,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "nmi"
-            ]
+            "enum": ["nmi"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationNMIPaymentGatewayConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "NMI Payment Gateway"
       },
@@ -3729,9 +3304,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "webhook_secret_key"
-        ],
+        "required": ["webhook_secret_key"],
         "additionalProperties": false,
         "description": "The verification configs for Repay. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "RepayConfigs"
@@ -3741,17 +3314,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "repay"
-            ]
+            "enum": ["repay"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationRepayConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "Repay"
       },
@@ -3765,10 +3334,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "webhook_secret_key",
-          "url"
-        ],
+        "required": ["webhook_secret_key", "url"],
         "additionalProperties": false,
         "description": "The verification configs for Square. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "SquareConfigs"
@@ -3778,17 +3344,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "square"
-            ]
+            "enum": ["square"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationSquareConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "Square"
       },
@@ -3799,9 +3361,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "webhook_secret_key"
-        ],
+        "required": ["webhook_secret_key"],
         "additionalProperties": false,
         "description": "The verification configs for SolidGate. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "SolidGateConfigs"
@@ -3811,17 +3371,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "solidgate"
-            ]
+            "enum": ["solidgate"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationSolidGateConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "SolidGate"
       },
@@ -3835,10 +3391,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "webhook_secret_key",
-          "url"
-        ],
+        "required": ["webhook_secret_key", "url"],
         "additionalProperties": false,
         "description": "The verification configs for Trello. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "TrelloConfigs"
@@ -3848,17 +3401,13 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "trello"
-            ]
+            "enum": ["trello"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationTrelloConfigs"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "Trello"
       },
@@ -3983,24 +3532,14 @@
         "type": "array",
         "items": {
           "type": "string",
-          "enum": [
-            "GET",
-            "POST",
-            "PUT",
-            "PATCH",
-            "DELETE"
-          ]
+          "enum": ["GET", "POST", "PUT", "PATCH", "DELETE"]
         },
         "nullable": true,
         "description": "List of allowed HTTP methods. Defaults to PUT, POST, PATCH, DELETE."
       },
       "SourceCustomResponseContentType": {
         "type": "string",
-        "enum": [
-          "json",
-          "text",
-          "xml"
-        ],
+        "enum": ["json", "text", "xml"],
         "description": "Content type of the custom response"
       },
       "SourceCustomResponse": {
@@ -4015,10 +3554,7 @@
             "description": "Body of the custom response"
           }
         },
-        "required": [
-          "content_type",
-          "body"
-        ],
+        "required": ["content_type", "body"],
         "additionalProperties": false,
         "nullable": true,
         "description": "Custom response object"
@@ -4131,10 +3667,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "enabled",
-          "source_id"
-        ],
+        "required": ["enabled", "source_id"],
         "additionalProperties": false
       },
       "AddCustomHostname": {
@@ -4145,9 +3678,7 @@
             "description": "The custom hostname to attach to the workspace"
           }
         },
-        "required": [
-          "hostname"
-        ],
+        "required": ["hostname"],
         "additionalProperties": false
       },
       "DeleteCustomDomainSchema": {
@@ -4158,9 +3689,7 @@
             "description": "The custom hostname ID"
           }
         },
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "additionalProperties": false
       },
       "ListCustomDomainSchema": {
@@ -4440,9 +3969,7 @@
                 "nullable": true
               }
             },
-            "required": [
-              "path"
-            ],
+            "required": ["path"],
             "additionalProperties": false,
             "nullable": true
           },
@@ -4454,9 +3981,7 @@
             "nullable": true
           }
         },
-        "required": [
-          "log_level"
-        ],
+        "required": ["log_level"],
         "additionalProperties": false
       },
       "TransformationExecutionPaginatedResult": {
@@ -4479,10 +4004,7 @@
       },
       "RetryStrategy": {
         "type": "string",
-        "enum": [
-          "linear",
-          "exponential"
-        ],
+        "enum": ["linear", "exponential"],
         "description": "Algorithm to use when calculating delay between retries"
       },
       "RetryRule": {
@@ -4490,9 +4012,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "retry"
-            ],
+            "enum": ["retry"],
             "description": "A retry rule must be of type `retry`"
           },
           "strategy": {
@@ -4509,10 +4029,7 @@
             "description": "Maximum number of retries to attempt"
           }
         },
-        "required": [
-          "type",
-          "strategy"
-        ],
+        "required": ["type", "strategy"],
         "additionalProperties": false
       },
       "FilterRuleProperty": {
@@ -4551,9 +4068,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "filter"
-            ],
+            "enum": ["filter"],
             "description": "A filter rule must be of type `filter`"
           },
           "headers": {
@@ -4569,9 +4084,7 @@
             "$ref": "#/components/schemas/FilterRuleProperty"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false
       },
       "TransformReference": {
@@ -4579,9 +4092,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "transform"
-            ],
+            "enum": ["transform"],
             "description": "A transformation rule must be of type `transformation`"
           },
           "transformation_id": {
@@ -4589,10 +4100,7 @@
             "description": "ID of the attached transformation object. Optional input, always set once the rule is defined"
           }
         },
-        "required": [
-          "type",
-          "transformation_id"
-        ],
+        "required": ["type", "transformation_id"],
         "additionalProperties": false
       },
       "TransformFull": {
@@ -4600,9 +4108,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "transform"
-            ],
+            "enum": ["transform"],
             "description": "A transformation rule must be of type `transformation`"
           },
           "transformation_id": {
@@ -4631,17 +4137,12 @@
                 "description": "A key-value object of environment variables to encrypt and expose to your transformation code"
               }
             },
-            "required": [
-              "name",
-              "code"
-            ],
+            "required": ["name", "code"],
             "additionalProperties": false,
             "description": "You can optionally define a new transformation while creating a transform rule"
           }
         },
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "additionalProperties": false
       },
       "TransformRule": {
@@ -4659,9 +4160,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "delay"
-            ],
+            "enum": ["delay"],
             "description": "A delay rule must be of type `delay`"
           },
           "delay": {
@@ -4669,10 +4168,7 @@
             "description": "Delay to introduce in MS"
           }
         },
-        "required": [
-          "type",
-          "delay"
-        ],
+        "required": ["type", "delay"],
         "additionalProperties": false
       },
       "Rule": {
@@ -4872,9 +4368,7 @@
         "operationId": "getIssueTriggers",
         "summary": "Get issue triggers",
         "description": "",
-        "tags": [
-          "Issue Triggers"
-        ],
+        "tags": ["Issue Triggers"],
         "responses": {
           "200": {
             "description": "List of issue triggers",
@@ -4985,20 +4479,14 @@
                 {
                   "type": "string",
                   "maxLength": 255,
-                  "enum": [
-                    "created_at",
-                    "type"
-                  ]
+                  "enum": ["created_at", "type"]
                 },
                 {
                   "type": "array",
                   "items": {
                     "type": "string",
                     "maxLength": 255,
-                    "enum": [
-                      "created_at",
-                      "type"
-                    ]
+                    "enum": ["created_at", "type"]
                   },
                   "minItems": 2,
                   "maxItems": 2
@@ -5014,19 +4502,13 @@
               "anyOf": [
                 {
                   "type": "string",
-                  "enum": [
-                    "asc",
-                    "desc"
-                  ]
+                  "enum": ["asc", "desc"]
                 },
                 {
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "asc",
-                      "desc"
-                    ]
+                    "enum": ["asc", "desc"]
                   },
                   "minItems": 2,
                   "maxItems": 2
@@ -5071,9 +4553,7 @@
         "operationId": "createIssueTrigger",
         "summary": "Create an issue trigger",
         "description": "",
-        "tags": [
-          "Issue Triggers"
-        ],
+        "tags": ["Issue Triggers"],
         "responses": {
           "200": {
             "description": "A single issue trigger",
@@ -5143,10 +4623,7 @@
                     "description": "Optional unique name to use as reference when using the API"
                   }
                 },
-                "required": [
-                  "type",
-                  "channels"
-                ],
+                "required": ["type", "channels"],
                 "additionalProperties": false
               }
             }
@@ -5157,9 +4634,7 @@
         "operationId": "upsertIssueTrigger",
         "summary": "Create or update an issue trigger",
         "description": "",
-        "tags": [
-          "Issue Triggers"
-        ],
+        "tags": ["Issue Triggers"],
         "responses": {
           "200": {
             "description": "A single issue trigger",
@@ -5228,11 +4703,7 @@
                     "description": "Required unique name to use as reference when using the API"
                   }
                 },
-                "required": [
-                  "type",
-                  "channels",
-                  "name"
-                ],
+                "required": ["type", "channels", "name"],
                 "additionalProperties": false
               }
             }
@@ -5245,9 +4716,7 @@
         "operationId": "getIssueTrigger",
         "summary": "Get a single issue trigger",
         "description": "",
-        "tags": [
-          "Issue Triggers"
-        ],
+        "tags": ["Issue Triggers"],
         "responses": {
           "200": {
             "description": "A single issue trigger",
@@ -5288,9 +4757,7 @@
         "operationId": "updateIssueTrigger",
         "summary": "Update an issue trigger",
         "description": "",
-        "tags": [
-          "Issue Triggers"
-        ],
+        "tags": ["Issue Triggers"],
         "responses": {
           "200": {
             "description": "A single issue trigger",
@@ -5383,9 +4850,7 @@
         "operationId": "deleteIssueTrigger",
         "summary": "Delete an issue trigger",
         "description": "",
-        "tags": [
-          "Issue Triggers"
-        ],
+        "tags": ["Issue Triggers"],
         "responses": {
           "200": {
             "description": "An object with deleted issue trigger's id",
@@ -5428,9 +4893,7 @@
         "operationId": "disableIssueTrigger",
         "summary": "Disable an issue trigger",
         "description": "",
-        "tags": [
-          "Issue Triggers"
-        ],
+        "tags": ["Issue Triggers"],
         "responses": {
           "200": {
             "description": "A single issue trigger",
@@ -5473,9 +4936,7 @@
         "operationId": "enableIssueTrigger",
         "summary": "Enable an issue trigger",
         "description": "",
-        "tags": [
-          "Issue Triggers"
-        ],
+        "tags": ["Issue Triggers"],
         "responses": {
           "200": {
             "description": "A single issue trigger",
@@ -5518,9 +4979,7 @@
         "operationId": "getAttempts",
         "summary": "Get attempts",
         "description": "",
-        "tags": [
-          "Attempts"
-        ],
+        "tags": ["Attempts"],
         "responses": {
           "200": {
             "description": "List of attempts",
@@ -5584,18 +5043,14 @@
                 {
                   "type": "string",
                   "maxLength": 255,
-                  "enum": [
-                    "created_at"
-                  ]
+                  "enum": ["created_at"]
                 },
                 {
                   "type": "array",
                   "items": {
                     "type": "string",
                     "maxLength": 255,
-                    "enum": [
-                      "created_at"
-                    ]
+                    "enum": ["created_at"]
                   },
                   "minItems": 2,
                   "maxItems": 2
@@ -5611,19 +5066,13 @@
               "anyOf": [
                 {
                   "type": "string",
-                  "enum": [
-                    "asc",
-                    "desc"
-                  ]
+                  "enum": ["asc", "desc"]
                 },
                 {
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "asc",
-                      "desc"
-                    ]
+                    "enum": ["asc", "desc"]
                   },
                   "minItems": 2,
                   "maxItems": 2
@@ -5670,9 +5119,7 @@
         "operationId": "getAttempt",
         "summary": "Get a single attempt",
         "description": "",
-        "tags": [
-          "Attempts"
-        ],
+        "tags": ["Attempts"],
         "responses": {
           "200": {
             "description": "A single attempt",
@@ -5715,9 +5162,7 @@
         "operationId": "getBookmarks",
         "summary": "Get bookmarks",
         "description": "",
-        "tags": [
-          "Bookmarks"
-        ],
+        "tags": ["Bookmarks"],
         "responses": {
           "200": {
             "description": "List of bookmarks",
@@ -5919,18 +5364,14 @@
                 {
                   "type": "string",
                   "maxLength": 255,
-                  "enum": [
-                    "created_at"
-                  ]
+                  "enum": ["created_at"]
                 },
                 {
                   "type": "array",
                   "items": {
                     "type": "string",
                     "maxLength": 255,
-                    "enum": [
-                      "created_at"
-                    ]
+                    "enum": ["created_at"]
                   },
                   "minItems": 2,
                   "maxItems": 2
@@ -5946,19 +5387,13 @@
               "anyOf": [
                 {
                   "type": "string",
-                  "enum": [
-                    "asc",
-                    "desc"
-                  ]
+                  "enum": ["asc", "desc"]
                 },
                 {
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "asc",
-                      "desc"
-                    ]
+                    "enum": ["asc", "desc"]
                   },
                   "minItems": 2,
                   "maxItems": 2
@@ -6003,9 +5438,7 @@
         "operationId": "createBookmark",
         "summary": "Create a bookmark",
         "description": "",
-        "tags": [
-          "Bookmarks"
-        ],
+        "tags": ["Bookmarks"],
         "responses": {
           "200": {
             "description": "A single bookmark",
@@ -6070,11 +5503,7 @@
                     "description": "A unique, human-friendly name for the bookmark"
                   }
                 },
-                "required": [
-                  "event_data_id",
-                  "webhook_id",
-                  "label"
-                ],
+                "required": ["event_data_id", "webhook_id", "label"],
                 "additionalProperties": false
               }
             }
@@ -6087,9 +5516,7 @@
         "operationId": "getBookmark",
         "summary": "Get a single bookmark",
         "description": "",
-        "tags": [
-          "Bookmarks"
-        ],
+        "tags": ["Bookmarks"],
         "responses": {
           "200": {
             "description": "A single bookmark",
@@ -6130,9 +5557,7 @@
         "operationId": "updateBookmark",
         "summary": "Update a bookmark",
         "description": "",
-        "tags": [
-          "Bookmarks"
-        ],
+        "tags": ["Bookmarks"],
         "responses": {
           "200": {
             "description": "A single bookmark",
@@ -6227,9 +5652,7 @@
         "operationId": "deleteBookmark",
         "summary": "Delete a bookmark",
         "description": "",
-        "tags": [
-          "Bookmarks"
-        ],
+        "tags": ["Bookmarks"],
         "responses": {
           "200": {
             "description": "An object with deleted bookmark's id",
@@ -6272,9 +5695,7 @@
         "operationId": "getRequestRawBody",
         "summary": "Get a bookmark raw body data",
         "description": "",
-        "tags": [
-          "Bookmarks"
-        ],
+        "tags": ["Bookmarks"],
         "responses": {
           "200": {
             "description": "A request raw body data",
@@ -6317,9 +5738,7 @@
         "operationId": "triggerBookmark",
         "summary": "Trigger a bookmark",
         "description": "",
-        "tags": [
-          "Bookmarks"
-        ],
+        "tags": ["Bookmarks"],
         "responses": {
           "200": {
             "description": "Array of created events",
@@ -6384,10 +5803,7 @@
                 "properties": {
                   "target": {
                     "type": "string",
-                    "enum": [
-                      "http",
-                      "cli"
-                    ],
+                    "enum": ["http", "cli"],
                     "description": "Bookmark target"
                   }
                 },
@@ -6403,9 +5819,7 @@
         "operationId": "getDestinations",
         "summary": "Get destinations",
         "description": "",
-        "tags": [
-          "Destinations"
-        ],
+        "tags": ["Destinations"],
         "responses": {
           "200": {
             "description": "List of destinations",
@@ -6621,18 +6035,14 @@
                 {
                   "type": "string",
                   "maxLength": 255,
-                  "enum": [
-                    "created_at"
-                  ]
+                  "enum": ["created_at"]
                 },
                 {
                   "type": "array",
                   "items": {
                     "type": "string",
                     "maxLength": 255,
-                    "enum": [
-                      "created_at"
-                    ]
+                    "enum": ["created_at"]
                   },
                   "minItems": 2,
                   "maxItems": 2
@@ -6648,19 +6058,13 @@
               "anyOf": [
                 {
                   "type": "string",
-                  "enum": [
-                    "asc",
-                    "desc"
-                  ]
+                  "enum": ["asc", "desc"]
                 },
                 {
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "asc",
-                      "desc"
-                    ]
+                    "enum": ["asc", "desc"]
                   },
                   "minItems": 2,
                   "maxItems": 2
@@ -6705,9 +6109,7 @@
         "operationId": "createDestination",
         "summary": "Create a destination",
         "description": "",
-        "tags": [
-          "Destinations"
-        ],
+        "tags": ["Destinations"],
         "responses": {
           "200": {
             "description": "A single destination",
@@ -6775,11 +6177,7 @@
                   },
                   "rate_limit_period": {
                     "type": "string",
-                    "enum": [
-                      "second",
-                      "minute",
-                      "hour"
-                    ],
+                    "enum": ["second", "minute", "hour"],
                     "nullable": true,
                     "description": "Period to rate limit attempts"
                   },
@@ -6817,9 +6215,7 @@
                     "type": "boolean"
                   }
                 },
-                "required": [
-                  "name"
-                ],
+                "required": ["name"],
                 "additionalProperties": false
               }
             }
@@ -6830,9 +6226,7 @@
         "operationId": "upsertDestination",
         "summary": "Update or create a destination",
         "description": "",
-        "tags": [
-          "Destinations"
-        ],
+        "tags": ["Destinations"],
         "responses": {
           "200": {
             "description": "A single destination",
@@ -6900,11 +6294,7 @@
                   },
                   "rate_limit_period": {
                     "type": "string",
-                    "enum": [
-                      "second",
-                      "minute",
-                      "hour"
-                    ],
+                    "enum": ["second", "minute", "hour"],
                     "nullable": true,
                     "description": "Period to rate limit attempts"
                   },
@@ -6942,9 +6332,7 @@
                     "type": "boolean"
                   }
                 },
-                "required": [
-                  "name"
-                ],
+                "required": ["name"],
                 "additionalProperties": false
               }
             }
@@ -6957,9 +6345,7 @@
         "operationId": "getDestination",
         "summary": "Get a destination",
         "description": "",
-        "tags": [
-          "Destinations"
-        ],
+        "tags": ["Destinations"],
         "responses": {
           "200": {
             "description": "A single destination",
@@ -7010,9 +6396,7 @@
         "operationId": "updateDestination",
         "summary": "Update a destination",
         "description": "",
-        "tags": [
-          "Destinations"
-        ],
+        "tags": ["Destinations"],
         "responses": {
           "200": {
             "description": "A single destination",
@@ -7100,11 +6484,7 @@
                   },
                   "rate_limit_period": {
                     "type": "string",
-                    "enum": [
-                      "second",
-                      "minute",
-                      "hour"
-                    ],
+                    "enum": ["second", "minute", "hour"],
                     "nullable": true,
                     "description": "Period to rate limit attempts"
                   },
@@ -7152,9 +6532,7 @@
         "operationId": "deleteDestination",
         "summary": "Delete a destination",
         "description": "",
-        "tags": [
-          "Destinations"
-        ],
+        "tags": ["Destinations"],
         "responses": {
           "200": {
             "description": "A single destination",
@@ -7168,9 +6546,7 @@
                       "description": "ID of the destination"
                     }
                   },
-                  "required": [
-                    "id"
-                  ],
+                  "required": ["id"],
                   "additionalProperties": false
                 }
               }
@@ -7206,9 +6582,7 @@
         "operationId": "archiveDestination",
         "summary": "Archive a destination",
         "description": "",
-        "tags": [
-          "Destinations"
-        ],
+        "tags": ["Destinations"],
         "responses": {
           "200": {
             "description": "A single destination",
@@ -7251,9 +6625,7 @@
         "operationId": "unarchiveDestination",
         "summary": "Unarchive a destination",
         "description": "",
-        "tags": [
-          "Destinations"
-        ],
+        "tags": ["Destinations"],
         "responses": {
           "200": {
             "description": "A single destination",
@@ -7296,9 +6668,7 @@
         "operationId": "getEventBulkRetries",
         "summary": "Get events bulk retries",
         "description": "",
-        "tags": [
-          "Bulk retry events"
-        ],
+        "tags": ["Bulk retry events"],
         "responses": {
           "200": {
             "description": "List of events bulk retries",
@@ -7965,18 +7335,14 @@
                 {
                   "type": "string",
                   "maxLength": 255,
-                  "enum": [
-                    "created_at"
-                  ]
+                  "enum": ["created_at"]
                 },
                 {
                   "type": "array",
                   "items": {
                     "type": "string",
                     "maxLength": 255,
-                    "enum": [
-                      "created_at"
-                    ]
+                    "enum": ["created_at"]
                   },
                   "minItems": 2,
                   "maxItems": 2
@@ -7992,19 +7358,13 @@
               "anyOf": [
                 {
                   "type": "string",
-                  "enum": [
-                    "asc",
-                    "desc"
-                  ]
+                  "enum": ["asc", "desc"]
                 },
                 {
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "asc",
-                      "desc"
-                    ]
+                    "enum": ["asc", "desc"]
                   },
                   "minItems": 2,
                   "maxItems": 2
@@ -8049,9 +7409,7 @@
         "operationId": "createEventBulkRetry",
         "summary": "Create an events bulk retry",
         "description": "",
-        "tags": [
-          "Bulk retry events"
-        ],
+        "tags": ["Bulk retry events"],
         "responses": {
           "200": {
             "description": "A single events bulk retry",
@@ -8561,9 +7919,7 @@
         "operationId": "generateEventBulkRetryPlan",
         "summary": "Generate an events bulk retry plan",
         "description": "",
-        "tags": [
-          "Bulk retry events"
-        ],
+        "tags": ["Bulk retry events"],
         "responses": {
           "200": {
             "description": "Events bulk retry plan",
@@ -9084,9 +8440,7 @@
         "operationId": "getEventBulkRetry",
         "summary": "Get an events bulk retry",
         "description": "",
-        "tags": [
-          "Bulk retry events"
-        ],
+        "tags": ["Bulk retry events"],
         "responses": {
           "200": {
             "description": "A single events bulk retry",
@@ -9129,9 +8483,7 @@
         "operationId": "cancelEventBulkRetry",
         "summary": "Cancel an events bulk retry",
         "description": "",
-        "tags": [
-          "Bulk retry events"
-        ],
+        "tags": ["Bulk retry events"],
         "responses": {
           "200": {
             "description": "A single events bulk retry",
@@ -9174,9 +8526,7 @@
         "operationId": "getEvents",
         "summary": "Get events",
         "description": "",
-        "tags": [
-          "Events"
-        ],
+        "tags": ["Events"],
         "responses": {
           "200": {
             "description": "List of events",
@@ -9744,9 +9094,7 @@
             "name": "include",
             "schema": {
               "type": "string",
-              "enum": [
-                "data"
-              ],
+              "enum": ["data"],
               "description": "Include the data object in the event model",
               "x-docs-hide": true
             }
@@ -9757,10 +9105,7 @@
             "schema": {
               "type": "string",
               "maxLength": 255,
-              "enum": [
-                "last_attempt_at",
-                "created_at"
-              ],
+              "enum": ["last_attempt_at", "created_at"],
               "description": "Sort key"
             }
           },
@@ -9769,10 +9114,7 @@
             "name": "dir",
             "schema": {
               "type": "string",
-              "enum": [
-                "asc",
-                "desc"
-              ],
+              "enum": ["asc", "desc"],
               "description": "Sort direction"
             }
           },
@@ -9814,9 +9156,7 @@
         "operationId": "getEvent",
         "summary": "Get an event",
         "description": "",
-        "tags": [
-          "Events"
-        ],
+        "tags": ["Events"],
         "responses": {
           "200": {
             "description": "A single event",
@@ -9859,9 +9199,7 @@
         "operationId": "getRequestRawBody",
         "summary": "Get a event raw body data",
         "description": "",
-        "tags": [
-          "Events"
-        ],
+        "tags": ["Events"],
         "responses": {
           "200": {
             "description": "A request raw body data",
@@ -9904,9 +9242,7 @@
         "operationId": "retryEvent",
         "summary": "Retry an event",
         "description": "",
-        "tags": [
-          "Events"
-        ],
+        "tags": ["Events"],
         "responses": {
           "200": {
             "description": "Retried event with event attempt",
@@ -9949,9 +9285,7 @@
         "operationId": "muteEvent",
         "summary": "Mute an event",
         "description": "",
-        "tags": [
-          "Events"
-        ],
+        "tags": ["Events"],
         "responses": {
           "200": {
             "description": "A single event",
@@ -9994,9 +9328,7 @@
         "operationId": "getIgnoredEventBulkRetries",
         "summary": "Get ignored events bulk retries",
         "description": "",
-        "tags": [
-          "Bulk retry ignored events"
-        ],
+        "tags": ["Bulk retry ignored events"],
         "responses": {
           "200": {
             "description": "List of ignored events bulk retries",
@@ -10254,18 +9586,14 @@
                 {
                   "type": "string",
                   "maxLength": 255,
-                  "enum": [
-                    "created_at"
-                  ]
+                  "enum": ["created_at"]
                 },
                 {
                   "type": "array",
                   "items": {
                     "type": "string",
                     "maxLength": 255,
-                    "enum": [
-                      "created_at"
-                    ]
+                    "enum": ["created_at"]
                   },
                   "minItems": 2,
                   "maxItems": 2
@@ -10281,19 +9609,13 @@
               "anyOf": [
                 {
                   "type": "string",
-                  "enum": [
-                    "asc",
-                    "desc"
-                  ]
+                  "enum": ["asc", "desc"]
                 },
                 {
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "asc",
-                      "desc"
-                    ]
+                    "enum": ["asc", "desc"]
                   },
                   "minItems": 2,
                   "maxItems": 2
@@ -10338,9 +9660,7 @@
         "operationId": "createIgnoredEventBulkRetry",
         "summary": "Create an ignored events bulk retry",
         "description": "",
-        "tags": [
-          "Bulk retry ignored events"
-        ],
+        "tags": ["Bulk retry ignored events"],
         "responses": {
           "200": {
             "description": "A single ignored events bulk retry",
@@ -10441,9 +9761,7 @@
         "operationId": "generateIgnoredEventBulkRetryPlan",
         "summary": "Generate an ignored events bulk retry plan",
         "description": "",
-        "tags": [
-          "Bulk retry ignored events"
-        ],
+        "tags": ["Bulk retry ignored events"],
         "responses": {
           "200": {
             "description": "Ignored events bulk retry plan",
@@ -10555,9 +9873,7 @@
         "operationId": "getIgnoredEventBulkRetry",
         "summary": "Get an ignored events bulk retry",
         "description": "",
-        "tags": [
-          "Bulk retry ignored events"
-        ],
+        "tags": ["Bulk retry ignored events"],
         "responses": {
           "200": {
             "description": "A single ignored events bulk retry",
@@ -10600,9 +9916,7 @@
         "operationId": "cancelIgnoredEventBulkRetry",
         "summary": "Cancel an ignored events bulk retry",
         "description": "",
-        "tags": [
-          "Bulk retry ignored events"
-        ],
+        "tags": ["Bulk retry ignored events"],
         "responses": {
           "200": {
             "description": "A single ignored events bulk retry",
@@ -10645,9 +9959,7 @@
         "operationId": "getIntegrations",
         "summary": "Get integrations",
         "description": "",
-        "tags": [
-          "Integrations"
-        ],
+        "tags": ["Integrations"],
         "responses": {
           "200": {
             "description": "List of integrations",
@@ -10703,9 +10015,7 @@
         "operationId": "createIntegration",
         "summary": "Create an integration",
         "description": "",
-        "tags": [
-          "Integrations"
-        ],
+        "tags": ["Integrations"],
         "responses": {
           "200": {
             "description": "A single integration",
@@ -10806,9 +10116,7 @@
         "operationId": "getIntegration",
         "summary": "Get an integration",
         "description": "",
-        "tags": [
-          "Integrations"
-        ],
+        "tags": ["Integrations"],
         "responses": {
           "200": {
             "description": "A single integration",
@@ -10848,9 +10156,7 @@
         "operationId": "updateIntegration",
         "summary": "Update an integration",
         "description": "",
-        "tags": [
-          "Integrations"
-        ],
+        "tags": ["Integrations"],
         "responses": {
           "200": {
             "description": "A single integration",
@@ -10969,9 +10275,7 @@
         "operationId": "deleteIntegration",
         "summary": "Delete an integration",
         "description": "",
-        "tags": [
-          "Integrations"
-        ],
+        "tags": ["Integrations"],
         "responses": {
           "200": {
             "description": "An object with deleted integration id",
@@ -11013,9 +10317,7 @@
         "operationId": "attachIntegrationToSource",
         "summary": "Attach an integration to a source",
         "description": "",
-        "tags": [
-          "Integrations"
-        ],
+        "tags": ["Integrations"],
         "responses": {
           "200": {
             "description": "Attach operation success status",
@@ -11076,9 +10378,7 @@
         "operationId": "detachIntegrationToSource",
         "summary": "Detach an integration from a source",
         "description": "",
-        "tags": [
-          "Integrations"
-        ],
+        "tags": ["Integrations"],
         "responses": {
           "200": {
             "description": "Detach operation success status",
@@ -11139,9 +10439,7 @@
         "operationId": "getIssues",
         "summary": "Get issues",
         "description": "",
-        "tags": [
-          "Issues"
-        ],
+        "tags": ["Issues"],
         "responses": {
           "200": {
             "description": "List of issues",
@@ -11228,11 +10526,7 @@
               "anyOf": [
                 {
                   "type": "string",
-                  "enum": [
-                    "delivery",
-                    "transformation",
-                    "backpressure"
-                  ],
+                  "enum": ["delivery", "transformation", "backpressure"],
                   "description": "Issue type",
                   "example": "delivery"
                 },
@@ -11240,11 +10534,7 @@
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "delivery",
-                      "transformation",
-                      "backpressure"
-                    ],
+                    "enum": ["delivery", "transformation", "backpressure"],
                     "description": "Issue type",
                     "example": "delivery"
                   }
@@ -11260,12 +10550,7 @@
               "anyOf": [
                 {
                   "type": "string",
-                  "enum": [
-                    "OPENED",
-                    "IGNORED",
-                    "ACKNOWLEDGED",
-                    "RESOLVED"
-                  ],
+                  "enum": ["OPENED", "IGNORED", "ACKNOWLEDGED", "RESOLVED"],
                   "description": "Issue status",
                   "example": "OPENED"
                 },
@@ -11273,12 +10558,7 @@
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "OPENED",
-                      "IGNORED",
-                      "ACKNOWLEDGED",
-                      "RESOLVED"
-                    ],
+                    "enum": ["OPENED", "IGNORED", "ACKNOWLEDGED", "RESOLVED"],
                     "description": "Issue status",
                     "example": "OPENED"
                   }
@@ -11578,19 +10858,13 @@
               "anyOf": [
                 {
                   "type": "string",
-                  "enum": [
-                    "asc",
-                    "desc"
-                  ]
+                  "enum": ["asc", "desc"]
                 },
                 {
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "asc",
-                      "desc"
-                    ]
+                    "enum": ["asc", "desc"]
                   },
                   "minItems": 2,
                   "maxItems": 2
@@ -11637,9 +10911,7 @@
         "operationId": "getIssueCount",
         "summary": "Get the number of issues",
         "description": "",
-        "tags": [
-          "Issues"
-        ],
+        "tags": ["Issues"],
         "responses": {
           "200": {
             "description": "Issue count",
@@ -11716,11 +10988,7 @@
               "anyOf": [
                 {
                   "type": "string",
-                  "enum": [
-                    "delivery",
-                    "transformation",
-                    "backpressure"
-                  ],
+                  "enum": ["delivery", "transformation", "backpressure"],
                   "description": "Issue type",
                   "example": "delivery"
                 },
@@ -11728,11 +10996,7 @@
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "delivery",
-                      "transformation",
-                      "backpressure"
-                    ],
+                    "enum": ["delivery", "transformation", "backpressure"],
                     "description": "Issue type",
                     "example": "delivery"
                   }
@@ -11748,12 +11012,7 @@
               "anyOf": [
                 {
                   "type": "string",
-                  "enum": [
-                    "OPENED",
-                    "IGNORED",
-                    "ACKNOWLEDGED",
-                    "RESOLVED"
-                  ],
+                  "enum": ["OPENED", "IGNORED", "ACKNOWLEDGED", "RESOLVED"],
                   "description": "Issue status",
                   "example": "OPENED"
                 },
@@ -11761,12 +11020,7 @@
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "OPENED",
-                      "IGNORED",
-                      "ACKNOWLEDGED",
-                      "RESOLVED"
-                    ],
+                    "enum": ["OPENED", "IGNORED", "ACKNOWLEDGED", "RESOLVED"],
                     "description": "Issue status",
                     "example": "OPENED"
                   }
@@ -12066,19 +11320,13 @@
               "anyOf": [
                 {
                   "type": "string",
-                  "enum": [
-                    "asc",
-                    "desc"
-                  ]
+                  "enum": ["asc", "desc"]
                 },
                 {
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "asc",
-                      "desc"
-                    ]
+                    "enum": ["asc", "desc"]
                   },
                   "minItems": 2,
                   "maxItems": 2
@@ -12125,9 +11373,7 @@
         "operationId": "getIssue",
         "summary": "Get a single issue",
         "description": "",
-        "tags": [
-          "Issues"
-        ],
+        "tags": ["Issues"],
         "responses": {
           "200": {
             "description": "A single issue",
@@ -12168,9 +11414,7 @@
         "operationId": "updateIssue",
         "summary": "Update issue",
         "description": "",
-        "tags": [
-          "Issues"
-        ],
+        "tags": ["Issues"],
         "responses": {
           "200": {
             "description": "Updated issue",
@@ -12225,18 +11469,11 @@
                 "properties": {
                   "status": {
                     "type": "string",
-                    "enum": [
-                      "OPENED",
-                      "IGNORED",
-                      "ACKNOWLEDGED",
-                      "RESOLVED"
-                    ],
+                    "enum": ["OPENED", "IGNORED", "ACKNOWLEDGED", "RESOLVED"],
                     "description": "New status"
                   }
                 },
-                "required": [
-                  "status"
-                ],
+                "required": ["status"],
                 "additionalProperties": false
               }
             }
@@ -12247,9 +11484,7 @@
         "operationId": "dismissIssue",
         "summary": "Dismiss an issue",
         "description": "",
-        "tags": [
-          "Issues"
-        ],
+        "tags": ["Issues"],
         "responses": {
           "200": {
             "description": "Dismissed issue",
@@ -12292,9 +11527,7 @@
         "operationId": "getRequests",
         "summary": "Get requests",
         "description": "",
-        "tags": [
-          "Requests"
-        ],
+        "tags": ["Requests"],
         "responses": {
           "200": {
             "description": "List of requests",
@@ -12355,10 +11588,7 @@
             "name": "status",
             "schema": {
               "type": "string",
-              "enum": [
-                "accepted",
-                "rejected"
-              ],
+              "enum": ["accepted", "rejected"],
               "description": "Filter by status"
             }
           },
@@ -12652,9 +11882,7 @@
             "name": "include",
             "schema": {
               "type": "string",
-              "enum": [
-                "data"
-              ],
+              "enum": ["data"],
               "x-docs-hide": true
             }
           },
@@ -12664,10 +11892,7 @@
             "schema": {
               "type": "string",
               "maxLength": 255,
-              "enum": [
-                "ingested_at",
-                "created_at"
-              ],
+              "enum": ["ingested_at", "created_at"],
               "description": "Sort key"
             }
           },
@@ -12676,10 +11901,7 @@
             "name": "dir",
             "schema": {
               "type": "string",
-              "enum": [
-                "asc",
-                "desc"
-              ],
+              "enum": ["asc", "desc"],
               "description": "Sort direction"
             }
           },
@@ -12721,9 +11943,7 @@
         "operationId": "getRequest",
         "summary": "Get a request",
         "description": "",
-        "tags": [
-          "Requests"
-        ],
+        "tags": ["Requests"],
         "responses": {
           "200": {
             "description": "A single request",
@@ -12766,9 +11986,7 @@
         "operationId": "getRequestRawBody",
         "summary": "Get a request raw body data",
         "description": "",
-        "tags": [
-          "Requests"
-        ],
+        "tags": ["Requests"],
         "responses": {
           "200": {
             "description": "A request raw body data",
@@ -12811,9 +12029,7 @@
         "operationId": "retryRequest",
         "summary": "Retry a request",
         "description": "",
-        "tags": [
-          "Requests"
-        ],
+        "tags": ["Requests"],
         "responses": {
           "200": {
             "description": "Retry request operation result",
@@ -12886,9 +12102,7 @@
                     "description": "Subset of webhook_ids to re-run the event logic on. Useful to retry only specific ignored_events"
                   }
                 },
-                "required": [
-                  "webhook_ids"
-                ],
+                "required": ["webhook_ids"],
                 "additionalProperties": false
               }
             }
@@ -12901,9 +12115,7 @@
         "operationId": "getRequestEvents",
         "summary": "Get request events",
         "description": "",
-        "tags": [
-          "Requests"
-        ],
+        "tags": ["Requests"],
         "responses": {
           "200": {
             "description": "List of events",
@@ -13481,9 +12693,7 @@
             "name": "include",
             "schema": {
               "type": "string",
-              "enum": [
-                "data"
-              ],
+              "enum": ["data"],
               "description": "Include the data object in the event model",
               "x-docs-hide": true
             }
@@ -13494,10 +12704,7 @@
             "schema": {
               "type": "string",
               "maxLength": 255,
-              "enum": [
-                "last_attempt_at",
-                "created_at"
-              ],
+              "enum": ["last_attempt_at", "created_at"],
               "description": "Sort key"
             }
           },
@@ -13506,10 +12713,7 @@
             "name": "dir",
             "schema": {
               "type": "string",
-              "enum": [
-                "asc",
-                "desc"
-              ],
+              "enum": ["asc", "desc"],
               "description": "Sort direction"
             }
           },
@@ -13560,9 +12764,7 @@
         "operationId": "getRequestIgnoredEvents",
         "summary": "Get request ignored events",
         "description": "",
-        "tags": [
-          "Requests"
-        ],
+        "tags": ["Requests"],
         "responses": {
           "200": {
             "description": "List of ignored events",
@@ -13636,18 +12838,14 @@
                 {
                   "type": "string",
                   "maxLength": 255,
-                  "enum": [
-                    "created_at"
-                  ]
+                  "enum": ["created_at"]
                 },
                 {
                   "type": "array",
                   "items": {
                     "type": "string",
                     "maxLength": 255,
-                    "enum": [
-                      "created_at"
-                    ]
+                    "enum": ["created_at"]
                   },
                   "minItems": 2,
                   "maxItems": 2
@@ -13663,19 +12861,13 @@
               "anyOf": [
                 {
                   "type": "string",
-                  "enum": [
-                    "asc",
-                    "desc"
-                  ]
+                  "enum": ["asc", "desc"]
                 },
                 {
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "asc",
-                      "desc"
-                    ]
+                    "enum": ["asc", "desc"]
                   },
                   "minItems": 2,
                   "maxItems": 2
@@ -13731,9 +12923,7 @@
         "operationId": "getRequestBulkRetries",
         "summary": "Get request bulk retries",
         "description": "",
-        "tags": [
-          "Bulk retry requests"
-        ],
+        "tags": ["Bulk retry requests"],
         "responses": {
           "200": {
             "description": "List of request bulk retries",
@@ -13952,10 +13142,7 @@
                 },
                 "status": {
                   "type": "string",
-                  "enum": [
-                    "accepted",
-                    "rejected"
-                  ],
+                  "enum": ["accepted", "rejected"],
                   "description": "Filter by status"
                 },
                 "rejection_cause": {
@@ -14197,26 +13384,18 @@
                 },
                 "include": {
                   "type": "string",
-                  "enum": [
-                    "data"
-                  ],
+                  "enum": ["data"],
                   "x-docs-hide": true
                 },
                 "order_by": {
                   "type": "string",
                   "maxLength": 255,
-                  "enum": [
-                    "ingested_at",
-                    "created_at"
-                  ],
+                  "enum": ["ingested_at", "created_at"],
                   "description": "Sort key"
                 },
                 "dir": {
                   "type": "string",
-                  "enum": [
-                    "asc",
-                    "desc"
-                  ],
+                  "enum": ["asc", "desc"],
                   "description": "Sort direction"
                 },
                 "limit": {
@@ -14258,18 +13437,14 @@
                 {
                   "type": "string",
                   "maxLength": 255,
-                  "enum": [
-                    "created_at"
-                  ]
+                  "enum": ["created_at"]
                 },
                 {
                   "type": "array",
                   "items": {
                     "type": "string",
                     "maxLength": 255,
-                    "enum": [
-                      "created_at"
-                    ]
+                    "enum": ["created_at"]
                   },
                   "minItems": 2,
                   "maxItems": 2
@@ -14285,19 +13460,13 @@
               "anyOf": [
                 {
                   "type": "string",
-                  "enum": [
-                    "asc",
-                    "desc"
-                  ]
+                  "enum": ["asc", "desc"]
                 },
                 {
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "asc",
-                      "desc"
-                    ]
+                    "enum": ["asc", "desc"]
                   },
                   "minItems": 2,
                   "maxItems": 2
@@ -14342,9 +13511,7 @@
         "operationId": "createRequestBulkRetry",
         "summary": "Create a requests bulk retry",
         "description": "",
-        "tags": [
-          "Bulk retry requests"
-        ],
+        "tags": ["Bulk retry requests"],
         "responses": {
           "200": {
             "description": "A single requests bulk retry",
@@ -14410,10 +13577,7 @@
                       },
                       "status": {
                         "type": "string",
-                        "enum": [
-                          "accepted",
-                          "rejected"
-                        ],
+                        "enum": ["accepted", "rejected"],
                         "description": "Filter by status"
                       },
                       "rejection_cause": {
@@ -14672,9 +13836,7 @@
         "operationId": "generateRequestBulkRetryPlan",
         "summary": "Generate a requests bulk retry plan",
         "description": "",
-        "tags": [
-          "Bulk retry requests"
-        ],
+        "tags": ["Bulk retry requests"],
         "responses": {
           "200": {
             "description": "Requests bulk retry plan",
@@ -14753,10 +13915,7 @@
                 },
                 "status": {
                   "type": "string",
-                  "enum": [
-                    "accepted",
-                    "rejected"
-                  ],
+                  "enum": ["accepted", "rejected"],
                   "description": "Filter by status"
                 },
                 "rejection_cause": {
@@ -15010,12 +14169,10 @@
     },
     "/bulk/requests/retry/{id}": {
       "get": {
-        "operationId": "getRequestBulkRetry",
+        "operationId": "get",
         "summary": "Get a requests bulk retry",
         "description": "",
-        "tags": [
-          "Bulk retry requests"
-        ],
+        "tags": ["Bulk retry requests"],
         "responses": {
           "200": {
             "description": "A single requests bulk retry",
@@ -15058,9 +14215,7 @@
         "operationId": "cancelRequestBulkRetry",
         "summary": "Cancel a requests bulk retry",
         "description": "",
-        "tags": [
-          "Bulk retry requests"
-        ],
+        "tags": ["Bulk retry requests"],
         "responses": {
           "200": {
             "description": "A single requests bulk retry",
@@ -15103,9 +14258,7 @@
         "operationId": "getSources",
         "summary": "Get sources",
         "description": "",
-        "tags": [
-          "Sources"
-        ],
+        "tags": ["Sources"],
         "responses": {
           "200": {
             "description": "List of sources",
@@ -15269,18 +14422,14 @@
                 {
                   "type": "string",
                   "maxLength": 255,
-                  "enum": [
-                    "created_at"
-                  ]
+                  "enum": ["created_at"]
                 },
                 {
                   "type": "array",
                   "items": {
                     "type": "string",
                     "maxLength": 255,
-                    "enum": [
-                      "created_at"
-                    ]
+                    "enum": ["created_at"]
                   },
                   "minItems": 2,
                   "maxItems": 2
@@ -15296,19 +14445,13 @@
               "anyOf": [
                 {
                   "type": "string",
-                  "enum": [
-                    "asc",
-                    "desc"
-                  ]
+                  "enum": ["asc", "desc"]
                 },
                 {
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "asc",
-                      "desc"
-                    ]
+                    "enum": ["asc", "desc"]
                   },
                   "minItems": 2,
                   "maxItems": 2
@@ -15353,9 +14496,7 @@
         "operationId": "createSource",
         "summary": "Create a source",
         "description": "",
-        "tags": [
-          "Sources"
-        ],
+        "tags": ["Sources"],
         "responses": {
           "200": {
             "description": "A single source",
@@ -15420,9 +14561,7 @@
                     "$ref": "#/components/schemas/VerificationConfig"
                   }
                 },
-                "required": [
-                  "name"
-                ],
+                "required": ["name"],
                 "additionalProperties": false
               }
             }
@@ -15433,9 +14572,7 @@
         "operationId": "upsertSource",
         "summary": "Update or create a source",
         "description": "",
-        "tags": [
-          "Sources"
-        ],
+        "tags": ["Sources"],
         "responses": {
           "200": {
             "description": "A single source",
@@ -15500,9 +14637,7 @@
                     "$ref": "#/components/schemas/VerificationConfig"
                   }
                 },
-                "required": [
-                  "name"
-                ],
+                "required": ["name"],
                 "additionalProperties": false
               }
             }
@@ -15515,9 +14650,7 @@
         "operationId": "getSource",
         "summary": "Get a source",
         "description": "",
-        "tags": [
-          "Sources"
-        ],
+        "tags": ["Sources"],
         "responses": {
           "200": {
             "description": "A single source",
@@ -15556,9 +14689,7 @@
             "name": "include",
             "schema": {
               "type": "string",
-              "enum": [
-                "verification.configs"
-              ]
+              "enum": ["verification.configs"]
             }
           },
           {
@@ -15578,9 +14709,7 @@
         "operationId": "updateSource",
         "summary": "Update a source",
         "description": "",
-        "tags": [
-          "Sources"
-        ],
+        "tags": ["Sources"],
         "responses": {
           "200": {
             "description": "A single source",
@@ -15675,9 +14804,7 @@
         "operationId": "deleteSource",
         "summary": "Delete a source",
         "description": "",
-        "tags": [
-          "Sources"
-        ],
+        "tags": ["Sources"],
         "responses": {
           "200": {
             "description": "A single source",
@@ -15691,9 +14818,7 @@
                       "description": "ID of the source"
                     }
                   },
-                  "required": [
-                    "id"
-                  ],
+                  "required": ["id"],
                   "additionalProperties": false
                 }
               }
@@ -15729,9 +14854,7 @@
         "operationId": "archiveSource",
         "summary": "Archive a source",
         "description": "",
-        "tags": [
-          "Sources"
-        ],
+        "tags": ["Sources"],
         "responses": {
           "200": {
             "description": "A single source",
@@ -15774,9 +14897,7 @@
         "operationId": "unarchiveSource",
         "summary": "Unarchive a source",
         "description": "",
-        "tags": [
-          "Sources"
-        ],
+        "tags": ["Sources"],
         "responses": {
           "200": {
             "description": "A single source",
@@ -15819,9 +14940,7 @@
         "operationId": "toggleWebhookNotifications",
         "summary": "Toggle webhook notifications for the workspace",
         "description": "",
-        "tags": [
-          "Notifications"
-        ],
+        "tags": ["Notifications"],
         "responses": {
           "200": {
             "description": "Toggle operation status response",
@@ -15872,9 +14991,7 @@
         "operationId": "addCustomDomain",
         "summary": "Add a custom domain to the workspace",
         "description": "",
-        "tags": [
-          "Notifications"
-        ],
+        "tags": ["Notifications"],
         "responses": {
           "200": {
             "description": "Custom domain successfuly added",
@@ -15914,9 +15031,7 @@
         "operationId": "listCustomDomains",
         "summary": "List all custom domains and their verification statuses for the workspace",
         "description": "",
-        "tags": [
-          "Notifications"
-        ],
+        "tags": ["Notifications"],
         "responses": {
           "200": {
             "description": "List of custom domains",
@@ -15948,9 +15063,7 @@
         "operationId": "deleteCustomDomain",
         "summary": "Removes a custom domain from the workspace",
         "description": "",
-        "tags": [
-          "Notifications"
-        ],
+        "tags": ["Notifications"],
         "responses": {
           "200": {
             "description": "Custom domain successfuly removed",
@@ -15990,9 +15103,7 @@
         "operationId": "getTransformations",
         "summary": "Get transformations",
         "description": "",
-        "tags": [
-          "Transformations"
-        ],
+        "tags": ["Transformations"],
         "responses": {
           "200": {
             "description": "List of transformations",
@@ -16111,18 +15222,14 @@
                 {
                   "type": "string",
                   "maxLength": 255,
-                  "enum": [
-                    "created_at"
-                  ]
+                  "enum": ["created_at"]
                 },
                 {
                   "type": "array",
                   "items": {
                     "type": "string",
                     "maxLength": 255,
-                    "enum": [
-                      "created_at"
-                    ]
+                    "enum": ["created_at"]
                   },
                   "minItems": 2,
                   "maxItems": 2
@@ -16138,19 +15245,13 @@
               "anyOf": [
                 {
                   "type": "string",
-                  "enum": [
-                    "asc",
-                    "desc"
-                  ]
+                  "enum": ["asc", "desc"]
                 },
                 {
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "asc",
-                      "desc"
-                    ]
+                    "enum": ["asc", "desc"]
                   },
                   "minItems": 2,
                   "maxItems": 2
@@ -16195,9 +15296,7 @@
         "operationId": "createTransformation",
         "summary": "Create a transformation",
         "description": "",
-        "tags": [
-          "Transformations"
-        ],
+        "tags": ["Transformations"],
         "responses": {
           "200": {
             "description": "A single transformation",
@@ -16259,10 +15358,7 @@
                     "description": "Key-value environment variables to be passed to the transformation"
                   }
                 },
-                "required": [
-                  "name",
-                  "code"
-                ],
+                "required": ["name", "code"],
                 "additionalProperties": false
               }
             }
@@ -16273,9 +15369,7 @@
         "operationId": "upsertTransformation",
         "summary": "Update or create a transformation",
         "description": "",
-        "tags": [
-          "Transformations"
-        ],
+        "tags": ["Transformations"],
         "responses": {
           "200": {
             "description": "A single transformation",
@@ -16337,10 +15431,7 @@
                     "description": "Key-value environment variables to be passed to the transformation"
                   }
                 },
-                "required": [
-                  "name",
-                  "code"
-                ],
+                "required": ["name", "code"],
                 "additionalProperties": false
               }
             }
@@ -16353,9 +15444,7 @@
         "operationId": "getTransformation",
         "summary": "Get a transformation",
         "description": "",
-        "tags": [
-          "Transformations"
-        ],
+        "tags": ["Transformations"],
         "responses": {
           "200": {
             "description": "A single transformation",
@@ -16396,9 +15485,7 @@
         "operationId": "updateTransformation",
         "summary": "Update a transformation",
         "description": "",
-        "tags": [
-          "Transformations"
-        ],
+        "tags": ["Transformations"],
         "responses": {
           "200": {
             "description": "A single transformation",
@@ -16492,9 +15579,7 @@
         "operationId": "testTransformation",
         "summary": "Test a transformation code",
         "description": "",
-        "tags": [
-          "Transformations"
-        ],
+        "tags": ["Transformations"],
         "responses": {
           "200": {
             "description": "Transformation run output",
@@ -16605,9 +15690,7 @@
                         "x-docs-type": "JSON"
                       }
                     },
-                    "required": [
-                      "headers"
-                    ],
+                    "required": ["headers"],
                     "additionalProperties": false,
                     "description": "Request input to use for the transformation execution"
                   },
@@ -16628,9 +15711,7 @@
         "operationId": "getTransformationExecutions",
         "summary": "Get transformation executions",
         "description": "",
-        "tags": [
-          "Transformations"
-        ],
+        "tags": ["Transformations"],
         "responses": {
           "200": {
             "description": "List of transformation executions",
@@ -16671,26 +15752,14 @@
               "anyOf": [
                 {
                   "type": "string",
-                  "enum": [
-                    "debug",
-                    "info",
-                    "warn",
-                    "error",
-                    "fatal"
-                  ],
+                  "enum": ["debug", "info", "warn", "error", "fatal"],
                   "nullable": true
                 },
                 {
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "debug",
-                      "info",
-                      "warn",
-                      "error",
-                      "fatal"
-                    ],
+                    "enum": ["debug", "info", "warn", "error", "fatal"],
                     "nullable": true
                   }
                 }
@@ -16784,18 +15853,14 @@
                 {
                   "type": "string",
                   "maxLength": 255,
-                  "enum": [
-                    "created_at"
-                  ]
+                  "enum": ["created_at"]
                 },
                 {
                   "type": "array",
                   "items": {
                     "type": "string",
                     "maxLength": 255,
-                    "enum": [
-                      "created_at"
-                    ]
+                    "enum": ["created_at"]
                   },
                   "minItems": 2,
                   "maxItems": 2
@@ -16811,19 +15876,13 @@
               "anyOf": [
                 {
                   "type": "string",
-                  "enum": [
-                    "asc",
-                    "desc"
-                  ]
+                  "enum": ["asc", "desc"]
                 },
                 {
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "asc",
-                      "desc"
-                    ]
+                    "enum": ["asc", "desc"]
                   },
                   "minItems": 2,
                   "maxItems": 2
@@ -16879,9 +15938,7 @@
         "operationId": "getTransformationExecution",
         "summary": "Get a transformation execution",
         "description": "",
-        "tags": [
-          "Transformations"
-        ],
+        "tags": ["Transformations"],
         "responses": {
           "200": {
             "description": "A single transformation execution",
@@ -16933,9 +15990,7 @@
         "operationId": "getConnections",
         "summary": "Get connections",
         "description": "",
-        "tags": [
-          "Connections"
-        ],
+        "tags": ["Connections"],
         "responses": {
           "200": {
             "description": "List of connections",
@@ -17235,19 +16290,13 @@
               "anyOf": [
                 {
                   "type": "string",
-                  "enum": [
-                    "asc",
-                    "desc"
-                  ]
+                  "enum": ["asc", "desc"]
                 },
                 {
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "asc",
-                      "desc"
-                    ]
+                    "enum": ["asc", "desc"]
                   },
                   "minItems": 2,
                   "maxItems": 2
@@ -17292,9 +16341,7 @@
         "operationId": "createConnection",
         "summary": "Create a connection",
         "description": "",
-        "tags": [
-          "Connections"
-        ],
+        "tags": ["Connections"],
         "responses": {
           "200": {
             "description": "A single connection",
@@ -17390,11 +16437,7 @@
                       },
                       "rate_limit_period": {
                         "type": "string",
-                        "enum": [
-                          "second",
-                          "minute",
-                          "hour"
-                        ],
+                        "enum": ["second", "minute", "hour"],
                         "nullable": true,
                         "description": "Period to rate limit attempts"
                       },
@@ -17432,9 +16475,7 @@
                         "type": "boolean"
                       }
                     },
-                    "required": [
-                      "name"
-                    ],
+                    "required": ["name"],
                     "additionalProperties": false,
                     "description": "Destination input object"
                   },
@@ -17463,9 +16504,7 @@
                         "$ref": "#/components/schemas/VerificationConfig"
                       }
                     },
-                    "required": [
-                      "name"
-                    ],
+                    "required": ["name"],
                     "additionalProperties": false,
                     "description": "Source input object"
                   },
@@ -17486,9 +16525,7 @@
         "operationId": "upsertConnection",
         "summary": "Update or create a connection",
         "description": "",
-        "tags": [
-          "Connections"
-        ],
+        "tags": ["Connections"],
         "responses": {
           "200": {
             "description": "A single connection",
@@ -17584,11 +16621,7 @@
                       },
                       "rate_limit_period": {
                         "type": "string",
-                        "enum": [
-                          "second",
-                          "minute",
-                          "hour"
-                        ],
+                        "enum": ["second", "minute", "hour"],
                         "nullable": true,
                         "description": "Period to rate limit attempts"
                       },
@@ -17626,9 +16659,7 @@
                         "type": "boolean"
                       }
                     },
-                    "required": [
-                      "name"
-                    ],
+                    "required": ["name"],
                     "additionalProperties": false,
                     "description": "Destination input object"
                   },
@@ -17657,9 +16688,7 @@
                         "$ref": "#/components/schemas/VerificationConfig"
                       }
                     },
-                    "required": [
-                      "name"
-                    ],
+                    "required": ["name"],
                     "additionalProperties": false,
                     "description": "Source input object"
                   },
@@ -17682,9 +16711,7 @@
         "operationId": "countConnections",
         "summary": "Count connections",
         "description": "",
-        "tags": [
-          "Connections"
-        ],
+        "tags": ["Connections"],
         "responses": {
           "200": {
             "description": "Count of connections",
@@ -17699,9 +16726,7 @@
                       "description": "Count of connections"
                     }
                   },
-                  "required": [
-                    "count"
-                  ],
+                  "required": ["count"],
                   "additionalProperties": false
                 }
               }
@@ -17873,9 +16898,7 @@
         "operationId": "getConnection",
         "summary": "Get a single connection",
         "description": "",
-        "tags": [
-          "Connections"
-        ],
+        "tags": ["Connections"],
         "responses": {
           "200": {
             "description": "A single connection",
@@ -17926,9 +16949,7 @@
         "operationId": "updateConnection",
         "summary": "Update a connection",
         "description": "",
-        "tags": [
-          "Connections"
-        ],
+        "tags": ["Connections"],
         "responses": {
           "200": {
             "description": "A single connection",
@@ -18020,9 +17041,7 @@
         "operationId": "deleteConnection",
         "summary": "Delete a connection",
         "description": "",
-        "tags": [
-          "Connections"
-        ],
+        "tags": ["Connections"],
         "responses": {
           "200": {
             "description": "A single connection",
@@ -18036,9 +17055,7 @@
                       "description": "ID of the connection"
                     }
                   },
-                  "required": [
-                    "id"
-                  ],
+                  "required": ["id"],
                   "additionalProperties": false
                 }
               }
@@ -18074,9 +17091,7 @@
         "operationId": "archiveConnection",
         "summary": "Archive a connection",
         "description": "",
-        "tags": [
-          "Connections"
-        ],
+        "tags": ["Connections"],
         "responses": {
           "200": {
             "description": "A single connection",
@@ -18119,9 +17134,7 @@
         "operationId": "unarchiveConnection",
         "summary": "Unarchive a connection",
         "description": "",
-        "tags": [
-          "Connections"
-        ],
+        "tags": ["Connections"],
         "responses": {
           "200": {
             "description": "A single connection",
@@ -18164,9 +17177,7 @@
         "operationId": "pauseConnection",
         "summary": "Pause a connection",
         "description": "",
-        "tags": [
-          "Connections"
-        ],
+        "tags": ["Connections"],
         "responses": {
           "200": {
             "description": "A single connection",
@@ -18209,9 +17220,7 @@
         "operationId": "unpauseConnection",
         "summary": "Unpause a connection",
         "description": "",
-        "tags": [
-          "Connections"
-        ],
+        "tags": ["Connections"],
         "responses": {
           "200": {
             "description": "A single connection",
