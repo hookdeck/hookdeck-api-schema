@@ -12,7 +12,8 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Fetch OpenAPI
-        run: curl -o openapi.json https://api.hookdeck.com/2024-03-01/openapi/fern
+        run: | 
+          curl https://api.hookdeck.com/2024-03-01/openapi/fern  | jq '.' > openapi.json
 
       - name: Check for Changes
         id: git-status
@@ -29,7 +30,7 @@ jobs:
           git config user.email "github-actions@github.com"
           git config user.name "GitHub Actions"
   
-      - name: Create Branch
+      - name: Create Branch and Commit
         if: steps.git-status.outputs.changed == 'true'
         run: |
           timestamp=$(date +%s)
@@ -41,8 +42,6 @@ jobs:
       - name: Push Branch
         if: steps.git-status.outputs.changed == 'true'
         run: |
-          timestamp=$(date +%s)
-          branch_name="update-openapi-${timestamp}"
           git push origin $branch_name
 
       - name: Create Pull Request
@@ -51,6 +50,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "Update OpenAPI specification"
-          branch: update-openapi-${timestamp}
+          branch: $branch_name
           title: "Update OpenAPI specification"
           body: "This PR updates the OpenAPI specification."
