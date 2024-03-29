@@ -14,6 +14,11 @@ jobs:
       - name: Fetch OpenAPI
         run: | 
           curl https://api.hookdeck.com/2024-03-01/openapi/fern  | jq '.' > openapi.json
+      
+      - name: Set Git Config
+        run: |
+          git config user.email "github-actions@github.com"
+          git config user.name "GitHub Actions"
 
       - name: Check for Changes
         id: git-status
@@ -23,12 +28,6 @@ jobs:
           else
             echo "::set-output name=changed::false"
           fi
-
-      - name: Set Git Config
-        if: steps.git-status.outputs.changed == 'true'
-        run: |
-          git config user.email "github-actions@github.com"
-          git config user.name "GitHub Actions"
   
       - name: Create Branch and Commit
         if: steps.git-status.outputs.changed == 'true'
