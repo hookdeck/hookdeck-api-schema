@@ -12,9 +12,9 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Fetch OpenAPI
-        run: | 
+        run: |
           curl https://api.hookdeck.com/2024-03-01/openapi/fern  | jq '.' > openapi.json
-      
+
       - name: Set Git Config
         run: |
           git config user.email "github-actions@github.com"
@@ -28,7 +28,7 @@ jobs:
           else
             echo "::set-output name=changed::false"
           fi
-  
+
       - name: Create Branch and Commit
         if: steps.git-status.outputs.changed == 'true'
         run: |
@@ -41,7 +41,8 @@ jobs:
       - name: Push Branch
         if: steps.git-status.outputs.changed == 'true'
         run: |
-          git push --set-upstream origin "$branch_name"
+          git config --global push.default current
+          git push $branch_name
 
       - name: Create Pull Request
         if: steps.git-status.outputs.changed == 'true'
