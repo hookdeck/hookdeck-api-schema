@@ -31,9 +31,8 @@ groups:
         #   token: ${NPM_TOKEN}
         github:
           repository: hookdeck/hookdeck-node-sdk
-          mode: pull-request
         config: 
-          namespaceExport: Intercom
+          namespaceExport: Hookdeck
           allowCustomFetcher: true
           skipResponseValidation: true
           includeApiReference: true
