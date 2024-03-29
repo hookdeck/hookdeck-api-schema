@@ -43,7 +43,7 @@ jobs:
         if: steps.git-status.outputs.changed == 'true'
         run: |
           git config --global push.default current
-          git push $BRANCH_NAME
+          git push origin $BRANCH_NAME
 
       - name: Create Pull Request
         if: steps.git-status.outputs.changed == 'true'
