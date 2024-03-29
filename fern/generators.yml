@@ -1,20 +1,40 @@
+api:
+  - path: ../openapi.json
+    overrides: ../overrides.yml
 groups:
   local:
     generators:
       - name: fernapi/fern-go-sdk
         version: 0.6.1
+        output:
+          location: local-file-system
+          path: ../local/go/generated/hookdeck-go-sdk
         config:
           enableExplicitNull: true
           module:
             path: github.com/hookdeck/hookdeck-go-sdk
-        output:
-          location: local-file-system
-          path: ../local/go/generated/hookdeck-go-sdk
-  publish:
+  go-sdk:
     generators:
       - name: fernapi/fern-go-sdk
         version: 0.6.1
-        config:
-          enableExplicitNull: true
         github:
           repository: hookdeck/hookdeck-go-sdk
+        config:
+          enableExplicitNull: true
+  node-sdk:
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.12.9
+        # output:
+        #   location: npm
+        #   package-name: hookdeck
+        #   token: ${NPM_TOKEN}
+        github:
+          repository: hookdeck/hookdeck-node-sdk
+          mode: pull-request
+        config: 
+          namespaceExport: Intercom
+          allowCustomFetcher: true
+          skipResponseValidation: true
+          includeApiReference: true
+        smart-casing: true

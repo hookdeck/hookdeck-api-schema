@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Fetch OpenAPI
-        run: curl -o openapi.json https://api.hookdeck.com/2024-03-01/openapi/fern
+        run: curl https://api.hookdeck.com/2024-03-01/openapi/fern | jq . > openapi.json
 
       - name: Check for Changes
         id: git-status
@@ -52,6 +52,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "Update OpenAPI specification"
           base: main
-          branch: ${{ env.BRANCH_NAME }}
+          branch: ${{ github.event.inputs.branch }}
           title: "Update OpenAPI specification"
           body: "This PR updates the OpenAPI specification."

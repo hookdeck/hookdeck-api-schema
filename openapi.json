@@ -1154,11 +1154,11 @@
           "auth_method": {
             "$ref": "#/components/schemas/DestinationAuthMethodConfig"
           },
-          "archived_at": {
+          "disabled_at": {
             "type": "string",
             "format": "date-time",
             "nullable": true,
-            "description": "Date the destination was archived"
+            "description": "Date the destination was disabled"
           },
           "updated_at": {
             "type": "string",
@@ -1171,7 +1171,14 @@
             "description": "Date the destination was created"
           }
         },
-        "required": ["id", "name", "team_id", "updated_at", "created_at"],
+        "required": [
+          "id",
+          "name",
+          "team_id",
+          "disabled_at",
+          "updated_at",
+          "created_at"
+        ],
         "additionalProperties": false,
         "description": "Associated [Destination](#destination-object) object"
       },
@@ -1348,52 +1355,60 @@
       "IntegrationProvider": {
         "type": "string",
         "enum": [
-          "hmac",
-          "basic_auth",
-          "api_key",
-          "cloudsignal",
-          "courier",
-          "twitter",
-          "stripe",
-          "recharge",
-          "twilio",
-          "github",
-          "shopify",
-          "postmark",
-          "typeform",
-          "xero",
-          "svix",
-          "zoom",
-          "akeneo",
-          "adyen",
-          "gitlab",
-          "property-finder",
-          "woocommerce",
-          "oura",
-          "commercelayer",
-          "hubspot",
-          "mailgun",
-          "persona",
-          "pipedrive",
-          "sendgrid",
-          "workos",
-          "synctera",
-          "aws_sns",
-          "three_d_eye",
-          "twitch",
-          "favro",
-          "wix",
-          "nmi",
-          "repay",
-          "square",
-          "solidgate",
-          "trello",
-          "sanity"
+          "HMAC",
+          "BASIC_AUTH",
+          "API_KEY",
+          "CLOUDSIGNAL",
+          "COURIER",
+          "FRONTAPP",
+          "TWITTER",
+          "STRIPE",
+          "RECHARGE",
+          "TWILIO",
+          "GITHUB",
+          "SHOPIFY",
+          "POSTMARK",
+          "TYPEFORM",
+          "XERO",
+          "SVIX",
+          "ZOOM",
+          "AKENEO",
+          "ADYEN",
+          "GITLAB",
+          "PROPERTY-FINDER",
+          "WOOCOMMERCE",
+          "OURA",
+          "COMMERCELAYER",
+          "HUBSPOT",
+          "MAILGUN",
+          "PERSONA",
+          "PIPEDRIVE",
+          "SENDGRID",
+          "WORKOS",
+          "SYNCTERA",
+          "AWS_SNS",
+          "THREE_D_EYE",
+          "TWITCH",
+          "ENODE",
+          "FAVRO",
+          "LINEAR",
+          "SHOPLINE",
+          "WIX",
+          "NMI",
+          "ORB",
+          "PYLON",
+          "REPAY",
+          "SQUARE",
+          "SOLIDGATE",
+          "TRELLO",
+          "SANITY",
+          "EBAY",
+          "TOKENIO"
         ]
       },
       "IntegrationFeature": {
         "type": "string",
-        "enum": ["VERIFICATION", "HANDSHAKE", "POLLING"]
+        "enum": ["VERIFICATION", "HANDSHAKE"]
       },
       "HMACAlgorithms": {
         "type": "string",
@@ -1460,14 +1475,14 @@
       "BasicAuthIntegrationConfigs": {
         "type": "object",
         "properties": {
-          "name": {
+          "username": {
             "type": "string"
           },
           "password": {
             "type": "string"
           }
         },
-        "required": ["name", "password"],
+        "required": ["username", "password"],
         "additionalProperties": false
       },
       "ShopifyIntegrationConfigs": {
@@ -1727,7 +1742,7 @@
           "last_updated_by": {
             "type": "string",
             "nullable": true,
-            "description": "ID of the team member who last updated the issue status"
+            "description": "Deprecated, will always be set to null"
           },
           "dismissed_at": {
             "type": "string",
@@ -1942,7 +1957,7 @@
           "last_updated_by": {
             "type": "string",
             "nullable": true,
-            "description": "ID of the team member who last updated the issue status"
+            "description": "Deprecated, will always be set to null"
           },
           "dismissed_at": {
             "type": "string",
@@ -2072,7 +2087,7 @@
           "last_updated_by": {
             "type": "string",
             "nullable": true,
-            "description": "ID of the team member who last updated the issue status"
+            "description": "Deprecated, will always be set to null"
           },
           "dismissed_at": {
             "type": "string",
@@ -2159,7 +2174,7 @@
           "last_updated_by": {
             "type": "string",
             "nullable": true,
-            "description": "ID of the team member who last updated the issue status"
+            "description": "Deprecated, will always be set to null"
           },
           "dismissed_at": {
             "type": "string",
@@ -2227,8 +2242,8 @@
       "RequestRejectionCause": {
         "type": "string",
         "enum": [
-          "SOURCE_ARCHIVED",
-          "NO_WEBHOOK",
+          "SOURCE_DISABLED",
+          "NO_CONNECTION",
           "VERIFICATION_FAILED",
           "UNSUPPORTED_HTTP_METHOD",
           "UNSUPPORTED_CONTENT_TYPE",
@@ -2363,7 +2378,7 @@
       "IgnoredEventCause": {
         "type": "string",
         "enum": [
-          "ARCHIVED",
+          "DISABLED",
           "FILTERED",
           "TRANSFORMATION_FAILED",
           "CLI_DISCONNECTED"
@@ -2482,7 +2497,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["hmac"]
+            "enum": ["hmac", "HMAC"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationHMACConfigs"
@@ -2495,14 +2510,14 @@
       "VerificationBasicAuthConfigs": {
         "type": "object",
         "properties": {
-          "name": {
+          "username": {
             "type": "string"
           },
           "password": {
             "type": "string"
           }
         },
-        "required": ["name", "password"],
+        "required": ["username", "password"],
         "additionalProperties": false,
         "description": "The verification configs for Basic Auth. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "BasicAuthConfigs"
@@ -2512,7 +2527,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["basic_auth"]
+            "enum": ["basic_auth", "BASIC_AUTH"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationBasicAuthConfigs"
@@ -2542,7 +2557,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["api_key"]
+            "enum": ["api_key", "API_KEY"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationAPIKeyConfigs"
@@ -2569,7 +2584,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["cloudsignal"]
+            "enum": ["cloudsignal", "CLOUDSIGNAL"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationCloudSignalConfigs"
@@ -2596,7 +2611,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["courier"]
+            "enum": ["courier", "COURIER"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationCourierConfigs"
@@ -2605,6 +2620,33 @@
         "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "Courier"
+      },
+      "VerificationFrontAppConfigs": {
+        "type": "object",
+        "properties": {
+          "webhook_secret_key": {
+            "type": "string"
+          }
+        },
+        "required": ["webhook_secret_key"],
+        "additionalProperties": false,
+        "description": "The verification configs for FrontApp. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "FrontAppConfigs"
+      },
+      "VerificationFrontApp": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["frontapp", "FRONTAPP"]
+          },
+          "configs": {
+            "$ref": "#/components/schemas/VerificationFrontAppConfigs"
+          }
+        },
+        "required": ["type"],
+        "additionalProperties": false,
+        "x-docs-type": "FrontApp"
       },
       "VerificationTwitterConfigs": {
         "type": "object",
@@ -2623,7 +2665,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["twitter"]
+            "enum": ["twitter", "TWITTER"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationTwitterConfigs"
@@ -2650,7 +2692,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["stripe"]
+            "enum": ["stripe", "STRIPE"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationStripeConfigs"
@@ -2692,7 +2734,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["recharge"]
+            "enum": ["recharge", "RECHARGE"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationRechargeConfigs"
@@ -2707,24 +2749,9 @@
         "properties": {
           "webhook_secret_key": {
             "type": "string"
-          },
-          "algorithm": {
-            "$ref": "#/components/schemas/HMACAlgorithms"
-          },
-          "header_key": {
-            "type": "string"
-          },
-          "encoding": {
-            "type": "string",
-            "enum": ["base64", "base64url", "hex"]
           }
         },
-        "required": [
-          "webhook_secret_key",
-          "algorithm",
-          "header_key",
-          "encoding"
-        ],
+        "required": ["webhook_secret_key"],
         "additionalProperties": false,
         "description": "The verification configs for Twilio. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "TwilioConfigs"
@@ -2734,7 +2761,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["twilio"]
+            "enum": ["twilio", "TWILIO"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationTwilioConfigs"
@@ -2761,7 +2788,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["github"]
+            "enum": ["github", "GITHUB"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationGitHubConfigs"
@@ -2810,7 +2837,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["shopify"]
+            "enum": ["shopify", "SHOPIFY"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationShopifyConfigs"
@@ -2823,11 +2850,14 @@
       "VerificationPostmarkConfigs": {
         "type": "object",
         "properties": {
-          "webhook_secret_key": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
             "type": "string"
           }
         },
-        "required": ["webhook_secret_key"],
+        "required": ["username", "password"],
         "additionalProperties": false,
         "description": "The verification configs for Postmark. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "PostmarkConfigs"
@@ -2837,7 +2867,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["postmark"]
+            "enum": ["postmark", "POSTMARK"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationPostmarkConfigs"
@@ -2864,7 +2894,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["typeform"]
+            "enum": ["typeform", "TYPEFORM"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationTypeformConfigs"
@@ -2891,7 +2921,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["xero"]
+            "enum": ["xero", "XERO"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationXeroConfigs"
@@ -2918,7 +2948,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["svix"]
+            "enum": ["svix", "SVIX"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationSvixConfigs"
@@ -2945,7 +2975,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["zoom"]
+            "enum": ["zoom", "ZOOM"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationZoomConfigs"
@@ -2972,7 +3002,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["akeneo"]
+            "enum": ["akeneo", "AKENEO"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationAkeneoConfigs"
@@ -2999,7 +3029,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["adyen"]
+            "enum": ["adyen", "ADYEN"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationAdyenConfigs"
@@ -3026,7 +3056,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["gitlab"]
+            "enum": ["gitlab", "GITLAB"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationGitLabConfigs"
@@ -3053,7 +3083,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["property-finder"]
+            "enum": ["property-finder", "PROPERTY-FINDER"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationPropertyFinderConfigs"
@@ -3080,7 +3110,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["woocommerce"]
+            "enum": ["woocommerce", "WOOCOMMERCE"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationWooCommerceConfigs"
@@ -3107,7 +3137,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["oura"]
+            "enum": ["oura", "OURA"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationOuraConfigs"
@@ -3134,7 +3164,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["commercelayer"]
+            "enum": ["commercelayer", "COMMERCELAYER"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationCommercelayerConfigs"
@@ -3161,7 +3191,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["hubspot"]
+            "enum": ["hubspot", "HUBSPOT"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationHubspotConfigs"
@@ -3188,7 +3218,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["mailgun"]
+            "enum": ["mailgun", "MAILGUN"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationMailgunConfigs"
@@ -3215,7 +3245,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["persona"]
+            "enum": ["persona", "PERSONA"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationPersonaConfigs"
@@ -3228,14 +3258,14 @@
       "VerificationPipedriveConfigs": {
         "type": "object",
         "properties": {
-          "name": {
+          "username": {
             "type": "string"
           },
           "password": {
             "type": "string"
           }
         },
-        "required": ["name", "password"],
+        "required": ["username", "password"],
         "additionalProperties": false,
         "description": "The verification configs for Pipedrive. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "PipedriveConfigs"
@@ -3245,7 +3275,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["pipedrive"]
+            "enum": ["pipedrive", "PIPEDRIVE"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationPipedriveConfigs"
@@ -3272,7 +3302,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["sendgrid"]
+            "enum": ["sendgrid", "SENDGRID"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationSendGridConfigs"
@@ -3299,7 +3329,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["workos"]
+            "enum": ["workos", "WORKOS"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationWorkOSConfigs"
@@ -3326,7 +3356,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["synctera"]
+            "enum": ["synctera", "SYNCTERA"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationSyncteraConfigs"
@@ -3348,7 +3378,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["aws_sns"]
+            "enum": ["aws_sns", "AWS_SNS"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationAWSSNSConfigs"
@@ -3375,7 +3405,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["three_d_eye"]
+            "enum": ["three_d_eye", "THREE_D_EYE"]
           },
           "configs": {
             "$ref": "#/components/schemas/Verification3dEyeConfigs"
@@ -3402,7 +3432,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["twitch"]
+            "enum": ["twitch", "TWITCH"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationTwitchConfigs"
@@ -3412,17 +3442,41 @@
         "additionalProperties": false,
         "x-docs-type": "Twitch"
       },
+      "VerificationEnodeConfigs": {
+        "type": "object",
+        "properties": {
+          "webhook_secret_key": {
+            "type": "string"
+          }
+        },
+        "required": ["webhook_secret_key"],
+        "additionalProperties": false,
+        "description": "The verification configs for Enode. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "EnodeConfigs"
+      },
+      "VerificationEnode": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["enode", "ENODE"]
+          },
+          "configs": {
+            "$ref": "#/components/schemas/VerificationEnodeConfigs"
+          }
+        },
+        "required": ["type"],
+        "additionalProperties": false,
+        "x-docs-type": "Enode"
+      },
       "VerificationFavroConfigs": {
         "type": "object",
         "properties": {
           "webhook_secret_key": {
             "type": "string"
-          },
-          "url": {
-            "type": "string"
           }
         },
-        "required": ["webhook_secret_key", "url"],
+        "required": ["webhook_secret_key"],
         "additionalProperties": false,
         "description": "The verification configs for Favro. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "FavroConfigs"
@@ -3432,7 +3486,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["favro"]
+            "enum": ["favro", "FAVRO"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationFavroConfigs"
@@ -3441,6 +3495,60 @@
         "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "Favro"
+      },
+      "VerificationLinearConfigs": {
+        "type": "object",
+        "properties": {
+          "webhook_secret_key": {
+            "type": "string"
+          }
+        },
+        "required": ["webhook_secret_key"],
+        "additionalProperties": false,
+        "description": "The verification configs for Linear. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "LinearConfigs"
+      },
+      "VerificationLinear": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["linear", "LINEAR"]
+          },
+          "configs": {
+            "$ref": "#/components/schemas/VerificationLinearConfigs"
+          }
+        },
+        "required": ["type"],
+        "additionalProperties": false,
+        "x-docs-type": "Linear"
+      },
+      "VerificationShoplineConfigs": {
+        "type": "object",
+        "properties": {
+          "webhook_secret_key": {
+            "type": "string"
+          }
+        },
+        "required": ["webhook_secret_key"],
+        "additionalProperties": false,
+        "description": "The verification configs for Shopline. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "ShoplineConfigs"
+      },
+      "VerificationShopline": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["shopline", "SHOPLINE"]
+          },
+          "configs": {
+            "$ref": "#/components/schemas/VerificationShoplineConfigs"
+          }
+        },
+        "required": ["type"],
+        "additionalProperties": false,
+        "x-docs-type": "Shopline"
       },
       "VerificationWixConfigs": {
         "type": "object",
@@ -3459,7 +3567,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["wix"]
+            "enum": ["wix", "WIX"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationWixConfigs"
@@ -3486,7 +3594,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["nmi"]
+            "enum": ["nmi", "NMI"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationNMIPaymentGatewayConfigs"
@@ -3495,6 +3603,60 @@
         "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "NMI Payment Gateway"
+      },
+      "VerificationOrbConfigs": {
+        "type": "object",
+        "properties": {
+          "webhook_secret_key": {
+            "type": "string"
+          }
+        },
+        "required": ["webhook_secret_key"],
+        "additionalProperties": false,
+        "description": "The verification configs for Orb. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "OrbConfigs"
+      },
+      "VerificationOrb": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["orb", "ORB"]
+          },
+          "configs": {
+            "$ref": "#/components/schemas/VerificationOrbConfigs"
+          }
+        },
+        "required": ["type"],
+        "additionalProperties": false,
+        "x-docs-type": "Orb"
+      },
+      "VerificationPylonConfigs": {
+        "type": "object",
+        "properties": {
+          "webhook_secret_key": {
+            "type": "string"
+          }
+        },
+        "required": ["webhook_secret_key"],
+        "additionalProperties": false,
+        "description": "The verification configs for Pylon. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "PylonConfigs"
+      },
+      "VerificationPylon": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["pylon", "PYLON"]
+          },
+          "configs": {
+            "$ref": "#/components/schemas/VerificationPylonConfigs"
+          }
+        },
+        "required": ["type"],
+        "additionalProperties": false,
+        "x-docs-type": "Pylon"
       },
       "VerificationRepayConfigs": {
         "type": "object",
@@ -3513,7 +3675,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["repay"]
+            "enum": ["repay", "REPAY"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationRepayConfigs"
@@ -3528,12 +3690,9 @@
         "properties": {
           "webhook_secret_key": {
             "type": "string"
-          },
-          "url": {
-            "type": "string"
           }
         },
-        "required": ["webhook_secret_key", "url"],
+        "required": ["webhook_secret_key"],
         "additionalProperties": false,
         "description": "The verification configs for Square. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "SquareConfigs"
@@ -3543,7 +3702,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["square"]
+            "enum": ["square", "SQUARE"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationSquareConfigs"
@@ -3570,7 +3729,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["solidgate"]
+            "enum": ["solidgate", "SOLIDGATE"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationSolidGateConfigs"
@@ -3585,12 +3744,9 @@
         "properties": {
           "webhook_secret_key": {
             "type": "string"
-          },
-          "url": {
-            "type": "string"
           }
         },
-        "required": ["webhook_secret_key", "url"],
+        "required": ["webhook_secret_key"],
         "additionalProperties": false,
         "description": "The verification configs for Trello. Only included if the ?include=verification.configs query param is present",
         "x-docs-type": "TrelloConfigs"
@@ -3600,7 +3756,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["trello"]
+            "enum": ["trello", "TRELLO"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationTrelloConfigs"
@@ -3627,7 +3783,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["sanity"]
+            "enum": ["sanity", "SANITY"]
           },
           "configs": {
             "$ref": "#/components/schemas/VerificationSanityConfigs"
@@ -3636,6 +3792,78 @@
         "required": ["type"],
         "additionalProperties": false,
         "x-docs-type": "Sanity"
+      },
+      "VerificationEbayConfigs": {
+        "type": "object",
+        "properties": {
+          "environment": {
+            "type": "string"
+          },
+          "client_id": {
+            "type": "string"
+          },
+          "client_secret": {
+            "type": "string"
+          },
+          "dev_id": {
+            "type": "string"
+          },
+          "verification_token": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "environment",
+          "client_id",
+          "client_secret",
+          "dev_id",
+          "verification_token"
+        ],
+        "additionalProperties": false,
+        "description": "The verification configs for Ebay. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "EbayConfigs"
+      },
+      "VerificationEbay": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["ebay", "EBAY"]
+          },
+          "configs": {
+            "$ref": "#/components/schemas/VerificationEbayConfigs"
+          }
+        },
+        "required": ["type"],
+        "additionalProperties": false,
+        "x-docs-type": "Ebay"
+      },
+      "VerificationTokenIOConfigs": {
+        "type": "object",
+        "properties": {
+          "public_key": {
+            "type": "string"
+          }
+        },
+        "required": ["public_key"],
+        "additionalProperties": false,
+        "description": "The verification configs for TokenIO. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "TokenIOConfigs"
+      },
+      "VerificationTokenIO": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["tokenio", "TOKENIO"]
+          },
+          "configs": {
+            "$ref": "#/components/schemas/VerificationTokenIOConfigs"
+          }
+        },
+        "required": ["type"],
+        "additionalProperties": false,
+        "x-docs-type": "TokenIO"
       },
       "VerificationConfig": {
         "oneOf": [
@@ -3653,6 +3881,9 @@
           },
           {
             "$ref": "#/components/schemas/VerificationCourier"
+          },
+          {
+            "$ref": "#/components/schemas/VerificationFrontApp"
           },
           {
             "$ref": "#/components/schemas/VerificationTwitter"
@@ -3739,13 +3970,28 @@
             "$ref": "#/components/schemas/VerificationTwitch"
           },
           {
+            "$ref": "#/components/schemas/VerificationEnode"
+          },
+          {
             "$ref": "#/components/schemas/VerificationFavro"
+          },
+          {
+            "$ref": "#/components/schemas/VerificationLinear"
+          },
+          {
+            "$ref": "#/components/schemas/VerificationShopline"
           },
           {
             "$ref": "#/components/schemas/VerificationWix"
           },
           {
             "$ref": "#/components/schemas/VerificationNMIPaymentGateway"
+          },
+          {
+            "$ref": "#/components/schemas/VerificationOrb"
+          },
+          {
+            "$ref": "#/components/schemas/VerificationPylon"
           },
           {
             "$ref": "#/components/schemas/VerificationRepay"
@@ -3761,10 +4007,15 @@
           },
           {
             "$ref": "#/components/schemas/VerificationSanity"
+          },
+          {
+            "$ref": "#/components/schemas/VerificationEbay"
+          },
+          {
+            "$ref": "#/components/schemas/VerificationTokenIO"
           }
         ],
-        "nullable": true,
-        "description": "The verification configs for the specific verification type"
+        "description": "The verification configs for the specified verification type"
       },
       "SourceAllowedHTTPMethod": {
         "type": "array",
@@ -3823,7 +4074,17 @@
             "format": "URL"
           },
           "verification": {
-            "$ref": "#/components/schemas/VerificationConfig"
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/VerificationConfig"
+              },
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": false
+              }
+            ],
+            "nullable": true
           },
           "allowed_http_methods": {
             "$ref": "#/components/schemas/SourceAllowedHTTPMethod"
@@ -3831,11 +4092,11 @@
           "custom_response": {
             "$ref": "#/components/schemas/SourceCustomResponse"
           },
-          "archived_at": {
+          "disabled_at": {
             "type": "string",
             "format": "date-time",
             "nullable": true,
-            "description": "Date the source was archived"
+            "description": "Date the source was disabled"
           },
           "updated_at": {
             "type": "string",
@@ -3853,6 +4114,7 @@
           "name",
           "team_id",
           "url",
+          "disabled_at",
           "updated_at",
           "created_at"
         ],
@@ -4465,11 +4727,11 @@
             "nullable": true,
             "description": "Array of rules configured on the connection"
           },
-          "archived_at": {
+          "disabled_at": {
             "type": "string",
             "format": "date-time",
             "nullable": true,
-            "description": "Date the connection was archived"
+            "description": "Date the connection was disabled"
           },
           "paused_at": {
             "type": "string",
@@ -4497,7 +4759,7 @@
           "destination",
           "source",
           "rules",
-          "archived_at",
+          "disabled_at",
           "paused_at",
           "updated_at",
           "created_at"
@@ -4526,7 +4788,7 @@
   },
   "servers": [
     {
-      "url": "https://api.hookdeck.com/2023-07-01",
+      "url": "https://api.hookdeck.com/2024-03-01",
       "description": "Production API"
     }
   ],
@@ -6164,15 +6426,15 @@
           },
           {
             "in": "query",
-            "name": "archived",
+            "name": "disabled",
             "schema": {
               "type": "boolean",
-              "description": "Include archived resources in the response"
+              "description": "Include disabled resources in the response"
             }
           },
           {
             "in": "query",
-            "name": "archived_at",
+            "name": "disabled_at",
             "schema": {
               "anyOf": [
                 {
@@ -6210,7 +6472,7 @@
                   "additionalProperties": false
                 }
               ],
-              "description": "Date the destination was archived"
+              "description": "Date the destination was disabled"
             }
           },
           {
@@ -6815,10 +7077,10 @@
         "x-fern-sdk-method-name": "delete"
       }
     },
-    "/destinations/{id}/archive": {
+    "/destinations/{id}/disable": {
       "put": {
-        "operationId": "archiveDestination",
-        "summary": "Archive a destination",
+        "operationId": "disableDestination",
+        "summary": "Disable a destination",
         "description": "",
         "tags": ["Destinations"],
         "responses": {
@@ -6852,16 +7114,129 @@
               "description": "Destination ID"
             },
             "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "description": "Destination ID"
+            },
+            "required": true
           }
         ],
         "x-fern-sdk-group-name": "destination",
-        "x-fern-sdk-method-name": "archive"
+        "x-fern-sdk-method-name": "disable"
+      }
+    },
+    "/destinations/{id}/archive": {
+      "put": {
+        "operationId": "disableDestination",
+        "summary": "Disable a destination",
+        "description": "",
+        "tags": ["Destinations"],
+        "responses": {
+          "200": {
+            "description": "A single destination",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Destination"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "description": "Destination ID"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "description": "Destination ID"
+            },
+            "required": true
+          }
+        ],
+        "x-fern-sdk-group-name": "destination",
+        "x-fern-sdk-method-name": "disable"
+      }
+    },
+    "/destinations/{id}/enable": {
+      "put": {
+        "operationId": "enableDestination",
+        "summary": "Enable a destination",
+        "description": "",
+        "tags": ["Destinations"],
+        "responses": {
+          "200": {
+            "description": "A single destination",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Destination"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "description": "Destination ID"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "description": "Destination ID"
+            },
+            "required": true
+          }
+        ],
+        "x-fern-sdk-group-name": "destination",
+        "x-fern-sdk-method-name": "enable"
       }
     },
     "/destinations/{id}/unarchive": {
       "put": {
-        "operationId": "unarchiveDestination",
-        "summary": "Unarchive a destination",
+        "operationId": "enableDestination",
+        "summary": "Enable a destination",
         "description": "",
         "tags": ["Destinations"],
         "responses": {
@@ -6895,10 +7270,19 @@
               "description": "Destination ID"
             },
             "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "description": "Destination ID"
+            },
+            "required": true
           }
         ],
         "x-fern-sdk-group-name": "destination",
-        "x-fern-sdk-method-name": "unarchive"
+        "x-fern-sdk-method-name": "enable"
       }
     },
     "/bulk/events/retry": {
@@ -14603,15 +14987,15 @@
           },
           {
             "in": "query",
-            "name": "archived",
+            "name": "disabled",
             "schema": {
               "type": "boolean",
-              "description": "Include archived resources in the response"
+              "description": "Include disabled resources in the response"
             }
           },
           {
             "in": "query",
-            "name": "archived_at",
+            "name": "disabled_at",
             "schema": {
               "anyOf": [
                 {
@@ -14649,7 +15033,7 @@
                   "additionalProperties": false
                 }
               ],
-              "description": "Date the source was archived"
+              "description": "Date the source was disabled"
             }
           },
           {
@@ -15087,10 +15471,10 @@
         "x-fern-sdk-method-name": "delete"
       }
     },
-    "/sources/{id}/archive": {
+    "/sources/{id}/disable": {
       "put": {
-        "operationId": "archiveSource",
-        "summary": "Archive a source",
+        "operationId": "disableSource",
+        "summary": "Disable a source",
         "description": "",
         "tags": ["Sources"],
         "responses": {
@@ -15124,16 +15508,129 @@
               "description": "Source ID"
             },
             "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "description": "Source ID"
+            },
+            "required": true
           }
         ],
         "x-fern-sdk-group-name": "source",
-        "x-fern-sdk-method-name": "archive"
+        "x-fern-sdk-method-name": "disable"
+      }
+    },
+    "/sources/{id}/archive": {
+      "put": {
+        "operationId": "disableSource",
+        "summary": "Disable a source",
+        "description": "",
+        "tags": ["Sources"],
+        "responses": {
+          "200": {
+            "description": "A single source",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Source"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "description": "Source ID"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "description": "Source ID"
+            },
+            "required": true
+          }
+        ],
+        "x-fern-sdk-group-name": "source",
+        "x-fern-sdk-method-name": "disable"
+      }
+    },
+    "/sources/{id}/enable": {
+      "put": {
+        "operationId": "enableSource",
+        "summary": "Enable a source",
+        "description": "",
+        "tags": ["Sources"],
+        "responses": {
+          "200": {
+            "description": "A single source",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Source"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "description": "Source ID"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "description": "Source ID"
+            },
+            "required": true
+          }
+        ],
+        "x-fern-sdk-group-name": "source",
+        "x-fern-sdk-method-name": "enable"
       }
     },
     "/sources/{id}/unarchive": {
       "put": {
-        "operationId": "unarchiveSource",
-        "summary": "Unarchive a source",
+        "operationId": "enableSource",
+        "summary": "Enable a source",
         "description": "",
         "tags": ["Sources"],
         "responses": {
@@ -15167,10 +15664,19 @@
               "description": "Source ID"
             },
             "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "description": "Source ID"
+            },
+            "required": true
           }
         ],
         "x-fern-sdk-group-name": "source",
-        "x-fern-sdk-method-name": "unarchive"
+        "x-fern-sdk-method-name": "enable"
       }
     },
     "/notifications/webhooks": {
@@ -15224,7 +15730,7 @@
         }
       }
     },
-    "/teams/{team_id}/custom_domains": {
+    "/teams/current/custom_domains": {
       "post": {
         "operationId": "addCustomDomain",
         "summary": "Add a custom domain to the workspace",
@@ -15242,16 +15748,7 @@
             }
           }
         },
-        "parameters": [
-          {
-            "in": "path",
-            "name": "team_id",
-            "schema": {
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
+        "parameters": [],
         "x-fern-sdk-group-name": "customDomain",
         "x-fern-sdk-method-name": "create",
         "requestBody": {
@@ -15282,21 +15779,12 @@
             }
           }
         },
-        "parameters": [
-          {
-            "in": "path",
-            "name": "team_id",
-            "schema": {
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
+        "parameters": [],
         "x-fern-sdk-group-name": "customDomain",
         "x-fern-sdk-method-name": "list"
       }
     },
-    "/teams/{team_id}/custom_domains/{domain_id}": {
+    "/teams/current/custom_domains/{domain_id}": {
       "delete": {
         "operationId": "deleteCustomDomain",
         "summary": "Removes a custom domain from the workspace",
@@ -15315,14 +15803,6 @@
           }
         },
         "parameters": [
-          {
-            "in": "path",
-            "name": "team_id",
-            "schema": {
-              "type": "string"
-            },
-            "required": true
-          },
           {
             "in": "path",
             "name": "domain_id",
@@ -16381,15 +16861,15 @@
           },
           {
             "in": "query",
-            "name": "archived",
+            "name": "disabled",
             "schema": {
               "type": "boolean",
-              "description": "Include archived resources in the response"
+              "description": "Include disabled resources in the response"
             }
           },
           {
             "in": "query",
-            "name": "archived_at",
+            "name": "disabled_at",
             "schema": {
               "anyOf": [
                 {
@@ -16427,7 +16907,7 @@
                   "additionalProperties": false
                 }
               ],
-              "description": "Date the connection was archived"
+              "description": "Date the connection was disabled"
             }
           },
           {
@@ -17034,15 +17514,15 @@
           },
           {
             "in": "query",
-            "name": "archived",
+            "name": "disabled",
             "schema": {
               "type": "boolean",
-              "description": "Include archived resources in the response"
+              "description": "Include disabled resources in the response"
             }
           },
           {
             "in": "query",
-            "name": "archived_at",
+            "name": "disabled_at",
             "schema": {
               "anyOf": [
                 {
@@ -17080,7 +17560,7 @@
                   "additionalProperties": false
                 }
               ],
-              "description": "Date the connection was archived"
+              "description": "Date the connection was disabled"
             }
           },
           {
@@ -17324,10 +17804,10 @@
         "x-fern-sdk-method-name": "delete"
       }
     },
-    "/connections/{id}/archive": {
+    "/connections/{id}/disable": {
       "put": {
-        "operationId": "archiveConnection",
-        "summary": "Archive a connection",
+        "operationId": "disableConnection",
+        "summary": "Disable a connection",
         "description": "",
         "tags": ["Connections"],
         "responses": {
@@ -17361,16 +17841,129 @@
               "description": "Connection ID"
             },
             "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "description": "Connection ID"
+            },
+            "required": true
           }
         ],
         "x-fern-sdk-group-name": "connection",
-        "x-fern-sdk-method-name": "archive"
+        "x-fern-sdk-method-name": "disable"
+      }
+    },
+    "/connections/{id}/archive": {
+      "put": {
+        "operationId": "disableConnection",
+        "summary": "Disable a connection",
+        "description": "",
+        "tags": ["Connections"],
+        "responses": {
+          "200": {
+            "description": "A single connection",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Connection"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "description": "Connection ID"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "description": "Connection ID"
+            },
+            "required": true
+          }
+        ],
+        "x-fern-sdk-group-name": "connection",
+        "x-fern-sdk-method-name": "disable"
+      }
+    },
+    "/connections/{id}/enable": {
+      "put": {
+        "operationId": "enableConnection",
+        "summary": "Enable a connection",
+        "description": "",
+        "tags": ["Connections"],
+        "responses": {
+          "200": {
+            "description": "A single connection",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Connection"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "description": "Connection ID"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "description": "Connection ID"
+            },
+            "required": true
+          }
+        ],
+        "x-fern-sdk-group-name": "connection",
+        "x-fern-sdk-method-name": "enable"
       }
     },
     "/connections/{id}/unarchive": {
       "put": {
-        "operationId": "unarchiveConnection",
-        "summary": "Unarchive a connection",
+        "operationId": "enableConnection",
+        "summary": "Enable a connection",
         "description": "",
         "tags": ["Connections"],
         "responses": {
@@ -17404,10 +17997,19 @@
               "description": "Connection ID"
             },
             "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "description": "Connection ID"
+            },
+            "required": true
           }
         ],
         "x-fern-sdk-group-name": "connection",
-        "x-fern-sdk-method-name": "unarchive"
+        "x-fern-sdk-method-name": "enable"
       }
     },
     "/connections/{id}/pause": {

@@ -1,0 +1,6 @@
+components: 
+  schemas: 
+    VerificationPropertyFinder: 
+      properties: 
+        type: 
+          x-fern-type: string 
