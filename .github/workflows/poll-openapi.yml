@@ -51,6 +51,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "Update OpenAPI specification"
+          base: main
           branch: ${{ env.BRANCH_NAME }}
           title: "Update OpenAPI specification"
           body: "This PR updates the OpenAPI specification."
