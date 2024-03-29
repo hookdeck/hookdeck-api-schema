@@ -23,16 +23,27 @@ jobs:
             echo "::set-output name=changed::false"
           fi
 
+      - name: Set Git Config
+        if: steps.git-status.outputs.changed == 'true'
+        run: |
+          git config user.email "github-actions@github.com"
+          git config user.name "GitHub Actions"
+  
       - name: Create Branch
         if: steps.git-status.outputs.changed == 'true'
         run: |
-          git checkout -b update-openapi
+          timestamp=$(date +%s)
+          branch_name="update-openapi-${timestamp}"
+          git checkout -b $branch_name
           git add openapi.json
           git commit -m "Update OpenAPI specification"
 
       - name: Push Branch
         if: steps.git-status.outputs.changed == 'true'
-        run: git push origin update-openapi
+        run: |
+          timestamp=$(date +%s)
+          branch_name="update-openapi-${timestamp}"
+          git push origin $branch_name
 
       - name: Create Pull Request
         if: steps.git-status.outputs.changed == 'true'
@@ -40,6 +51,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "Update OpenAPI specification"
-          branch: update-openapi
+          branch: update-openapi-${timestamp}
           title: "Update OpenAPI specification"
           body: "This PR updates the OpenAPI specification."
