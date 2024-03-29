@@ -1,0 +1,41 @@
+name: Fetch Hookdeck OpenAPI
+on:
+  workflow_dispatch: # Manually trigger the workflow
+  schedule:
+    - cron: "*/15 * * * *"
+jobs:
+  fetch-openapi:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Fetch OpenAPI
+        run: curl -o openapi.json https://api.hookdeck.com/2024-03-01/openapi/fern
+
+      - name: Check for Changes
+        id: git-status
+        run: |
+          git diff --quiet || echo "::set-output name=changed::true"
+
+      - name: Create Branch
+        if: steps.git-status.outputs.changed == 'true'
+        run: |
+          git checkout -b update-openapi
+          git add openapi.json
+          git commit -m "Update OpenAPI specification"
+
+      - name: Push Branch
+        if: steps.git-status.outputs.changed == 'true'
+        run: git push origin update-openapi
+
+      - name: Create Pull Request
+        if: steps.git-status.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "Update OpenAPI specification"
+          branch: update-openapi
+          title: "Update OpenAPI specification"
+          body: "This PR updates the OpenAPI specification."
