@@ -27,7 +27,7 @@ groups:
         version: 0.12.9
         output:
           location: npm
-          package-name: @hookdeck/sdk
+          package-name: "@hookdeck/sdk"
           token: ${NPM_TOKEN}
         github:
           repository: hookdeck/hookdeck-typescript-sdk
