@@ -30,7 +30,7 @@ groups:
           package-name: @hookdeck/sdk
           token: ${NPM_TOKEN}
         github:
-          repository: hookdeck/hookdeck-node-sdk
+          repository: hookdeck/hookdeck-typescript-sdk
         config: 
           namespaceExport: Hookdeck
           allowCustomFetcher: true
