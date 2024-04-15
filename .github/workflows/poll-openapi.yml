@@ -1,6 +1,5 @@
 name: Fetch Hookdeck OpenAPI
 on:
-  pull_request:
   workflow_dispatch: # Manually trigger the workflow
   schedule:
     - cron: "*/15 * * * *"
