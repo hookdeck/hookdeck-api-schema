@@ -11,19 +11,47 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      id-token: write
+    
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup node
         uses: actions/setup-node@v3
 
+      - name: Update jsr.json version
+        uses: jossef/action-set-json-field@v2.1
+        with:
+          file: jsr.json
+          field: version
+          value: ${{ inputs.version }}
+    
+      - name: Commit jsr.json
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          git commit -m "docs: updating JSR release ${{ inputs.version }}"
+        
+      - name: Push jsr.json changes
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tags: true
+
       - name: Download Fern
         run: npm install -g fern-api
 
-      - name: Release SDKs
+      - name: Publish to NPM
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           fern generate --group node-sdk --version ${{ inputs.version }} --log-level debug
+
+      - name: Publish to JSR.io
+        run: npx jsr publish
