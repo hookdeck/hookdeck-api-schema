@@ -45,6 +45,8 @@ jobs:
       - name: Clone hookdeck-typescript-sdk for JSR
         run: |
           git clone https://oauth2:${{ secrets.GH_ACCESS_TOKEN }}:@github.com/hookdeck/hookdeck-typescript-sdk.git
+          git remote set-url --push origin https://oauth2:${{ secrets.GH_ACCESS_TOKEN }}:@github.com/hookdeck/hookdeck-typescript-sdk.git
+
 
       - name: Update jsr.json version
         uses: jossef/action-set-json-field@v2.1
