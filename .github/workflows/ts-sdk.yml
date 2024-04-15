@@ -51,8 +51,8 @@ jobs:
       - name: Commit jsr.json
         run: |
           cd hookdeck-typescript-sdk
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          # git config --local user.email "action@github.com"
+          # git config --local user.name "GitHub Action"
           git add -A
           git commit -m "docs: updating JSR release ${{ inputs.version }}"
         
