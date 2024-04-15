@@ -23,21 +23,21 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v3
 
-      - name: Download Fern
-        run: npm install -g fern-api
+      # - name: Download Fern
+      #   run: npm install -g fern-api
 
-      - name: Publish to NPM
-        env:
-          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          fern generate --group node-sdk --version ${{ inputs.version }} --log-level debug
+      # - name: Publish to NPM
+      #   env:
+      #     FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+      #     NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      #   run: |
+      #     fern generate --group node-sdk --version ${{ inputs.version }} --log-level debug
 
       - uses: actions/checkout@v4
         with:
           # Repository name with owner. For example, actions/checkout
           # Default: ${{ github.repository }}
-          repository: 'https://github.com/hookdeck/hookdeck-typescript-sdk.git'
+          repository: 'hookdeck/hookdeck-typescript-sdk.git'
           path: 'hookdeck-typescript-sdk'
 
       - name: Update jsr.json version
