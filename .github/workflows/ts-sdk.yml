@@ -39,6 +39,7 @@ jobs:
           # Default: ${{ github.repository }}
           repository: 'hookdeck/hookdeck-typescript-sdk.git'
           path: 'hookdeck-typescript-sdk'
+          ref: 'main'
 
       - name: Update jsr.json version
         uses: jossef/action-set-json-field@v2.1
