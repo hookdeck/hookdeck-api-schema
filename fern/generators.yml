@@ -31,9 +31,11 @@ groups:
           token: ${NPM_TOKEN}
         github:
           repository: hookdeck/hookdeck-typescript-sdk
+          mode: pull-request
         config: 
           namespaceExport: Hookdeck
           allowCustomFetcher: true
           skipResponseValidation: true
           includeApiReference: true
+          outputEsm: true
         smart-casing: true
