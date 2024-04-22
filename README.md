@@ -1,8 +1,9 @@
-# Hookdeck API
+# Hookdeck OpenAPI Schema
 
-Tagging a release on this repository will:
+In addition to the standard uses of OpenAPI schema, the Hookdeck OpenAPI schema is used to generate our SDKS:
 
-- Update the [Go SDK](https://github.com/hookdeck/hookdeck-go-sdk)
+- [Go SDK](https://github.com/hookdeck/hookdeck-go-sdk)
+- [TypeScript SDK](https://github.com/hookdeck/hookdeck-typescript-sdk)
 - _More SDKs to come..._
 
 ## What is in this repository?
