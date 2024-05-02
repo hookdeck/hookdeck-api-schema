@@ -279,7 +279,7 @@
           "team_id": {
             "type": "string",
             "nullable": true,
-            "description": "ID of the workspace"
+            "description": "ID of the project"
           },
           "name": {
             "type": "string",
@@ -682,7 +682,7 @@
           },
           "team_id": {
             "type": "string",
-            "description": "ID of the workspace"
+            "description": "ID of the project"
           },
           "webhook_id": {
             "type": "string",
@@ -781,7 +781,7 @@
           },
           "team_id": {
             "type": "string",
-            "description": "ID of the workspace"
+            "description": "ID of the project"
           },
           "webhook_id": {
             "type": "string",
@@ -1215,6 +1215,46 @@
         "description": "Custom Signature",
         "x-docs-type": "Custom Signature"
       },
+      "DestinationAuthMethodAwsSignatureConfig": {
+        "type": "object",
+        "properties": {
+          "access_key_id": {
+            "type": "string",
+            "description": "AWS access key id"
+          },
+          "secret_access_key": {
+            "type": "string",
+            "description": "AWS secret access key"
+          }
+        },
+        "required": [
+          "access_key_id",
+          "secret_access_key"
+        ],
+        "additionalProperties": false,
+        "description": "AWS Signature config for the destination's auth method"
+      },
+      "AuthAwsSignature": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "AWS_SIGNATURE"
+            ],
+            "description": "Type of auth method"
+          },
+          "config": {
+            "$ref": "#/components/schemas/DestinationAuthMethodAwsSignatureConfig"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false,
+        "description": "AWS Signature",
+        "x-docs-type": "AWS Signature"
+      },
       "DestinationAuthMethodConfig": {
         "anyOf": [
           {
@@ -1241,6 +1281,9 @@
           },
           {
             "$ref": "#/components/schemas/AuthCustomSignature"
+          },
+          {
+            "$ref": "#/components/schemas/AuthAwsSignature"
           }
         ],
         "description": "Config for the destination's auth method"
@@ -1263,7 +1306,7 @@
           },
           "team_id": {
             "type": "string",
-            "description": "ID of the workspace"
+            "description": "ID of the project"
           },
           "path_forwarding_disabled": {
             "type": "boolean",
@@ -1283,7 +1326,7 @@
           "rate_limit": {
             "type": "integer",
             "nullable": true,
-            "description": "Limit event attempts to receive per period. Max value is workspace plan's max attempts thoughput."
+            "description": "Limit delivery rate of event attempts to receive per period."
           },
           "rate_limit_period": {
             "$ref": "#/components/schemas/DestinationRateLimitPeriod"
@@ -1349,7 +1392,7 @@
           },
           "team_id": {
             "type": "string",
-            "description": "ID of the workspace"
+            "description": "ID of the project"
           },
           "query": {
             "anyOf": [
@@ -1547,7 +1590,9 @@
           "SANITY",
           "EBAY",
           "TELNYX",
-          "TOKENIO"
+          "TOKENIO",
+          "FISERV",
+          "BONDSMITH"
         ]
       },
       "IntegrationFeature": {
@@ -1696,7 +1741,7 @@
           },
           "team_id": {
             "type": "string",
-            "description": "ID of the workspace"
+            "description": "ID of the project"
           },
           "label": {
             "type": "string",
@@ -1905,7 +1950,7 @@
           },
           "team_id": {
             "type": "string",
-            "description": "ID of the workspace"
+            "description": "ID of the project"
           },
           "status": {
             "$ref": "#/components/schemas/IssueStatus"
@@ -2138,7 +2183,7 @@
           },
           "team_id": {
             "type": "string",
-            "description": "ID of the workspace"
+            "description": "ID of the project"
           },
           "status": {
             "$ref": "#/components/schemas/IssueStatus"
@@ -2272,7 +2317,7 @@
           },
           "team_id": {
             "type": "string",
-            "description": "ID of the workspace"
+            "description": "ID of the project"
           },
           "status": {
             "$ref": "#/components/schemas/IssueStatus"
@@ -2361,7 +2406,7 @@
           },
           "team_id": {
             "type": "string",
-            "description": "ID of the workspace"
+            "description": "ID of the project"
           },
           "status": {
             "$ref": "#/components/schemas/IssueStatus"
@@ -2475,7 +2520,7 @@
           },
           "team_id": {
             "type": "string",
-            "description": "ID of the workspace"
+            "description": "ID of the project"
           },
           "verified": {
             "type": "boolean",
@@ -4473,6 +4518,74 @@
         "additionalProperties": false,
         "x-docs-type": "TokenIO"
       },
+      "VerificationFiservConfigs": {
+        "type": "object",
+        "properties": {
+          "webhook_secret_key": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "webhook_secret_key"
+        ],
+        "additionalProperties": false,
+        "description": "The verification configs for Fiserv. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "FiservConfigs"
+      },
+      "VerificationFiserv": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "fiserv",
+              "FISERV"
+            ]
+          },
+          "configs": {
+            "$ref": "#/components/schemas/VerificationFiservConfigs"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false,
+        "x-docs-type": "Fiserv"
+      },
+      "VerificationBondsmithConfigs": {
+        "type": "object",
+        "properties": {
+          "webhook_secret_key": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "webhook_secret_key"
+        ],
+        "additionalProperties": false,
+        "description": "The verification configs for Bondsmith. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "BondsmithConfigs"
+      },
+      "VerificationBondsmith": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "bondsmith",
+              "BONDSMITH"
+            ]
+          },
+          "configs": {
+            "$ref": "#/components/schemas/VerificationBondsmithConfigs"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false,
+        "x-docs-type": "Bondsmith"
+      },
       "VerificationConfig": {
         "oneOf": [
           {
@@ -4624,6 +4737,12 @@
           },
           {
             "$ref": "#/components/schemas/VerificationTokenIO"
+          },
+          {
+            "$ref": "#/components/schemas/VerificationFiserv"
+          },
+          {
+            "$ref": "#/components/schemas/VerificationBondsmith"
           }
         ],
         "description": "The verification configs for the specified verification type"
@@ -4690,7 +4809,7 @@
           },
           "team_id": {
             "type": "string",
-            "description": "ID of the workspace"
+            "description": "ID of the project"
           },
           "url": {
             "type": "string",
@@ -4802,7 +4921,7 @@
         "properties": {
           "hostname": {
             "type": "string",
-            "description": "The custom hostname to attach to the workspace"
+            "description": "The custom hostname to attach to the project"
           }
         },
         "required": [
@@ -4949,7 +5068,7 @@
           },
           "team_id": {
             "type": "string",
-            "description": "ID of the workspace"
+            "description": "ID of the project"
           },
           "name": {
             "type": "string",
@@ -5375,7 +5494,7 @@
           },
           "team_id": {
             "type": "string",
-            "description": "ID of the workspace"
+            "description": "ID of the project"
           },
           "destination": {
             "$ref": "#/components/schemas/Destination"
@@ -5499,7 +5618,7 @@
     },
     {
       "name": "Issues",
-      "description": "Issues lets you track problems in your workspace and communicate resolution steps with your team."
+      "description": "Issues lets you track problems in your project and communicate resolution steps with your team."
     },
     {
       "name": "Requests",
@@ -7438,7 +7557,8 @@
                     "enum": [
                       "second",
                       "minute",
-                      "hour"
+                      "hour",
+                      "concurrent"
                     ],
                     "nullable": true,
                     "description": "Period to rate limit attempts"
@@ -7563,7 +7683,8 @@
                     "enum": [
                       "second",
                       "minute",
-                      "hour"
+                      "hour",
+                      "concurrent"
                     ],
                     "nullable": true,
                     "description": "Period to rate limit attempts"
@@ -7763,7 +7884,8 @@
                     "enum": [
                       "second",
                       "minute",
-                      "hour"
+                      "hour",
+                      "concurrent"
                     ],
                     "nullable": true,
                     "description": "Period to rate limit attempts"
@@ -16729,7 +16851,7 @@
     "/notifications/webhooks": {
       "put": {
         "operationId": "toggleWebhookNotifications",
-        "summary": "Toggle webhook notifications for the workspace",
+        "summary": "Toggle webhook notifications for the project",
         "description": "",
         "tags": [
           "Notifications"
@@ -16758,7 +16880,7 @@
                 "properties": {
                   "enabled": {
                     "type": "boolean",
-                    "description": "Enable or disable webhook notifications on the workspace"
+                    "description": "Enable or disable webhook notifications on the project"
                   },
                   "topics": {
                     "type": "array",
@@ -16782,7 +16904,7 @@
     "/teams/current/custom_domains": {
       "post": {
         "operationId": "addCustomDomain",
-        "summary": "Add a custom domain to the workspace",
+        "summary": "Add a custom domain to the project",
         "description": "",
         "tags": [
           "Notifications"
@@ -16815,7 +16937,7 @@
       },
       "get": {
         "operationId": "listCustomDomains",
-        "summary": "List all custom domains and their verification statuses for the workspace",
+        "summary": "List all custom domains and their verification statuses for the project",
         "description": "",
         "tags": [
           "Notifications"
@@ -16840,7 +16962,7 @@
     "/teams/current/custom_domains/{domain_id}": {
       "delete": {
         "operationId": "deleteCustomDomain",
-        "summary": "Removes a custom domain from the workspace",
+        "summary": "Removes a custom domain from the project",
         "description": "",
         "tags": [
           "Notifications"
@@ -18279,7 +18401,8 @@
                         "enum": [
                           "second",
                           "minute",
-                          "hour"
+                          "hour",
+                          "concurrent"
                         ],
                         "nullable": true,
                         "description": "Period to rate limit attempts"
@@ -18473,7 +18596,8 @@
                         "enum": [
                           "second",
                           "minute",
-                          "hour"
+                          "hour",
+                          "concurrent"
                         ],
                         "nullable": true,
                         "description": "Period to rate limit attempts"
