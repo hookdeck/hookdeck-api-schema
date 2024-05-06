@@ -1088,6 +1088,15 @@
             "type": "string",
             "description": "URL of the auth server",
             "format": "URL"
+          },
+          "authentication_type": {
+            "type": "string",
+            "enum": [
+              "basic",
+              "bearer"
+            ],
+            "description": "Basic (default) or Bearer Authentication",
+            "default": "basic"
           }
         },
         "required": [
@@ -1143,15 +1152,6 @@
             "type": "string",
             "description": "URL of the auth server",
             "format": "URL"
-          },
-          "authentication_type": {
-            "type": "string",
-            "enum": [
-              "basic",
-              "bearer"
-            ],
-            "description": "Basic (default) or Bearer Authentication",
-            "default": "basic"
           }
         },
         "required": [
