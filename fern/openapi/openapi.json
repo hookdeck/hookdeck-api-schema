@@ -5362,28 +5362,7 @@
         ],
         "additionalProperties": false
       },
-      "TransformReference": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "type": "string",
-            "enum": [
-              "transform"
-            ],
-            "description": "A transformation rule must be of type `transformation`"
-          },
-          "transformation_id": {
-            "type": "string",
-            "description": "ID of the attached transformation object. Optional input, always set once the rule is defined"
-          }
-        },
-        "required": [
-          "type",
-          "transformation_id"
-        ],
-        "additionalProperties": false
-      },
-      "TransformFull": {
+      "TransformRule": {
         "type": "object",
         "properties": {
           "type": {
@@ -5431,16 +5410,6 @@
           "type"
         ],
         "additionalProperties": false
-      },
-      "TransformRule": {
-        "anyOf": [
-          {
-            "$ref": "#/components/schemas/TransformReference"
-          },
-          {
-            "$ref": "#/components/schemas/TransformFull"
-          }
-        ]
       },
       "DelayRule": {
         "type": "object",
