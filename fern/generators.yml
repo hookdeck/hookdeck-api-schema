@@ -1,6 +1,7 @@
 api:
   path: ./openapi/openapi.json
   overrides: ../overrides.yml
+  origin: https://api.hookdeck.com/latest/openapi/fern
 groups:
   local:
     generators:
