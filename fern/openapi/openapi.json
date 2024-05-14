@@ -1601,7 +1601,9 @@
           "TELNYX",
           "TOKENIO",
           "FISERV",
-          "BONDSMITH"
+          "BONDSMITH",
+          "VERCEL_LOG_DRAINS",
+          "VERCEL"
         ]
       },
       "IntegrationFeature": {
@@ -1741,6 +1743,22 @@
         ],
         "additionalProperties": false
       },
+      "VercelLogDrainsIntegrationConfigs": {
+        "type": "object",
+        "properties": {
+          "webhook_secret_key": {
+            "type": "string",
+            "nullable": true
+          },
+          "vercel_log_drains_secret": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "vercel_log_drains_secret"
+        ],
+        "additionalProperties": false
+      },
       "Integration": {
         "type": "object",
         "properties": {
@@ -1787,6 +1805,9 @@
               },
               {
                 "$ref": "#/components/schemas/ShopifyIntegrationConfigs"
+              },
+              {
+                "$ref": "#/components/schemas/VercelLogDrainsIntegrationConfigs"
               },
               {
                 "type": "object",
@@ -4595,6 +4616,78 @@
         "additionalProperties": false,
         "x-docs-type": "Bondsmith"
       },
+      "VerificationVercelLogDrainsConfigs": {
+        "type": "object",
+        "properties": {
+          "webhook_secret_key": {
+            "type": "string",
+            "nullable": true
+          },
+          "vercel_log_drains_secret": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "vercel_log_drains_secret"
+        ],
+        "additionalProperties": false,
+        "description": "The verification configs for Vercel Log Drains. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "VercelLogDrainsConfigs"
+      },
+      "VerificationVercelLogDrains": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "vercel_log_drains",
+              "VERCEL_LOG_DRAINS"
+            ]
+          },
+          "configs": {
+            "$ref": "#/components/schemas/VerificationVercelLogDrainsConfigs"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false,
+        "x-docs-type": "Vercel Log Drains"
+      },
+      "VerificationVercelConfigs": {
+        "type": "object",
+        "properties": {
+          "webhook_secret_key": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "webhook_secret_key"
+        ],
+        "additionalProperties": false,
+        "description": "The verification configs for Vercel. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "VercelConfigs"
+      },
+      "VerificationVercel": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "vercel",
+              "VERCEL"
+            ]
+          },
+          "configs": {
+            "$ref": "#/components/schemas/VerificationVercelConfigs"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false,
+        "x-docs-type": "Vercel"
+      },
       "VerificationConfig": {
         "oneOf": [
           {
@@ -4752,6 +4845,12 @@
           },
           {
             "$ref": "#/components/schemas/VerificationBondsmith"
+          },
+          {
+            "$ref": "#/components/schemas/VerificationVercelLogDrains"
+          },
+          {
+            "$ref": "#/components/schemas/VerificationVercel"
           }
         ],
         "description": "The verification configs for the specified verification type"
@@ -11658,6 +11757,9 @@
                         "$ref": "#/components/schemas/ShopifyIntegrationConfigs"
                       },
                       {
+                        "$ref": "#/components/schemas/VercelLogDrainsIntegrationConfigs"
+                      },
+                      {
                         "type": "object",
                         "properties": {},
                         "additionalProperties": false
@@ -11821,6 +11923,9 @@
                       },
                       {
                         "$ref": "#/components/schemas/ShopifyIntegrationConfigs"
+                      },
+                      {
+                        "$ref": "#/components/schemas/VercelLogDrainsIntegrationConfigs"
                       },
                       {
                         "type": "object",
