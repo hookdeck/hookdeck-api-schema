@@ -38,5 +38,5 @@ groups:
           allowCustomFetcher: true
           skipResponseValidation: true
           includeApiReference: true
-          outputEsm: true
+          outputEsm: false
         smart-casing: true
