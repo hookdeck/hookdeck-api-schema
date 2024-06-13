@@ -25,7 +25,7 @@ groups:
   node-sdk:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.14.1-rc4
+        version: 0.23.1
         output:
           location: npm
           package-name: "@hookdeck/sdk"
