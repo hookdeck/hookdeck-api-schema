@@ -1601,7 +1601,11 @@
           "TELNYX",
           "TOKENIO",
           "FISERV",
-          "BONDSMITH"
+          "BONDSMITH",
+          "VERCEL_LOG_DRAINS",
+          "VERCEL",
+          "TEBEX",
+          "SLACK"
         ]
       },
       "IntegrationFeature": {
@@ -1741,6 +1745,22 @@
         ],
         "additionalProperties": false
       },
+      "VercelLogDrainsIntegrationConfigs": {
+        "type": "object",
+        "properties": {
+          "webhook_secret_key": {
+            "type": "string",
+            "nullable": true
+          },
+          "vercel_log_drains_secret": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "vercel_log_drains_secret"
+        ],
+        "additionalProperties": false
+      },
       "Integration": {
         "type": "object",
         "properties": {
@@ -1787,6 +1807,9 @@
               },
               {
                 "$ref": "#/components/schemas/ShopifyIntegrationConfigs"
+              },
+              {
+                "$ref": "#/components/schemas/VercelLogDrainsIntegrationConfigs"
               },
               {
                 "type": "object",
@@ -4595,6 +4618,146 @@
         "additionalProperties": false,
         "x-docs-type": "Bondsmith"
       },
+      "VerificationVercelLogDrainsConfigs": {
+        "type": "object",
+        "properties": {
+          "webhook_secret_key": {
+            "type": "string",
+            "nullable": true
+          },
+          "vercel_log_drains_secret": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "vercel_log_drains_secret"
+        ],
+        "additionalProperties": false,
+        "description": "The verification configs for Vercel Log Drains. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "VercelLogDrainsConfigs"
+      },
+      "VerificationVercelLogDrains": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "vercel_log_drains",
+              "VERCEL_LOG_DRAINS"
+            ]
+          },
+          "configs": {
+            "$ref": "#/components/schemas/VerificationVercelLogDrainsConfigs"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false,
+        "x-docs-type": "Vercel Log Drains"
+      },
+      "VerificationVercelConfigs": {
+        "type": "object",
+        "properties": {
+          "webhook_secret_key": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "webhook_secret_key"
+        ],
+        "additionalProperties": false,
+        "description": "The verification configs for Vercel. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "VercelConfigs"
+      },
+      "VerificationVercel": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "vercel",
+              "VERCEL"
+            ]
+          },
+          "configs": {
+            "$ref": "#/components/schemas/VerificationVercelConfigs"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false,
+        "x-docs-type": "Vercel"
+      },
+      "VerificationTebexConfigs": {
+        "type": "object",
+        "properties": {
+          "webhook_secret_key": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "webhook_secret_key"
+        ],
+        "additionalProperties": false,
+        "description": "The verification configs for Tebex. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "TebexConfigs"
+      },
+      "VerificationTebex": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "tebex",
+              "TEBEX"
+            ]
+          },
+          "configs": {
+            "$ref": "#/components/schemas/VerificationTebexConfigs"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false,
+        "x-docs-type": "Tebex"
+      },
+      "VerificationSlackConfigs": {
+        "type": "object",
+        "properties": {
+          "webhook_secret_key": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "webhook_secret_key"
+        ],
+        "additionalProperties": false,
+        "description": "The verification configs for Slack. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "SlackConfigs"
+      },
+      "VerificationSlack": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "slack",
+              "SLACK"
+            ]
+          },
+          "configs": {
+            "$ref": "#/components/schemas/VerificationSlackConfigs"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false,
+        "x-docs-type": "Slack"
+      },
       "VerificationConfig": {
         "oneOf": [
           {
@@ -4752,6 +4915,18 @@
           },
           {
             "$ref": "#/components/schemas/VerificationBondsmith"
+          },
+          {
+            "$ref": "#/components/schemas/VerificationVercelLogDrains"
+          },
+          {
+            "$ref": "#/components/schemas/VerificationVercel"
+          },
+          {
+            "$ref": "#/components/schemas/VerificationTebex"
+          },
+          {
+            "$ref": "#/components/schemas/VerificationSlack"
           }
         ],
         "description": "The verification configs for the specified verification type"
@@ -7262,6 +7437,14 @@
                     }
                   },
                   "additionalProperties": false
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[A-z0-9-_]+$",
+                    "maxLength": 155
+                  }
                 }
               ],
               "description": "The destination name"
@@ -11658,6 +11841,9 @@
                         "$ref": "#/components/schemas/ShopifyIntegrationConfigs"
                       },
                       {
+                        "$ref": "#/components/schemas/VercelLogDrainsIntegrationConfigs"
+                      },
+                      {
                         "type": "object",
                         "properties": {},
                         "additionalProperties": false
@@ -11821,6 +12007,9 @@
                       },
                       {
                         "$ref": "#/components/schemas/ShopifyIntegrationConfigs"
+                      },
+                      {
+                        "$ref": "#/components/schemas/VercelLogDrainsIntegrationConfigs"
                       },
                       {
                         "type": "object",
@@ -16091,6 +16280,14 @@
                     }
                   },
                   "additionalProperties": false
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[A-z0-9-_]+$",
+                    "maxLength": 155
+                  }
                 }
               ],
               "description": "The source name"
@@ -18027,6 +18224,15 @@
                     }
                   },
                   "additionalProperties": false
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[A-z0-9-_]+$",
+                    "maxLength": 155,
+                    "nullable": true
+                  }
                 }
               ],
               "description": "Filter by connection name"
