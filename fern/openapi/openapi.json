@@ -1599,13 +1599,15 @@
           "SANITY",
           "EBAY",
           "TELNYX",
+          "DISCORD",
           "TOKENIO",
           "FISERV",
           "BONDSMITH",
           "VERCEL_LOG_DRAINS",
           "VERCEL",
           "TEBEX",
-          "SLACK"
+          "SLACK",
+          "RAZORPAY"
         ]
       },
       "IntegrationFeature": {
@@ -4516,6 +4518,40 @@
         "additionalProperties": false,
         "x-docs-type": "Telnyx"
       },
+      "VerificationDiscordConfigs": {
+        "type": "object",
+        "properties": {
+          "public_key": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "public_key"
+        ],
+        "additionalProperties": false,
+        "description": "The verification configs for Discord. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "DiscordConfigs"
+      },
+      "VerificationDiscord": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "discord",
+              "DISCORD"
+            ]
+          },
+          "configs": {
+            "$ref": "#/components/schemas/VerificationDiscordConfigs"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false,
+        "x-docs-type": "Discord"
+      },
       "VerificationTokenIOConfigs": {
         "type": "object",
         "properties": {
@@ -4758,6 +4794,40 @@
         "additionalProperties": false,
         "x-docs-type": "Slack"
       },
+      "VerificationRazorpayConfigs": {
+        "type": "object",
+        "properties": {
+          "webhook_secret_key": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "webhook_secret_key"
+        ],
+        "additionalProperties": false,
+        "description": "The verification configs for Razorpay. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "RazorpayConfigs"
+      },
+      "VerificationRazorpay": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "razorpay",
+              "RAZORPAY"
+            ]
+          },
+          "configs": {
+            "$ref": "#/components/schemas/VerificationRazorpayConfigs"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false,
+        "x-docs-type": "Razorpay"
+      },
       "VerificationConfig": {
         "oneOf": [
           {
@@ -4908,6 +4978,9 @@
             "$ref": "#/components/schemas/VerificationTelnyx"
           },
           {
+            "$ref": "#/components/schemas/VerificationDiscord"
+          },
+          {
             "$ref": "#/components/schemas/VerificationTokenIO"
           },
           {
@@ -4927,6 +5000,9 @@
           },
           {
             "$ref": "#/components/schemas/VerificationSlack"
+          },
+          {
+            "$ref": "#/components/schemas/VerificationRazorpay"
           }
         ],
         "description": "The verification configs for the specified verification type"
