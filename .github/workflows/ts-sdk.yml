@@ -1,4 +1,4 @@
-name: Release Node SDK
+name: Generate Node SDK
 
 on:
   workflow_dispatch:
