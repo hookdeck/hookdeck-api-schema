@@ -1,4 +1,4 @@
-name: Release Go SDK
+name: Generate Go SDK
 
 on:
   workflow_dispatch:
