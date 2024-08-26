@@ -3072,27 +3072,10 @@
         "properties": {
           "webhook_secret_key": {
             "type": "string"
-          },
-          "algorithm": {
-            "$ref": "#/components/schemas/HMACAlgorithms"
-          },
-          "header_key": {
-            "type": "string"
-          },
-          "encoding": {
-            "type": "string",
-            "enum": [
-              "base64",
-              "base64url",
-              "hex"
-            ]
           }
         },
         "required": [
-          "webhook_secret_key",
-          "algorithm",
-          "header_key",
-          "encoding"
+          "webhook_secret_key"
         ],
         "additionalProperties": false,
         "description": "The verification configs for Recharge. Only included if the ?include=verification.configs query param is present",
