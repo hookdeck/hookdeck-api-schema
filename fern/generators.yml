@@ -1,5 +1,5 @@
 api:
-  path: ./openapi/openapi.json
+  path: ../openapi.json
   overrides: ../overrides.yml
   origin: https://api.hookdeck.com/latest/openapi/fern
 groups:

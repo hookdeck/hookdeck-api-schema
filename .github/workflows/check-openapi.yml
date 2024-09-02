@@ -1,8 +1,6 @@
-name: Fetch Hookdeck OpenAPI
+name: Check Hookdeck OpenAPI for Changes
 on:
   workflow_dispatch: # Manually trigger the workflow
-  schedule:
-    - cron: "*/15 * * * *"
 
 permissions:
   contents: write
