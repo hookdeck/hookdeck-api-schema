@@ -430,24 +430,10 @@
       "AttemptStatus": {
         "type": "string",
         "enum": [
-          "QUEUED",
           "FAILED",
-          "SUCCESSFUL",
-          "HOLD"
+          "SUCCESSFUL"
         ],
         "description": "Attempt status"
-      },
-      "AttemptState": {
-        "type": "string",
-        "enum": [
-          "DELIVERING",
-          "QUEUED",
-          "PENDING",
-          "COMPLETED",
-          "HOLD"
-        ],
-        "nullable": true,
-        "x-docs-hide": true
       },
       "EventAttempt": {
         "type": "object",
@@ -458,11 +444,15 @@
           },
           "team_id": {
             "type": "string",
-            "description": "Team ID"
+            "description": "ID of the project"
           },
           "event_id": {
             "type": "string",
             "description": "Event ID"
+          },
+          "destination_id": {
+            "type": "string",
+            "description": "Destination ID"
           },
           "response_status": {
             "type": "integer",
@@ -557,20 +547,13 @@
             "type": "string",
             "format": "date-time",
             "description": "Date the attempt was created"
-          },
-          "state": {
-            "$ref": "#/components/schemas/AttemptState"
-          },
-          "destination_id": {
-            "type": "string",
-            "nullable": true,
-            "x-docs-hide": true
           }
         },
         "required": [
           "id",
           "team_id",
           "event_id",
+          "destination_id",
           "status",
           "updated_at",
           "created_at"
@@ -1534,16 +1517,102 @@
       "RetriedEvent": {
         "type": "object",
         "properties": {
-          "event": {
-            "$ref": "#/components/schemas/Event"
+          "id": {
+            "type": "string",
+            "description": "ID of the event"
           },
-          "attempt": {
-            "$ref": "#/components/schemas/EventAttempt"
+          "team_id": {
+            "type": "string",
+            "description": "ID of the project"
+          },
+          "webhook_id": {
+            "type": "string",
+            "description": "ID of the associated connection"
+          },
+          "source_id": {
+            "type": "string",
+            "description": "ID of the associated source"
+          },
+          "destination_id": {
+            "type": "string",
+            "description": "ID of the associated destination"
+          },
+          "event_data_id": {
+            "type": "string",
+            "description": "ID of the event data"
+          },
+          "request_id": {
+            "type": "string",
+            "description": "ID of the request that created the event"
+          },
+          "attempts": {
+            "type": "integer",
+            "description": "Number of delivery attempts made"
+          },
+          "last_attempt_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "description": "Date of the most recently attempted retry"
+          },
+          "next_attempt_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "description": "Date of the next scheduled retry"
+          },
+          "response_status": {
+            "type": "integer",
+            "nullable": true,
+            "description": "Event status"
+          },
+          "error_code": {
+            "$ref": "#/components/schemas/AttemptErrorCodes"
+          },
+          "status": {
+            "$ref": "#/components/schemas/EventStatus"
+          },
+          "successful_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "description": "Date of the latest successful attempt"
+          },
+          "cli_id": {
+            "type": "string",
+            "nullable": true,
+            "description": "ID of the CLI the event is sent to"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date the event was last updated"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date the event was created"
+          },
+          "data": {
+            "$ref": "#/components/schemas/ShortEventData"
           }
         },
         "required": [
-          "event",
-          "attempt"
+          "id",
+          "team_id",
+          "webhook_id",
+          "source_id",
+          "destination_id",
+          "event_data_id",
+          "request_id",
+          "attempts",
+          "last_attempt_at",
+          "next_attempt_at",
+          "status",
+          "successful_at",
+          "cli_id",
+          "updated_at",
+          "created_at"
         ],
         "additionalProperties": false
       },
@@ -2145,7 +2214,8 @@
             "type": "string"
           },
           "team_id": {
-            "type": "string"
+            "type": "string",
+            "description": "ID of the project"
           },
           "webhook_id": {
             "type": "string"
@@ -2710,7 +2780,8 @@
             "type": "string"
           },
           "team_id": {
-            "type": "string"
+            "type": "string",
+            "description": "ID of the project"
           },
           "webhook_id": {
             "type": "string"
@@ -5859,7 +5930,7 @@
   },
   "servers": [
     {
-      "url": "https://api.hookdeck.com/2024-03-01",
+      "url": "https://api.hookdeck.com/2024-09-01",
       "description": "Production API"
     }
   ],
