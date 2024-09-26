@@ -375,6 +375,35 @@
         "additionalProperties": false,
         "description": "Error response model"
       },
+      "Operators": {
+        "type": "object",
+        "properties": {
+          "gt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "gte": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "le": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "lte": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "any": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "DeletedIssueTriggerResponse": {
         "type": "object",
         "properties": {
@@ -885,7 +914,7 @@
           "concurrent"
         ],
         "nullable": true,
-        "description": "Period to rate limit attempts",
+        "description": "Period to rate limit events by. Refered as Delivery Rate period in the dashboard and documentation.",
         "default": "second"
       },
       "DestinationHTTPMethod": {
@@ -1318,7 +1347,7 @@
           "rate_limit": {
             "type": "integer",
             "nullable": true,
-            "description": "Limit delivery rate of event attempts to receive per period."
+            "description": "Limit of events to receive per period. Refered as Delivery Rate limit in the dashboard and documentation."
           },
           "rate_limit_period": {
             "$ref": "#/components/schemas/DestinationRateLimitPeriod"
@@ -1786,31 +1815,6 @@
         "properties": {
           "webhook_secret_key": {
             "type": "string"
-          },
-          "rate_limit_period": {
-            "type": "string",
-            "enum": [
-              "minute",
-              "second"
-            ],
-            "nullable": true
-          },
-          "rate_limit": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "api_key": {
-            "type": "string",
-            "nullable": true
-          },
-          "api_secret": {
-            "type": "string",
-            "nullable": true
-          },
-          "shop": {
-            "type": "string",
-            "nullable": true
           }
         },
         "required": [
@@ -3245,31 +3249,6 @@
         "properties": {
           "webhook_secret_key": {
             "type": "string"
-          },
-          "rate_limit_period": {
-            "type": "string",
-            "enum": [
-              "minute",
-              "second"
-            ],
-            "nullable": true
-          },
-          "rate_limit": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "api_key": {
-            "type": "string",
-            "nullable": true
-          },
-          "api_secret": {
-            "type": "string",
-            "nullable": true
-          },
-          "shop": {
-            "type": "string",
-            "nullable": true
           }
         },
         "required": [
@@ -5135,6 +5114,7 @@
             "$ref": "#/components/schemas/VerificationPaddle"
           }
         ],
+        "nullable": true,
         "description": "The verification configs for the specified verification type"
       },
       "SourceAllowedHTTPMethod": {
@@ -5207,17 +5187,7 @@
             "format": "URL"
           },
           "verification": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/VerificationConfig"
-              },
-              {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": false
-              }
-            ],
-            "nullable": true
+            "$ref": "#/components/schemas/VerificationConfig"
           },
           "allowed_http_methods": {
             "$ref": "#/components/schemas/SourceAllowedHTTPMethod"
@@ -6083,33 +6053,7 @@
                   "nullable": true
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "gte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "le": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "lte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "any": {
-                      "type": "boolean"
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "description": "Date when the issue trigger was disabled"
@@ -7013,37 +6957,7 @@
                   "description": "Last used date"
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true,
-                      "description": "Last used date"
-                    },
-                    "gte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true,
-                      "description": "Last used date"
-                    },
-                    "le": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true,
-                      "description": "Last used date"
-                    },
-                    "lte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true,
-                      "description": "Last used date"
-                    },
-                    "any": {
-                      "type": "boolean"
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "description": "Filter by last used date"
@@ -7407,7 +7321,7 @@
     },
     "/bookmarks/{id}/raw_body": {
       "get": {
-        "operationId": "getRequestRawBody",
+        "operationId": "getBookmarkRawBody",
         "summary": "Get a bookmark raw body data",
         "description": "",
         "tags": [
@@ -7608,41 +7522,7 @@
                   "maxLength": 155
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "pattern": "^[A-z0-9-_]+$",
-                      "maxLength": 155
-                    },
-                    "gte": {
-                      "type": "string",
-                      "pattern": "^[A-z0-9-_]+$",
-                      "maxLength": 155
-                    },
-                    "le": {
-                      "type": "string",
-                      "pattern": "^[A-z0-9-_]+$",
-                      "maxLength": 155
-                    },
-                    "lte": {
-                      "type": "string",
-                      "pattern": "^[A-z0-9-_]+$",
-                      "maxLength": 155
-                    },
-                    "any": {
-                      "type": "boolean"
-                    },
-                    "all": {
-                      "type": "boolean"
-                    },
-                    "contains": {
-                      "type": "string",
-                      "pattern": "^[A-z0-9-_]+$",
-                      "maxLength": 155
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 },
                 {
                   "type": "array",
@@ -7675,33 +7555,7 @@
                   "nullable": true
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "gte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "le": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "lte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "any": {
-                      "type": "boolean"
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "description": "Date the destination was disabled"
@@ -7919,6 +7773,11 @@
                     "nullable": true,
                     "description": "Path for the CLI destination"
                   },
+                  "rate_limit": {
+                    "type": "integer",
+                    "nullable": true,
+                    "description": "Limit of events to receive per period. Refered as Delivery Rate limit in the dashboard and documentation."
+                  },
                   "rate_limit_period": {
                     "type": "string",
                     "enum": [
@@ -7928,31 +7787,7 @@
                       "concurrent"
                     ],
                     "nullable": true,
-                    "description": "Period to rate limit attempts"
-                  },
-                  "rate_limit": {
-                    "type": "integer",
-                    "oneOf": [
-                      {
-                        "type": "integer",
-                        "description": "When rate limit period is set to \"seconds\""
-                      },
-                      {
-                        "type": "integer",
-                        "description": "When rate limit period is set to \"minute\""
-                      },
-                      {
-                        "type": "integer",
-                        "description": "When rate limit period is set to \"hour\""
-                      },
-                      {
-                        "type": "integer",
-                        "description": "When rate limit period is set to \"concurrent\""
-                      }
-                    ],
-                    "nullable": true,
-                    "description": "Limit event attempts to receive per period",
-                    "x-docs-type": "integer"
+                    "description": "Period to rate limit events by. Refered as Delivery Rate period in the dashboard and documentation."
                   },
                   "http_method": {
                     "$ref": "#/components/schemas/DestinationHTTPMethod"
@@ -8045,6 +7880,11 @@
                     "nullable": true,
                     "description": "Path for the CLI destination"
                   },
+                  "rate_limit": {
+                    "type": "integer",
+                    "nullable": true,
+                    "description": "Limit of events to receive per period. Refered as Delivery Rate limit in the dashboard and documentation."
+                  },
                   "rate_limit_period": {
                     "type": "string",
                     "enum": [
@@ -8054,31 +7894,7 @@
                       "concurrent"
                     ],
                     "nullable": true,
-                    "description": "Period to rate limit attempts"
-                  },
-                  "rate_limit": {
-                    "type": "integer",
-                    "oneOf": [
-                      {
-                        "type": "integer",
-                        "description": "When rate limit period is set to \"seconds\""
-                      },
-                      {
-                        "type": "integer",
-                        "description": "When rate limit period is set to \"minute\""
-                      },
-                      {
-                        "type": "integer",
-                        "description": "When rate limit period is set to \"hour\""
-                      },
-                      {
-                        "type": "integer",
-                        "description": "When rate limit period is set to \"concurrent\""
-                      }
-                    ],
-                    "nullable": true,
-                    "description": "Limit event attempts to receive per period",
-                    "x-docs-type": "integer"
+                    "description": "Period to rate limit events by. Refered as Delivery Rate period in the dashboard and documentation."
                   },
                   "http_method": {
                     "$ref": "#/components/schemas/DestinationHTTPMethod"
@@ -8246,6 +8062,11 @@
                     "nullable": true,
                     "description": "Path for the CLI destination"
                   },
+                  "rate_limit": {
+                    "type": "integer",
+                    "nullable": true,
+                    "description": "Limit of events to receive per period. Refered as Delivery Rate limit in the dashboard and documentation."
+                  },
                   "rate_limit_period": {
                     "type": "string",
                     "enum": [
@@ -8255,31 +8076,7 @@
                       "concurrent"
                     ],
                     "nullable": true,
-                    "description": "Period to rate limit attempts"
-                  },
-                  "rate_limit": {
-                    "type": "integer",
-                    "oneOf": [
-                      {
-                        "type": "integer",
-                        "description": "When rate limit period is set to \"seconds\""
-                      },
-                      {
-                        "type": "integer",
-                        "description": "When rate limit period is set to \"minute\""
-                      },
-                      {
-                        "type": "integer",
-                        "description": "When rate limit period is set to \"hour\""
-                      },
-                      {
-                        "type": "integer",
-                        "description": "When rate limit period is set to \"concurrent\""
-                      }
-                    ],
-                    "nullable": true,
-                    "description": "Limit event attempts to receive per period",
-                    "x-docs-type": "integer"
+                    "description": "Period to rate limit events by. Refered as Delivery Rate period in the dashboard and documentation."
                   },
                   "http_method": {
                     "$ref": "#/components/schemas/DestinationHTTPMethod"
@@ -8389,15 +8186,6 @@
               "description": "Destination ID"
             },
             "required": true
-          },
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string",
-              "description": "Destination ID"
-            },
-            "required": true
           }
         ],
         "x-fern-sdk-group-name": "destination",
@@ -8406,7 +8194,7 @@
     },
     "/destinations/{id}/archive": {
       "put": {
-        "operationId": "disableDestination",
+        "operationId": "disableDestination_archive",
         "summary": "Disable a destination",
         "description": "",
         "tags": [
@@ -8435,15 +8223,6 @@
           }
         },
         "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string",
-              "description": "Destination ID"
-            },
-            "required": true
-          },
           {
             "in": "path",
             "name": "id",
@@ -8497,15 +8276,6 @@
               "description": "Destination ID"
             },
             "required": true
-          },
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string",
-              "description": "Destination ID"
-            },
-            "required": true
           }
         ],
         "x-fern-sdk-group-name": "destination",
@@ -8514,7 +8284,7 @@
     },
     "/destinations/{id}/unarchive": {
       "put": {
-        "operationId": "enableDestination",
+        "operationId": "enableDestination_unarchive",
         "summary": "Enable a destination",
         "description": "",
         "tags": [
@@ -8543,15 +8313,6 @@
           }
         },
         "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string",
-              "description": "Destination ID"
-            },
-            "required": true
-          },
           {
             "in": "path",
             "name": "id",
@@ -8618,33 +8379,7 @@
                   "nullable": true
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "gte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "le": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "lte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "any": {
-                      "type": "boolean"
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "description": "Filter by date the bulk retry was cancelled"
@@ -8661,33 +8396,7 @@
                   "nullable": true
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "gte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "le": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "lte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "any": {
-                      "type": "boolean"
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "description": "Filter by date the bulk retry completed"
@@ -8704,33 +8413,7 @@
                   "nullable": true
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "gte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "le": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "lte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "any": {
-                      "type": "boolean"
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "description": "Filter by date the bulk retry was created"
@@ -8857,36 +8540,7 @@
                       "minimum": 0
                     },
                     {
-                      "type": "object",
-                      "properties": {
-                        "gt": {
-                          "type": "integer",
-                          "minimum": 0
-                        },
-                        "gte": {
-                          "type": "integer",
-                          "minimum": 0
-                        },
-                        "le": {
-                          "type": "integer",
-                          "minimum": 0
-                        },
-                        "lte": {
-                          "type": "integer",
-                          "minimum": 0
-                        },
-                        "any": {
-                          "type": "boolean"
-                        },
-                        "all": {
-                          "type": "boolean"
-                        },
-                        "contains": {
-                          "type": "integer",
-                          "minimum": 0
-                        }
-                      },
-                      "additionalProperties": false
+                      "$ref": "#/components/schemas/Operators"
                     }
                   ],
                   "description": "Filter by number of attempts"
@@ -8899,41 +8553,7 @@
                       "maximum": 600
                     },
                     {
-                      "type": "object",
-                      "properties": {
-                        "gt": {
-                          "type": "integer",
-                          "minimum": 200,
-                          "maximum": 600
-                        },
-                        "gte": {
-                          "type": "integer",
-                          "minimum": 200,
-                          "maximum": 600
-                        },
-                        "le": {
-                          "type": "integer",
-                          "minimum": 200,
-                          "maximum": 600
-                        },
-                        "lte": {
-                          "type": "integer",
-                          "minimum": 200,
-                          "maximum": 600
-                        },
-                        "any": {
-                          "type": "boolean"
-                        },
-                        "all": {
-                          "type": "boolean"
-                        },
-                        "contains": {
-                          "type": "integer",
-                          "minimum": 200,
-                          "maximum": 600
-                        }
-                      },
-                      "additionalProperties": false
+                      "$ref": "#/components/schemas/Operators"
                     },
                     {
                       "type": "array",
@@ -8954,29 +8574,7 @@
                       "format": "date-time"
                     },
                     {
-                      "type": "object",
-                      "properties": {
-                        "gt": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "gte": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "le": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "lte": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "any": {
-                          "type": "boolean"
-                        }
-                      },
-                      "additionalProperties": false
+                      "$ref": "#/components/schemas/Operators"
                     }
                   ],
                   "nullable": true,
@@ -8989,29 +8587,7 @@
                       "format": "date-time"
                     },
                     {
-                      "type": "object",
-                      "properties": {
-                        "gt": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "gte": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "le": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "lte": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "any": {
-                          "type": "boolean"
-                        }
-                      },
-                      "additionalProperties": false
+                      "$ref": "#/components/schemas/Operators"
                     }
                   ],
                   "description": "Filter by `created_at` date using a date operator"
@@ -9064,29 +8640,7 @@
                       "format": "date-time"
                     },
                     {
-                      "type": "object",
-                      "properties": {
-                        "gt": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "gte": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "le": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "lte": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "any": {
-                          "type": "boolean"
-                        }
-                      },
-                      "additionalProperties": false
+                      "$ref": "#/components/schemas/Operators"
                     }
                   ],
                   "nullable": true,
@@ -9465,36 +9019,7 @@
                             "minimum": 0
                           },
                           {
-                            "type": "object",
-                            "properties": {
-                              "gt": {
-                                "type": "integer",
-                                "minimum": 0
-                              },
-                              "gte": {
-                                "type": "integer",
-                                "minimum": 0
-                              },
-                              "le": {
-                                "type": "integer",
-                                "minimum": 0
-                              },
-                              "lte": {
-                                "type": "integer",
-                                "minimum": 0
-                              },
-                              "any": {
-                                "type": "boolean"
-                              },
-                              "all": {
-                                "type": "boolean"
-                              },
-                              "contains": {
-                                "type": "integer",
-                                "minimum": 0
-                              }
-                            },
-                            "additionalProperties": false
+                            "$ref": "#/components/schemas/Operators"
                           }
                         ],
                         "description": "Filter by number of attempts"
@@ -9507,41 +9032,7 @@
                             "maximum": 600
                           },
                           {
-                            "type": "object",
-                            "properties": {
-                              "gt": {
-                                "type": "integer",
-                                "minimum": 200,
-                                "maximum": 600
-                              },
-                              "gte": {
-                                "type": "integer",
-                                "minimum": 200,
-                                "maximum": 600
-                              },
-                              "le": {
-                                "type": "integer",
-                                "minimum": 200,
-                                "maximum": 600
-                              },
-                              "lte": {
-                                "type": "integer",
-                                "minimum": 200,
-                                "maximum": 600
-                              },
-                              "any": {
-                                "type": "boolean"
-                              },
-                              "all": {
-                                "type": "boolean"
-                              },
-                              "contains": {
-                                "type": "integer",
-                                "minimum": 200,
-                                "maximum": 600
-                              }
-                            },
-                            "additionalProperties": false
+                            "$ref": "#/components/schemas/Operators"
                           },
                           {
                             "type": "array",
@@ -9562,29 +9053,7 @@
                             "format": "date-time"
                           },
                           {
-                            "type": "object",
-                            "properties": {
-                              "gt": {
-                                "type": "string",
-                                "format": "date-time"
-                              },
-                              "gte": {
-                                "type": "string",
-                                "format": "date-time"
-                              },
-                              "le": {
-                                "type": "string",
-                                "format": "date-time"
-                              },
-                              "lte": {
-                                "type": "string",
-                                "format": "date-time"
-                              },
-                              "any": {
-                                "type": "boolean"
-                              }
-                            },
-                            "additionalProperties": false
+                            "$ref": "#/components/schemas/Operators"
                           }
                         ],
                         "nullable": true,
@@ -9597,29 +9066,7 @@
                             "format": "date-time"
                           },
                           {
-                            "type": "object",
-                            "properties": {
-                              "gt": {
-                                "type": "string",
-                                "format": "date-time"
-                              },
-                              "gte": {
-                                "type": "string",
-                                "format": "date-time"
-                              },
-                              "le": {
-                                "type": "string",
-                                "format": "date-time"
-                              },
-                              "lte": {
-                                "type": "string",
-                                "format": "date-time"
-                              },
-                              "any": {
-                                "type": "boolean"
-                              }
-                            },
-                            "additionalProperties": false
+                            "$ref": "#/components/schemas/Operators"
                           }
                         ],
                         "description": "Filter by `created_at` date using a date operator"
@@ -9672,29 +9119,7 @@
                             "format": "date-time"
                           },
                           {
-                            "type": "object",
-                            "properties": {
-                              "gt": {
-                                "type": "string",
-                                "format": "date-time"
-                              },
-                              "gte": {
-                                "type": "string",
-                                "format": "date-time"
-                              },
-                              "le": {
-                                "type": "string",
-                                "format": "date-time"
-                              },
-                              "lte": {
-                                "type": "string",
-                                "format": "date-time"
-                              },
-                              "any": {
-                                "type": "boolean"
-                              }
-                            },
-                            "additionalProperties": false
+                            "$ref": "#/components/schemas/Operators"
                           }
                         ],
                         "nullable": true,
@@ -9990,36 +9415,7 @@
                       "minimum": 0
                     },
                     {
-                      "type": "object",
-                      "properties": {
-                        "gt": {
-                          "type": "integer",
-                          "minimum": 0
-                        },
-                        "gte": {
-                          "type": "integer",
-                          "minimum": 0
-                        },
-                        "le": {
-                          "type": "integer",
-                          "minimum": 0
-                        },
-                        "lte": {
-                          "type": "integer",
-                          "minimum": 0
-                        },
-                        "any": {
-                          "type": "boolean"
-                        },
-                        "all": {
-                          "type": "boolean"
-                        },
-                        "contains": {
-                          "type": "integer",
-                          "minimum": 0
-                        }
-                      },
-                      "additionalProperties": false
+                      "$ref": "#/components/schemas/Operators"
                     }
                   ],
                   "description": "Filter by number of attempts"
@@ -10032,41 +9428,7 @@
                       "maximum": 600
                     },
                     {
-                      "type": "object",
-                      "properties": {
-                        "gt": {
-                          "type": "integer",
-                          "minimum": 200,
-                          "maximum": 600
-                        },
-                        "gte": {
-                          "type": "integer",
-                          "minimum": 200,
-                          "maximum": 600
-                        },
-                        "le": {
-                          "type": "integer",
-                          "minimum": 200,
-                          "maximum": 600
-                        },
-                        "lte": {
-                          "type": "integer",
-                          "minimum": 200,
-                          "maximum": 600
-                        },
-                        "any": {
-                          "type": "boolean"
-                        },
-                        "all": {
-                          "type": "boolean"
-                        },
-                        "contains": {
-                          "type": "integer",
-                          "minimum": 200,
-                          "maximum": 600
-                        }
-                      },
-                      "additionalProperties": false
+                      "$ref": "#/components/schemas/Operators"
                     },
                     {
                       "type": "array",
@@ -10087,29 +9449,7 @@
                       "format": "date-time"
                     },
                     {
-                      "type": "object",
-                      "properties": {
-                        "gt": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "gte": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "le": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "lte": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "any": {
-                          "type": "boolean"
-                        }
-                      },
-                      "additionalProperties": false
+                      "$ref": "#/components/schemas/Operators"
                     }
                   ],
                   "nullable": true,
@@ -10122,29 +9462,7 @@
                       "format": "date-time"
                     },
                     {
-                      "type": "object",
-                      "properties": {
-                        "gt": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "gte": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "le": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "lte": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "any": {
-                          "type": "boolean"
-                        }
-                      },
-                      "additionalProperties": false
+                      "$ref": "#/components/schemas/Operators"
                     }
                   ],
                   "description": "Filter by `created_at` date using a date operator"
@@ -10197,29 +9515,7 @@
                       "format": "date-time"
                     },
                     {
-                      "type": "object",
-                      "properties": {
-                        "gt": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "gte": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "le": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "lte": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "any": {
-                          "type": "boolean"
-                        }
-                      },
-                      "additionalProperties": false
+                      "$ref": "#/components/schemas/Operators"
                     }
                   ],
                   "nullable": true,
@@ -10601,36 +9897,7 @@
                   "minimum": 0
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "integer",
-                      "minimum": 0
-                    },
-                    "gte": {
-                      "type": "integer",
-                      "minimum": 0
-                    },
-                    "le": {
-                      "type": "integer",
-                      "minimum": 0
-                    },
-                    "lte": {
-                      "type": "integer",
-                      "minimum": 0
-                    },
-                    "any": {
-                      "type": "boolean"
-                    },
-                    "all": {
-                      "type": "boolean"
-                    },
-                    "contains": {
-                      "type": "integer",
-                      "minimum": 0
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "description": "Filter by number of attempts"
@@ -10647,41 +9914,7 @@
                   "maximum": 600
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "integer",
-                      "minimum": 200,
-                      "maximum": 600
-                    },
-                    "gte": {
-                      "type": "integer",
-                      "minimum": 200,
-                      "maximum": 600
-                    },
-                    "le": {
-                      "type": "integer",
-                      "minimum": 200,
-                      "maximum": 600
-                    },
-                    "lte": {
-                      "type": "integer",
-                      "minimum": 200,
-                      "maximum": 600
-                    },
-                    "any": {
-                      "type": "boolean"
-                    },
-                    "all": {
-                      "type": "boolean"
-                    },
-                    "contains": {
-                      "type": "integer",
-                      "minimum": 200,
-                      "maximum": 600
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 },
                 {
                   "type": "array",
@@ -10706,29 +9939,7 @@
                   "format": "date-time"
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "gte": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "le": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "lte": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "any": {
-                      "type": "boolean"
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "nullable": true,
@@ -10745,29 +9956,7 @@
                   "format": "date-time"
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "gte": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "le": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "lte": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "any": {
-                      "type": "boolean"
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "description": "Filter by `created_at` date using a date operator"
@@ -10832,29 +10021,7 @@
                   "format": "date-time"
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "gte": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "le": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "lte": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "any": {
-                      "type": "boolean"
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "nullable": true,
@@ -11131,7 +10298,7 @@
     },
     "/events/{id}/raw_body": {
       "get": {
-        "operationId": "getRequestRawBody",
+        "operationId": "getEventRawBody",
         "summary": "Get a event raw body data",
         "description": "",
         "tags": [
@@ -11316,33 +10483,7 @@
                   "nullable": true
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "gte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "le": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "lte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "any": {
-                      "type": "boolean"
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "description": "Filter by date the bulk retry was cancelled"
@@ -11359,33 +10500,7 @@
                   "nullable": true
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "gte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "le": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "lte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "any": {
-                      "type": "boolean"
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "description": "Filter by date the bulk retry completed"
@@ -11402,33 +10517,7 @@
                   "nullable": true
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "gte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "le": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "lte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "any": {
-                      "type": "boolean"
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "description": "Filter by date the bulk retry was created"
@@ -12655,33 +11744,7 @@
                   "nullable": true
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "gte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "le": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "lte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "any": {
-                      "type": "boolean"
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "description": "Filter by created dates"
@@ -12698,33 +11761,7 @@
                   "nullable": true
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "gte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "le": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "lte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "any": {
-                      "type": "boolean"
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "description": "Filter by first seen dates"
@@ -12741,33 +11778,7 @@
                   "nullable": true
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "gte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "le": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "lte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "any": {
-                      "type": "boolean"
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "description": "Filter by last seen dates"
@@ -12784,33 +11795,7 @@
                   "nullable": true
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "gte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "le": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "lte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "any": {
-                      "type": "boolean"
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "description": "Filter by dismissed dates"
@@ -13143,33 +12128,7 @@
                   "nullable": true
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "gte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "le": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "lte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "any": {
-                      "type": "boolean"
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "description": "Filter by created dates"
@@ -13186,33 +12145,7 @@
                   "nullable": true
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "gte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "le": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "lte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "any": {
-                      "type": "boolean"
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "description": "Filter by first seen dates"
@@ -13229,33 +12162,7 @@
                   "nullable": true
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "gte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "le": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "lte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "any": {
-                      "type": "boolean"
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "description": "Filter by last seen dates"
@@ -13272,33 +12179,7 @@
                   "nullable": true
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "gte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "le": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "lte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "any": {
-                      "type": "boolean"
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "description": "Filter by dismissed dates"
@@ -13776,36 +12657,7 @@
                   "minimum": 0
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "integer",
-                      "minimum": 0
-                    },
-                    "gte": {
-                      "type": "integer",
-                      "minimum": 0
-                    },
-                    "le": {
-                      "type": "integer",
-                      "minimum": 0
-                    },
-                    "lte": {
-                      "type": "integer",
-                      "minimum": 0
-                    },
-                    "any": {
-                      "type": "boolean"
-                    },
-                    "all": {
-                      "type": "boolean"
-                    },
-                    "contains": {
-                      "type": "integer",
-                      "minimum": 0
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 },
                 {
                   "type": "array",
@@ -13828,36 +12680,7 @@
                   "minimum": 0
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "integer",
-                      "minimum": 0
-                    },
-                    "gte": {
-                      "type": "integer",
-                      "minimum": 0
-                    },
-                    "le": {
-                      "type": "integer",
-                      "minimum": 0
-                    },
-                    "lte": {
-                      "type": "integer",
-                      "minimum": 0
-                    },
-                    "any": {
-                      "type": "boolean"
-                    },
-                    "all": {
-                      "type": "boolean"
-                    },
-                    "contains": {
-                      "type": "integer",
-                      "minimum": 0
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 },
                 {
                   "type": "array",
@@ -13880,29 +12703,7 @@
                   "format": "date-time"
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "gte": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "le": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "lte": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "any": {
-                      "type": "boolean"
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "description": "Filter by event ingested date"
@@ -14344,36 +13145,7 @@
                   "minimum": 0
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "integer",
-                      "minimum": 0
-                    },
-                    "gte": {
-                      "type": "integer",
-                      "minimum": 0
-                    },
-                    "le": {
-                      "type": "integer",
-                      "minimum": 0
-                    },
-                    "lte": {
-                      "type": "integer",
-                      "minimum": 0
-                    },
-                    "any": {
-                      "type": "boolean"
-                    },
-                    "all": {
-                      "type": "boolean"
-                    },
-                    "contains": {
-                      "type": "integer",
-                      "minimum": 0
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "description": "Filter by number of attempts"
@@ -14390,41 +13162,7 @@
                   "maximum": 600
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "integer",
-                      "minimum": 200,
-                      "maximum": 600
-                    },
-                    "gte": {
-                      "type": "integer",
-                      "minimum": 200,
-                      "maximum": 600
-                    },
-                    "le": {
-                      "type": "integer",
-                      "minimum": 200,
-                      "maximum": 600
-                    },
-                    "lte": {
-                      "type": "integer",
-                      "minimum": 200,
-                      "maximum": 600
-                    },
-                    "any": {
-                      "type": "boolean"
-                    },
-                    "all": {
-                      "type": "boolean"
-                    },
-                    "contains": {
-                      "type": "integer",
-                      "minimum": 200,
-                      "maximum": 600
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 },
                 {
                   "type": "array",
@@ -14449,29 +13187,7 @@
                   "format": "date-time"
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "gte": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "le": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "lte": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "any": {
-                      "type": "boolean"
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "nullable": true,
@@ -14488,29 +13204,7 @@
                   "format": "date-time"
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "gte": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "le": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "lte": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "any": {
-                      "type": "boolean"
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "description": "Filter by `created_at` date using a date operator"
@@ -14575,29 +13269,7 @@
                   "format": "date-time"
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "gte": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "le": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "lte": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "any": {
-                      "type": "boolean"
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "nullable": true,
@@ -15059,33 +13731,7 @@
                   "nullable": true
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "gte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "le": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "lte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "any": {
-                      "type": "boolean"
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "description": "Filter by date the bulk retry was cancelled"
@@ -15102,33 +13748,7 @@
                   "nullable": true
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "gte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "le": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "lte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "any": {
-                      "type": "boolean"
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "description": "Filter by date the bulk retry completed"
@@ -15145,33 +13765,7 @@
                   "nullable": true
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "gte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "le": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "lte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "any": {
-                      "type": "boolean"
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "description": "Filter by date the bulk retry was created"
@@ -15337,36 +13931,7 @@
                       "minimum": 0
                     },
                     {
-                      "type": "object",
-                      "properties": {
-                        "gt": {
-                          "type": "integer",
-                          "minimum": 0
-                        },
-                        "gte": {
-                          "type": "integer",
-                          "minimum": 0
-                        },
-                        "le": {
-                          "type": "integer",
-                          "minimum": 0
-                        },
-                        "lte": {
-                          "type": "integer",
-                          "minimum": 0
-                        },
-                        "any": {
-                          "type": "boolean"
-                        },
-                        "all": {
-                          "type": "boolean"
-                        },
-                        "contains": {
-                          "type": "integer",
-                          "minimum": 0
-                        }
-                      },
-                      "additionalProperties": false
+                      "$ref": "#/components/schemas/Operators"
                     },
                     {
                       "type": "array",
@@ -15385,36 +13950,7 @@
                       "minimum": 0
                     },
                     {
-                      "type": "object",
-                      "properties": {
-                        "gt": {
-                          "type": "integer",
-                          "minimum": 0
-                        },
-                        "gte": {
-                          "type": "integer",
-                          "minimum": 0
-                        },
-                        "le": {
-                          "type": "integer",
-                          "minimum": 0
-                        },
-                        "lte": {
-                          "type": "integer",
-                          "minimum": 0
-                        },
-                        "any": {
-                          "type": "boolean"
-                        },
-                        "all": {
-                          "type": "boolean"
-                        },
-                        "contains": {
-                          "type": "integer",
-                          "minimum": 0
-                        }
-                      },
-                      "additionalProperties": false
+                      "$ref": "#/components/schemas/Operators"
                     },
                     {
                       "type": "array",
@@ -15433,29 +13969,7 @@
                       "format": "date-time"
                     },
                     {
-                      "type": "object",
-                      "properties": {
-                        "gt": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "gte": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "le": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "lte": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "any": {
-                          "type": "boolean"
-                        }
-                      },
-                      "additionalProperties": false
+                      "$ref": "#/components/schemas/Operators"
                     }
                   ],
                   "description": "Filter by event ingested date"
@@ -15795,36 +14309,7 @@
                             "minimum": 0
                           },
                           {
-                            "type": "object",
-                            "properties": {
-                              "gt": {
-                                "type": "integer",
-                                "minimum": 0
-                              },
-                              "gte": {
-                                "type": "integer",
-                                "minimum": 0
-                              },
-                              "le": {
-                                "type": "integer",
-                                "minimum": 0
-                              },
-                              "lte": {
-                                "type": "integer",
-                                "minimum": 0
-                              },
-                              "any": {
-                                "type": "boolean"
-                              },
-                              "all": {
-                                "type": "boolean"
-                              },
-                              "contains": {
-                                "type": "integer",
-                                "minimum": 0
-                              }
-                            },
-                            "additionalProperties": false
+                            "$ref": "#/components/schemas/Operators"
                           },
                           {
                             "type": "array",
@@ -15843,36 +14328,7 @@
                             "minimum": 0
                           },
                           {
-                            "type": "object",
-                            "properties": {
-                              "gt": {
-                                "type": "integer",
-                                "minimum": 0
-                              },
-                              "gte": {
-                                "type": "integer",
-                                "minimum": 0
-                              },
-                              "le": {
-                                "type": "integer",
-                                "minimum": 0
-                              },
-                              "lte": {
-                                "type": "integer",
-                                "minimum": 0
-                              },
-                              "any": {
-                                "type": "boolean"
-                              },
-                              "all": {
-                                "type": "boolean"
-                              },
-                              "contains": {
-                                "type": "integer",
-                                "minimum": 0
-                              }
-                            },
-                            "additionalProperties": false
+                            "$ref": "#/components/schemas/Operators"
                           },
                           {
                             "type": "array",
@@ -15891,29 +14347,7 @@
                             "format": "date-time"
                           },
                           {
-                            "type": "object",
-                            "properties": {
-                              "gt": {
-                                "type": "string",
-                                "format": "date-time"
-                              },
-                              "gte": {
-                                "type": "string",
-                                "format": "date-time"
-                              },
-                              "le": {
-                                "type": "string",
-                                "format": "date-time"
-                              },
-                              "lte": {
-                                "type": "string",
-                                "format": "date-time"
-                              },
-                              "any": {
-                                "type": "boolean"
-                              }
-                            },
-                            "additionalProperties": false
+                            "$ref": "#/components/schemas/Operators"
                           }
                         ],
                         "description": "Filter by event ingested date"
@@ -16138,36 +14572,7 @@
                       "minimum": 0
                     },
                     {
-                      "type": "object",
-                      "properties": {
-                        "gt": {
-                          "type": "integer",
-                          "minimum": 0
-                        },
-                        "gte": {
-                          "type": "integer",
-                          "minimum": 0
-                        },
-                        "le": {
-                          "type": "integer",
-                          "minimum": 0
-                        },
-                        "lte": {
-                          "type": "integer",
-                          "minimum": 0
-                        },
-                        "any": {
-                          "type": "boolean"
-                        },
-                        "all": {
-                          "type": "boolean"
-                        },
-                        "contains": {
-                          "type": "integer",
-                          "minimum": 0
-                        }
-                      },
-                      "additionalProperties": false
+                      "$ref": "#/components/schemas/Operators"
                     },
                     {
                       "type": "array",
@@ -16186,36 +14591,7 @@
                       "minimum": 0
                     },
                     {
-                      "type": "object",
-                      "properties": {
-                        "gt": {
-                          "type": "integer",
-                          "minimum": 0
-                        },
-                        "gte": {
-                          "type": "integer",
-                          "minimum": 0
-                        },
-                        "le": {
-                          "type": "integer",
-                          "minimum": 0
-                        },
-                        "lte": {
-                          "type": "integer",
-                          "minimum": 0
-                        },
-                        "any": {
-                          "type": "boolean"
-                        },
-                        "all": {
-                          "type": "boolean"
-                        },
-                        "contains": {
-                          "type": "integer",
-                          "minimum": 0
-                        }
-                      },
-                      "additionalProperties": false
+                      "$ref": "#/components/schemas/Operators"
                     },
                     {
                       "type": "array",
@@ -16234,29 +14610,7 @@
                       "format": "date-time"
                     },
                     {
-                      "type": "object",
-                      "properties": {
-                        "gt": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "gte": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "le": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "lte": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "any": {
-                          "type": "boolean"
-                        }
-                      },
-                      "additionalProperties": false
+                      "$ref": "#/components/schemas/Operators"
                     }
                   ],
                   "description": "Filter by event ingested date"
@@ -16451,41 +14805,7 @@
                   "maxLength": 155
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "pattern": "^[A-z0-9-_]+$",
-                      "maxLength": 155
-                    },
-                    "gte": {
-                      "type": "string",
-                      "pattern": "^[A-z0-9-_]+$",
-                      "maxLength": 155
-                    },
-                    "le": {
-                      "type": "string",
-                      "pattern": "^[A-z0-9-_]+$",
-                      "maxLength": 155
-                    },
-                    "lte": {
-                      "type": "string",
-                      "pattern": "^[A-z0-9-_]+$",
-                      "maxLength": 155
-                    },
-                    "any": {
-                      "type": "boolean"
-                    },
-                    "all": {
-                      "type": "boolean"
-                    },
-                    "contains": {
-                      "type": "string",
-                      "pattern": "^[A-z0-9-_]+$",
-                      "maxLength": 155
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 },
                 {
                   "type": "array",
@@ -16518,33 +14838,7 @@
                   "nullable": true
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "gte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "le": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "lte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "any": {
-                      "type": "boolean"
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "description": "Date the source was disabled"
@@ -17052,15 +15346,6 @@
               "description": "Source ID"
             },
             "required": true
-          },
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string",
-              "description": "Source ID"
-            },
-            "required": true
           }
         ],
         "x-fern-sdk-group-name": "source",
@@ -17069,7 +15354,7 @@
     },
     "/sources/{id}/archive": {
       "put": {
-        "operationId": "disableSource",
+        "operationId": "disableSource_archive",
         "summary": "Disable a source",
         "description": "",
         "tags": [
@@ -17098,15 +15383,6 @@
           }
         },
         "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string",
-              "description": "Source ID"
-            },
-            "required": true
-          },
           {
             "in": "path",
             "name": "id",
@@ -17160,15 +15436,6 @@
               "description": "Source ID"
             },
             "required": true
-          },
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string",
-              "description": "Source ID"
-            },
-            "required": true
           }
         ],
         "x-fern-sdk-group-name": "source",
@@ -17177,7 +15444,7 @@
     },
     "/sources/{id}/unarchive": {
       "put": {
-        "operationId": "enableSource",
+        "operationId": "enableSource_unarchive",
         "summary": "Enable a source",
         "description": "",
         "tags": [
@@ -17206,15 +15473,6 @@
           }
         },
         "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string",
-              "description": "Source ID"
-            },
-            "required": true
-          },
           {
             "in": "path",
             "name": "id",
@@ -17447,46 +15705,7 @@
                   "nullable": true
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "pattern": "^[A-z0-9-_]+$",
-                      "maxLength": 155,
-                      "nullable": true
-                    },
-                    "gte": {
-                      "type": "string",
-                      "pattern": "^[A-z0-9-_]+$",
-                      "maxLength": 155,
-                      "nullable": true
-                    },
-                    "le": {
-                      "type": "string",
-                      "pattern": "^[A-z0-9-_]+$",
-                      "maxLength": 155,
-                      "nullable": true
-                    },
-                    "lte": {
-                      "type": "string",
-                      "pattern": "^[A-z0-9-_]+$",
-                      "maxLength": 155,
-                      "nullable": true
-                    },
-                    "any": {
-                      "type": "boolean"
-                    },
-                    "all": {
-                      "type": "boolean"
-                    },
-                    "contains": {
-                      "type": "string",
-                      "pattern": "^[A-z0-9-_]+$",
-                      "maxLength": 155,
-                      "nullable": true
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "description": "Filter by transformation name"
@@ -18137,29 +16356,7 @@
                   "format": "date-time"
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "gte": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "le": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "lte": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "any": {
-                      "type": "boolean"
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "description": "ISO date of the transformation's execution"
@@ -18390,46 +16587,7 @@
                   "nullable": true
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "pattern": "^[A-z0-9-_]+$",
-                      "maxLength": 155,
-                      "nullable": true
-                    },
-                    "gte": {
-                      "type": "string",
-                      "pattern": "^[A-z0-9-_]+$",
-                      "maxLength": 155,
-                      "nullable": true
-                    },
-                    "le": {
-                      "type": "string",
-                      "pattern": "^[A-z0-9-_]+$",
-                      "maxLength": 155,
-                      "nullable": true
-                    },
-                    "lte": {
-                      "type": "string",
-                      "pattern": "^[A-z0-9-_]+$",
-                      "maxLength": 155,
-                      "nullable": true
-                    },
-                    "any": {
-                      "type": "boolean"
-                    },
-                    "all": {
-                      "type": "boolean"
-                    },
-                    "contains": {
-                      "type": "string",
-                      "pattern": "^[A-z0-9-_]+$",
-                      "maxLength": 155,
-                      "nullable": true
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 },
                 {
                   "type": "array",
@@ -18503,33 +16661,7 @@
                   "nullable": true
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "gte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "le": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "lte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "any": {
-                      "type": "boolean"
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "description": "Date the connection was disabled"
@@ -18556,33 +16688,7 @@
                   "nullable": true
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "gte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "le": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "lte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "any": {
-                      "type": "boolean"
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "description": "Date the connection was paused"
@@ -18786,6 +16892,11 @@
                         "nullable": true,
                         "description": "Path for the CLI destination"
                       },
+                      "rate_limit": {
+                        "type": "integer",
+                        "nullable": true,
+                        "description": "Limit of events to receive per period. Refered as Delivery Rate limit in the dashboard and documentation."
+                      },
                       "rate_limit_period": {
                         "type": "string",
                         "enum": [
@@ -18795,31 +16906,7 @@
                           "concurrent"
                         ],
                         "nullable": true,
-                        "description": "Period to rate limit attempts"
-                      },
-                      "rate_limit": {
-                        "type": "integer",
-                        "oneOf": [
-                          {
-                            "type": "integer",
-                            "description": "When rate limit period is set to \"seconds\""
-                          },
-                          {
-                            "type": "integer",
-                            "description": "When rate limit period is set to \"minute\""
-                          },
-                          {
-                            "type": "integer",
-                            "description": "When rate limit period is set to \"hour\""
-                          },
-                          {
-                            "type": "integer",
-                            "description": "When rate limit period is set to \"concurrent\""
-                          }
-                        ],
-                        "nullable": true,
-                        "description": "Limit event attempts to receive per period",
-                        "x-docs-type": "integer"
+                        "description": "Period to rate limit events by. Refered as Delivery Rate period in the dashboard and documentation."
                       },
                       "http_method": {
                         "$ref": "#/components/schemas/DestinationHTTPMethod"
@@ -18981,6 +17068,11 @@
                         "nullable": true,
                         "description": "Path for the CLI destination"
                       },
+                      "rate_limit": {
+                        "type": "integer",
+                        "nullable": true,
+                        "description": "Limit of events to receive per period. Refered as Delivery Rate limit in the dashboard and documentation."
+                      },
                       "rate_limit_period": {
                         "type": "string",
                         "enum": [
@@ -18990,31 +17082,7 @@
                           "concurrent"
                         ],
                         "nullable": true,
-                        "description": "Period to rate limit attempts"
-                      },
-                      "rate_limit": {
-                        "type": "integer",
-                        "oneOf": [
-                          {
-                            "type": "integer",
-                            "description": "When rate limit period is set to \"seconds\""
-                          },
-                          {
-                            "type": "integer",
-                            "description": "When rate limit period is set to \"minute\""
-                          },
-                          {
-                            "type": "integer",
-                            "description": "When rate limit period is set to \"hour\""
-                          },
-                          {
-                            "type": "integer",
-                            "description": "When rate limit period is set to \"concurrent\""
-                          }
-                        ],
-                        "nullable": true,
-                        "description": "Limit event attempts to receive per period",
-                        "x-docs-type": "integer"
+                        "description": "Period to rate limit events by. Refered as Delivery Rate period in the dashboard and documentation."
                       },
                       "http_method": {
                         "$ref": "#/components/schemas/DestinationHTTPMethod"
@@ -19188,33 +17256,7 @@
                   "nullable": true
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "gte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "le": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "lte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "any": {
-                      "type": "boolean"
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "description": "Date the connection was disabled"
@@ -19231,33 +17273,7 @@
                   "nullable": true
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "gt": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "gte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "le": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "lte": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "any": {
-                      "type": "boolean"
-                    }
-                  },
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Operators"
                 }
               ],
               "description": "Date the connection was paused"
@@ -19508,15 +17524,6 @@
               "description": "Connection ID"
             },
             "required": true
-          },
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string",
-              "description": "Connection ID"
-            },
-            "required": true
           }
         ],
         "x-fern-sdk-group-name": "connection",
@@ -19525,7 +17532,7 @@
     },
     "/connections/{id}/archive": {
       "put": {
-        "operationId": "disableConnection",
+        "operationId": "disableConnection_archive",
         "summary": "Disable a connection",
         "description": "",
         "tags": [
@@ -19554,15 +17561,6 @@
           }
         },
         "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string",
-              "description": "Connection ID"
-            },
-            "required": true
-          },
           {
             "in": "path",
             "name": "id",
@@ -19616,15 +17614,6 @@
               "description": "Connection ID"
             },
             "required": true
-          },
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string",
-              "description": "Connection ID"
-            },
-            "required": true
           }
         ],
         "x-fern-sdk-group-name": "connection",
@@ -19633,7 +17622,7 @@
     },
     "/connections/{id}/unarchive": {
       "put": {
-        "operationId": "enableConnection",
+        "operationId": "enableConnection_unarchive",
         "summary": "Enable a connection",
         "description": "",
         "tags": [
@@ -19662,15 +17651,6 @@
           }
         },
         "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string",
-              "description": "Connection ID"
-            },
-            "required": true
-          },
           {
             "in": "path",
             "name": "id",
