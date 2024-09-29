@@ -464,14 +464,6 @@
         ],
         "description": "Attempt status"
       },
-      "AttemptState": {
-        "type": "string",
-        "enum": [
-          "COMPLETED"
-        ],
-        "nullable": true,
-        "x-docs-hide": true
-      },
       "EventAttempt": {
         "type": "object",
         "properties": {
@@ -546,9 +538,6 @@
           },
           "status": {
             "$ref": "#/components/schemas/AttemptStatus"
-          },
-          "state": {
-            "$ref": "#/components/schemas/AttemptState"
           },
           "successful_at": {
             "type": "string",
