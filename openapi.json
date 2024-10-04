@@ -1105,9 +1105,10 @@
             "type": "string",
             "enum": [
               "basic",
-              "bearer"
+              "bearer",
+              "x-www-form-urlencoded"
             ],
-            "description": "Basic (default) or Bearer Authentication",
+            "description": "Basic (default), Bearer Authentication or x-www-form-urlencoded",
             "default": "basic"
           }
         },
@@ -1246,6 +1247,16 @@
           "secret_access_key": {
             "type": "string",
             "description": "AWS secret access key"
+          },
+          "region": {
+            "type": "string",
+            "nullable": true,
+            "description": "AWS region"
+          },
+          "service": {
+            "type": "string",
+            "nullable": true,
+            "description": "AWS service"
           }
         },
         "required": [
@@ -1707,7 +1718,8 @@
           "SLACK",
           "RAZORPAY",
           "MAILCHIMP",
-          "PADDLE"
+          "PADDLE",
+          "PAYPAL"
         ]
       },
       "IntegrationFeature": {
@@ -4931,6 +4943,40 @@
         "additionalProperties": false,
         "x-docs-type": "Paddle"
       },
+      "VerificationPaypalConfigs": {
+        "type": "object",
+        "properties": {
+          "webhook_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "webhook_id"
+        ],
+        "additionalProperties": false,
+        "description": "The verification configs for Paypal. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "PaypalConfigs"
+      },
+      "VerificationPaypal": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "paypal",
+              "PAYPAL"
+            ]
+          },
+          "configs": {
+            "$ref": "#/components/schemas/VerificationPaypalConfigs"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false,
+        "x-docs-type": "Paypal"
+      },
       "VerificationConfig": {
         "oneOf": [
           {
@@ -5112,6 +5158,9 @@
           },
           {
             "$ref": "#/components/schemas/VerificationPaddle"
+          },
+          {
+            "$ref": "#/components/schemas/VerificationPaypal"
           }
         ],
         "nullable": true,
