@@ -1,7 +1,7 @@
 api:
   path: ../openapi.json
-  overrides: ./overrides.yml
   origin: https://api.hookdeck.com/latest/openapi/fern
+  overrides: ./overrides.yml
 groups:
   local:
     generators:
@@ -17,7 +17,7 @@ groups:
   go-sdk:
     generators:
       - name: fernapi/fern-go-sdk
-        version: 0.6.1
+        version: 0.27.0
         github:
           repository: hookdeck/hookdeck-go-sdk
           mode: pull-request
@@ -26,15 +26,15 @@ groups:
   node-sdk:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.23.1
+        version: 0.39.3
         output:
           location: npm
-          package-name: "@hookdeck/sdk"
+          package-name: '@hookdeck/sdk'
           token: ${NPM_TOKEN}
         github:
           repository: hookdeck/hookdeck-typescript-sdk
           mode: pull-request
-        config: 
+        config:
           namespaceExport: Hookdeck
           allowCustomFetcher: true
           skipResponseValidation: true
