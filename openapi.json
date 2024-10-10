@@ -2769,13 +2769,16 @@
         ]
       },
       "FilteredMeta": {
-        "type": "string",
-        "enum": [
-          "body",
-          "headers",
-          "path",
-          "query"
-        ]
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": [
+            "body",
+            "headers",
+            "path",
+            "query"
+          ]
+        }
       },
       "TransformationFailedMeta": {
         "type": "object",
@@ -2819,10 +2822,6 @@
             ],
             "nullable": true
           },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time"
-          },
           "created_at": {
             "type": "string",
             "format": "date-time"
@@ -2834,7 +2833,6 @@
           "webhook_id",
           "cause",
           "request_id",
-          "updated_at",
           "created_at"
         ],
         "additionalProperties": false
