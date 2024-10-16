@@ -1720,7 +1720,8 @@
           "RAZORPAY",
           "MAILCHIMP",
           "PADDLE",
-          "PAYPAL"
+          "PAYPAL",
+          "TREEZOR"
         ]
       },
       "IntegrationFeature": {
@@ -5010,6 +5011,40 @@
         "additionalProperties": false,
         "x-docs-type": "Paypal"
       },
+      "VerificationTreezorConfigs": {
+        "type": "object",
+        "properties": {
+          "webhook_secret_key": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "webhook_secret_key"
+        ],
+        "additionalProperties": false,
+        "description": "The verification configs for Treezor. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "TreezorConfigs"
+      },
+      "VerificationTreezor": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "treezor",
+              "TREEZOR"
+            ]
+          },
+          "configs": {
+            "$ref": "#/components/schemas/VerificationTreezorConfigs"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false,
+        "x-docs-type": "Treezor"
+      },
       "VerificationConfig": {
         "oneOf": [
           {
@@ -5197,6 +5232,9 @@
           },
           {
             "$ref": "#/components/schemas/VerificationPaypal"
+          },
+          {
+            "$ref": "#/components/schemas/VerificationTreezor"
           }
         ],
         "nullable": true,
