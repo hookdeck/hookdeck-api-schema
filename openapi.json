@@ -5769,6 +5769,17 @@
             "type": "integer",
             "nullable": true,
             "description": "Maximum number of retries to attempt"
+          },
+          "response_status_codes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^(?:([2-5]\\d{2})-([2-5]\\d{2})|([><=]{1,2})([2-5]\\d{2})|!?([2-5]\\d{2}))$"
+            },
+            "minItems": 1,
+            "maxItems": 10,
+            "nullable": true,
+            "description": "HTTP codes to retry on. Accepts: range expressions (e.g., \"400-499\", \">400\"), specific codes (e.g., 404), and exclusions (e.g., \"!401\"). Example: [\"500-599\", \">400\", 404, \"!401\"]"
           }
         },
         "required": [
@@ -16122,6 +16133,59 @@
         ],
         "x-fern-sdk-group-name": "transformation",
         "x-fern-sdk-method-name": "retrieve"
+      },
+      "delete": {
+        "operationId": "deleteTransformation",
+        "summary": "Delete a transformation",
+        "description": "",
+        "tags": [
+          "Transformations"
+        ],
+        "responses": {
+          "200": {
+            "description": "An object with deleted transformation id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "ID of the Transformation"
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "description": "Transformation ID"
+            },
+            "required": true
+          }
+        ],
+        "x-fern-sdk-group-name": "transformation",
+        "x-fern-sdk-method-name": "delete"
       },
       "put": {
         "operationId": "updateTransformation",
