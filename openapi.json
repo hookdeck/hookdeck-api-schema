@@ -1721,7 +1721,8 @@
           "MAILCHIMP",
           "PADDLE",
           "PAYPAL",
-          "TREEZOR"
+          "TREEZOR",
+          "PRAXIS"
         ]
       },
       "IntegrationFeature": {
@@ -5045,6 +5046,40 @@
         "additionalProperties": false,
         "x-docs-type": "Treezor"
       },
+      "VerificationPraxisConfigs": {
+        "type": "object",
+        "properties": {
+          "webhook_secret_key": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "webhook_secret_key"
+        ],
+        "additionalProperties": false,
+        "description": "The verification configs for Praxis. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "PraxisConfigs"
+      },
+      "VerificationPraxis": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "praxis",
+              "PRAXIS"
+            ]
+          },
+          "configs": {
+            "$ref": "#/components/schemas/VerificationPraxisConfigs"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false,
+        "x-docs-type": "Praxis"
+      },
       "VerificationConfig": {
         "oneOf": [
           {
@@ -5235,6 +5270,9 @@
           },
           {
             "$ref": "#/components/schemas/VerificationTreezor"
+          },
+          {
+            "$ref": "#/components/schemas/VerificationPraxis"
           }
         ],
         "nullable": true,
