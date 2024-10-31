@@ -4701,7 +4701,7 @@
         ],
         "additionalProperties": false,
         "x-docs-type": "TokenIO",
-        "x-docs-external-url": "https://developer.token.io/token_rest_api_doc/content/e-rest/webhook_signature_validation.htm?TocPath=_____14"
+        "x-docs-external-url": "https://developer.token.io/token_rest_api_doc/content/e-rest/webhooks.htm?Highlight=webhook#Signature"
       },
       "VerificationFiservConfigs": {
         "type": "object",
