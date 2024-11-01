@@ -1662,6 +1662,7 @@
           "HMAC",
           "BASIC_AUTH",
           "API_KEY",
+          "BRIDGE",
           "CLOUDSIGNAL",
           "COURIER",
           "FRONTAPP",
@@ -1719,7 +1720,9 @@
           "RAZORPAY",
           "MAILCHIMP",
           "PADDLE",
-          "PAYPAL"
+          "PAYPAL",
+          "TREEZOR",
+          "PRAXIS"
         ]
       },
       "IntegrationFeature": {
@@ -2982,6 +2985,41 @@
         "additionalProperties": false,
         "x-docs-type": "API Key"
       },
+      "VerificationBridgeConfigs": {
+        "type": "object",
+        "properties": {
+          "public_key": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "public_key"
+        ],
+        "additionalProperties": false,
+        "description": "The verification configs for Bridge. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "BridgeConfigs"
+      },
+      "VerificationBridge": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "bridge",
+              "BRIDGE"
+            ]
+          },
+          "configs": {
+            "$ref": "#/components/schemas/VerificationBridgeConfigs"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false,
+        "x-docs-type": "Bridge",
+        "x-docs-external-url": "https://apidocs.bridge.xyz/docs/webhook-event-signature-verification"
+      },
       "VerificationCloudSignalConfigs": {
         "type": "object",
         "properties": {
@@ -3048,7 +3086,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Courier"
+        "x-docs-type": "Courier",
+        "x-docs-external-url": "https://www.courier.com/docs/platform/workspaces/outbound-webhooks#step-4-compare-the-signatures"
       },
       "VerificationFrontAppConfigs": {
         "type": "object",
@@ -3082,7 +3121,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "FrontApp"
+        "x-docs-type": "FrontApp",
+        "x-docs-external-url": "https://dev.frontapp.com/docs/webhooks-1#verifying-integrity"
       },
       "VerificationTwitterConfigs": {
         "type": "object",
@@ -3116,7 +3156,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Twitter"
+        "x-docs-type": "Twitter",
+        "x-docs-external-url": "https://developer.x.com/en/docs/x-api/enterprise/account-activity-api/guides/securing-webhooks"
       },
       "VerificationStripeConfigs": {
         "type": "object",
@@ -3150,7 +3191,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Stripe"
+        "x-docs-type": "Stripe",
+        "x-docs-external-url": "https://stripe.com/docs/webhooks#verify-manually"
       },
       "VerificationRechargeConfigs": {
         "type": "object",
@@ -3184,7 +3226,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Recharge"
+        "x-docs-type": "Recharge",
+        "x-docs-external-url": "https://docs.getrecharge.com/docs/webhooks-overview#validating-webhooks"
       },
       "VerificationTwilioConfigs": {
         "type": "object",
@@ -3218,7 +3261,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Twilio"
+        "x-docs-type": "Twilio",
+        "x-docs-external-url": "https://www.twilio.com/docs/usage/webhooks/webhooks-security#validating-signatures-from-twilio"
       },
       "VerificationGitHubConfigs": {
         "type": "object",
@@ -3252,7 +3296,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "GitHub"
+        "x-docs-type": "GitHub",
+        "x-docs-external-url": "https://docs.github.com/en/webhooks/using-webhooks/validating-webhook-deliveries"
       },
       "VerificationShopifyConfigs": {
         "type": "object",
@@ -3286,7 +3331,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Shopify"
+        "x-docs-type": "Shopify",
+        "x-docs-external-url": "https://shopify.dev/docs/apps/build/webhooks/subscribe/https#step-2-validate-the-origin-of-your-webhook-to-ensure-its-coming-from-shopify"
       },
       "VerificationPostmarkConfigs": {
         "type": "object",
@@ -3358,7 +3404,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Typeform"
+        "x-docs-type": "Typeform",
+        "x-docs-external-url": "https://www.typeform.com/developers/webhooks/secure-your-webhooks/"
       },
       "VerificationXeroConfigs": {
         "type": "object",
@@ -3392,7 +3439,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Xero"
+        "x-docs-type": "Xero",
+        "x-docs-external-url": "https://developer.xero.com/documentation/guides/webhooks/configuring-your-server/"
       },
       "VerificationSvixConfigs": {
         "type": "object",
@@ -3460,7 +3508,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Zoom"
+        "x-docs-type": "Zoom",
+        "x-docs-external-url": "https://developers.zoom.us/docs/api/rest/webhook-reference/#verify-webhook-events"
       },
       "VerificationAkeneoConfigs": {
         "type": "object",
@@ -3528,7 +3577,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Adyen"
+        "x-docs-type": "Adyen",
+        "x-docs-external-url": "https://docs.adyen.com/development-resources/webhooks/verify-hmac-signatures/"
       },
       "VerificationGitLabConfigs": {
         "type": "object",
@@ -3664,7 +3714,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Oura"
+        "x-docs-type": "Oura",
+        "x-docs-external-url": "https://cloud.ouraring.com/v2/docs#section/Security"
       },
       "VerificationCommercelayerConfigs": {
         "type": "object",
@@ -3698,7 +3749,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Commercelayer"
+        "x-docs-type": "Commercelayer",
+        "x-docs-external-url": "https://docs.commercelayer.io/core/callbacks-security"
       },
       "VerificationHubspotConfigs": {
         "type": "object",
@@ -3732,7 +3784,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Hubspot"
+        "x-docs-type": "Hubspot",
+        "x-docs-external-url": "https://developers.hubspot.com/docs/api/webhooks/validating-requests"
       },
       "VerificationMailgunConfigs": {
         "type": "object",
@@ -3766,7 +3819,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Mailgun"
+        "x-docs-type": "Mailgun",
+        "x-docs-external-url": "https://documentation.mailgun.com/docs/mailgun/user-manual/tracking-messages/#webhooks"
       },
       "VerificationPersonaConfigs": {
         "type": "object",
@@ -3800,7 +3854,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Persona"
+        "x-docs-type": "Persona",
+        "x-docs-external-url": "https://docs.withpersona.com/docs/webhooks-best-practices#checking-signatures"
       },
       "VerificationPipedriveConfigs": {
         "type": "object",
@@ -3906,7 +3961,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "WorkOS"
+        "x-docs-type": "WorkOS",
+        "x-docs-external-url": "https://workos.com/docs/events/data-syncing/webhooks/3-process-the-events/b-validate-the-requests-manually"
       },
       "VerificationSyncteraConfigs": {
         "type": "object",
@@ -3940,7 +3996,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Synctera"
+        "x-docs-type": "Synctera",
+        "x-docs-external-url": "https://dev.synctera.com/docs/webhooks-guide#integration-steps"
       },
       "VerificationAWSSNSConfigs": {
         "type": "object",
@@ -4035,7 +4092,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Twitch"
+        "x-docs-type": "Twitch",
+        "x-docs-external-url": "https://dev.twitch.tv/docs/eventsub/handling-webhook-events/#verifying-the-event-message"
       },
       "VerificationEnodeConfigs": {
         "type": "object",
@@ -4069,7 +4127,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Enode"
+        "x-docs-type": "Enode",
+        "x-docs-external-url": "https://developers.enode.com/docs/webhooks"
       },
       "VerificationFavroConfigs": {
         "type": "object",
@@ -4103,7 +4162,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Favro"
+        "x-docs-type": "Favro",
+        "x-docs-external-url": "https://favro.com/developer/#webhook-signatures"
       },
       "VerificationLinearConfigs": {
         "type": "object",
@@ -4137,7 +4197,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Linear"
+        "x-docs-type": "Linear",
+        "x-docs-external-url": "https://developers.linear.app/docs/graphql/webhooks#securing-webhooks"
       },
       "VerificationShoplineConfigs": {
         "type": "object",
@@ -4171,7 +4232,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Shopline"
+        "x-docs-type": "Shopline",
+        "x-docs-external-url": "https://developer.shopline.com/docsv2/ec20/3cv5d7wpfgr6a8z5/wf8em731s7f8c3ut?version=v20240301#signature-verification"
       },
       "VerificationWixConfigs": {
         "type": "object",
@@ -4205,7 +4267,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Wix"
+        "x-docs-type": "Wix",
+        "x-docs-external-url": "https://dev.wix.com/docs/build-apps/build-your-app/authentication/verify-wix-requests"
       },
       "VerificationNMIPaymentGatewayConfigs": {
         "type": "object",
@@ -4239,7 +4302,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "NMI Payment Gateway"
+        "x-docs-type": "NMI Payment Gateway",
+        "x-docs-external-url": "https://secure.networkmerchants.com/gw/merchants/resources/integration/integration_portal.php#webhooks_setup"
       },
       "VerificationOrbConfigs": {
         "type": "object",
@@ -4273,7 +4337,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Orb"
+        "x-docs-type": "Orb",
+        "x-docs-external-url": "https://docs.withorb.com/guides/integrations-and-exports/webhooks#webhooks-verification"
       },
       "VerificationPylonConfigs": {
         "type": "object",
@@ -4307,7 +4372,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Pylon"
+        "x-docs-type": "Pylon",
+        "x-docs-external-url": "https://getpylon.com/developers/guides/using-webhooks/#event-signatures"
       },
       "VerificationRepayConfigs": {
         "type": "object",
@@ -4375,7 +4441,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Square"
+        "x-docs-type": "Square",
+        "x-docs-external-url": "https://developer.squareup.com/docs/webhooks/step3validate"
       },
       "VerificationSolidGateConfigs": {
         "type": "object",
@@ -4409,7 +4476,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "SolidGate"
+        "x-docs-type": "SolidGate",
+        "x-docs-external-url": "https://docs.solidgate.com/payments/integrate/webhooks/#security"
       },
       "VerificationTrelloConfigs": {
         "type": "object",
@@ -4443,7 +4511,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Trello"
+        "x-docs-type": "Trello",
+        "x-docs-external-url": "https://developer.atlassian.com/cloud/trello/guides/rest-api/webhooks/#webhook-signatures"
       },
       "VerificationSanityConfigs": {
         "type": "object",
@@ -4477,7 +4546,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Sanity"
+        "x-docs-type": "Sanity",
+        "x-docs-external-url": "https://www.sanity.io/docs/webhooks"
       },
       "VerificationEbayConfigs": {
         "type": "object",
@@ -4527,7 +4597,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Ebay"
+        "x-docs-type": "Ebay",
+        "x-docs-external-url": "https://developer.ebay.com/api-docs/commerce/notification/resources/destination/methods/createDestination"
       },
       "VerificationTelnyxConfigs": {
         "type": "object",
@@ -4629,7 +4700,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "TokenIO"
+        "x-docs-type": "TokenIO",
+        "x-docs-external-url": "https://developer.token.io/token_rest_api_doc/content/e-rest/webhooks.htm?Highlight=webhook#Signature"
       },
       "VerificationFiservConfigs": {
         "type": "object",
@@ -4697,7 +4769,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Bondsmith"
+        "x-docs-type": "Bondsmith",
+        "x-docs-external-url": "https://docs.bond.tech/docs/signatures"
       },
       "VerificationVercelLogDrainsConfigs": {
         "type": "object",
@@ -4735,7 +4808,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Vercel Log Drains"
+        "x-docs-type": "Vercel Log Drains",
+        "x-docs-external-url": "https://vercel.com/docs/rest-api#securing-your-log-drains"
       },
       "VerificationVercelConfigs": {
         "type": "object",
@@ -4769,7 +4843,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Vercel"
+        "x-docs-type": "Vercel",
+        "x-docs-external-url": "https://vercel.com/docs/observability/webhooks-overview/webhooks-api#securing-webhooks"
       },
       "VerificationTebexConfigs": {
         "type": "object",
@@ -4803,7 +4878,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Tebex"
+        "x-docs-type": "Tebex",
+        "x-docs-external-url": "https://docs.tebex.io/developers/webhooks/overview#verifying-webhook-authenticity"
       },
       "VerificationSlackConfigs": {
         "type": "object",
@@ -4837,7 +4913,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Slack"
+        "x-docs-type": "Slack",
+        "x-docs-external-url": "https://api.slack.com/authentication/verifying-requests-from-slack#validating-a-request"
       },
       "VerificationRazorpayConfigs": {
         "type": "object",
@@ -4871,7 +4948,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Razorpay"
+        "x-docs-type": "Razorpay",
+        "x-docs-external-url": "https://razorpay.com/docs/webhooks/validate-test/#validate-webhooks"
       },
       "VerificationMailchimpConfigs": {
         "type": "object",
@@ -4939,7 +5017,8 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Paddle"
+        "x-docs-type": "Paddle",
+        "x-docs-external-url": "https://developer.paddle.com/webhooks/signature-verification"
       },
       "VerificationPaypalConfigs": {
         "type": "object",
@@ -4973,7 +5052,78 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-docs-type": "Paypal"
+        "x-docs-type": "Paypal",
+        "x-docs-external-url": "https://developer.paypal.com/api/rest/webhooks/rest/"
+      },
+      "VerificationTreezorConfigs": {
+        "type": "object",
+        "properties": {
+          "webhook_secret_key": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "webhook_secret_key"
+        ],
+        "additionalProperties": false,
+        "description": "The verification configs for Treezor. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "TreezorConfigs"
+      },
+      "VerificationTreezor": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "treezor",
+              "TREEZOR"
+            ]
+          },
+          "configs": {
+            "$ref": "#/components/schemas/VerificationTreezorConfigs"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false,
+        "x-docs-type": "Treezor",
+        "x-docs-external-url": "https://docs.treezor.com/guide/webhooks/integrity-checks.html"
+      },
+      "VerificationPraxisConfigs": {
+        "type": "object",
+        "properties": {
+          "webhook_secret_key": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "webhook_secret_key"
+        ],
+        "additionalProperties": false,
+        "description": "The verification configs for Praxis. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "PraxisConfigs"
+      },
+      "VerificationPraxis": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "praxis",
+              "PRAXIS"
+            ]
+          },
+          "configs": {
+            "$ref": "#/components/schemas/VerificationPraxisConfigs"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false,
+        "x-docs-type": "Praxis",
+        "x-docs-external-url": "https://doc.praxiscashier.com/integration_docs/latest/webhooks/validation"
       },
       "VerificationConfig": {
         "oneOf": [
@@ -4985,6 +5135,9 @@
           },
           {
             "$ref": "#/components/schemas/VerificationAPIKey"
+          },
+          {
+            "$ref": "#/components/schemas/VerificationBridge"
           },
           {
             "$ref": "#/components/schemas/VerificationCloudSignal"
@@ -5159,6 +5312,12 @@
           },
           {
             "$ref": "#/components/schemas/VerificationPaypal"
+          },
+          {
+            "$ref": "#/components/schemas/VerificationTreezor"
+          },
+          {
+            "$ref": "#/components/schemas/VerificationPraxis"
           }
         ],
         "nullable": true,
@@ -5693,6 +5852,17 @@
             "type": "integer",
             "nullable": true,
             "description": "Maximum number of retries to attempt"
+          },
+          "response_status_codes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^(?:([2-5]\\d{2})-([2-5]\\d{2})|([><=]{1,2})([2-5]\\d{2})|!?([2-5]\\d{2}))$"
+            },
+            "minItems": 1,
+            "maxItems": 10,
+            "nullable": true,
+            "description": "HTTP codes to retry on. Accepts: range expressions (e.g., \"400-499\", \">400\"), specific codes (e.g., 404), and exclusions (e.g., \"!401\"). Example: [\"500-599\", \">400\", 404, \"!401\"]"
           }
         },
         "required": [
@@ -16046,6 +16216,59 @@
         ],
         "x-fern-sdk-group-name": "transformation",
         "x-fern-sdk-method-name": "retrieve"
+      },
+      "delete": {
+        "operationId": "deleteTransformation",
+        "summary": "Delete a transformation",
+        "description": "",
+        "tags": [
+          "Transformations"
+        ],
+        "responses": {
+          "200": {
+            "description": "An object with deleted transformation id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "ID of the Transformation"
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "description": "Transformation ID"
+            },
+            "required": true
+          }
+        ],
+        "x-fern-sdk-group-name": "transformation",
+        "x-fern-sdk-method-name": "delete"
       },
       "put": {
         "operationId": "updateTransformation",
