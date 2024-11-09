@@ -1722,7 +1722,8 @@
           "PADDLE",
           "PAYPAL",
           "TREEZOR",
-          "PRAXIS"
+          "PRAXIS",
+          "CUSTOMERIO"
         ]
       },
       "IntegrationFeature": {
@@ -3192,7 +3193,7 @@
         ],
         "additionalProperties": false,
         "x-docs-type": "Stripe",
-        "x-docs-external-url": "https://stripe.com/docs/webhooks#verify-manually"
+        "x-docs-external-url": "https://docs.stripe.com/webhooks?verify=verify-manually"
       },
       "VerificationRechargeConfigs": {
         "type": "object",
@@ -5125,6 +5126,41 @@
         "x-docs-type": "Praxis",
         "x-docs-external-url": "https://doc.praxiscashier.com/integration_docs/latest/webhooks/validation"
       },
+      "VerificationCustomer.IOConfigs": {
+        "type": "object",
+        "properties": {
+          "webhook_secret_key": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "webhook_secret_key"
+        ],
+        "additionalProperties": false,
+        "description": "The verification configs for Customer.IO. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "Customer.IOConfigs"
+      },
+      "VerificationCustomer.IO": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "customerio",
+              "CUSTOMERIO"
+            ]
+          },
+          "configs": {
+            "$ref": "#/components/schemas/VerificationCustomer.IOConfigs"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false,
+        "x-docs-type": "Customer.IO",
+        "x-docs-external-url": "https://docs.customer.io/journeys/webhooks/#securely-verify-requests"
+      },
       "VerificationConfig": {
         "oneOf": [
           {
@@ -5318,6 +5354,9 @@
           },
           {
             "$ref": "#/components/schemas/VerificationPraxis"
+          },
+          {
+            "$ref": "#/components/schemas/VerificationCustomer.IO"
           }
         ],
         "nullable": true,
