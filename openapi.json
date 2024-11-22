@@ -1676,6 +1676,7 @@
           "TYPEFORM",
           "XERO",
           "SVIX",
+          "REPLICATE",
           "ZOOM",
           "AKENEO",
           "ADYEN",
@@ -3477,6 +3478,41 @@
         "additionalProperties": false,
         "x-docs-type": "Svix"
       },
+      "VerificationReplicateConfigs": {
+        "type": "object",
+        "properties": {
+          "webhook_secret_key": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "webhook_secret_key"
+        ],
+        "additionalProperties": false,
+        "description": "The verification configs for Replicate. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "ReplicateConfigs"
+      },
+      "VerificationReplicate": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "replicate",
+              "REPLICATE"
+            ]
+          },
+          "configs": {
+            "$ref": "#/components/schemas/VerificationReplicateConfigs"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false,
+        "x-docs-type": "Replicate",
+        "x-docs-external-url": "https://replicate.com/docs/topics/webhooks/verify-webhook"
+      },
       "VerificationZoomConfigs": {
         "type": "object",
         "properties": {
@@ -5213,6 +5249,9 @@
           },
           {
             "$ref": "#/components/schemas/VerificationSvix"
+          },
+          {
+            "$ref": "#/components/schemas/VerificationReplicate"
           },
           {
             "$ref": "#/components/schemas/VerificationZoom"
