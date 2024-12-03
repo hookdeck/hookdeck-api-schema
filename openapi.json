@@ -1676,6 +1676,7 @@
           "TYPEFORM",
           "XERO",
           "SVIX",
+          "REPLICATE",
           "ZOOM",
           "AKENEO",
           "ADYEN",
@@ -1722,7 +1723,8 @@
           "PADDLE",
           "PAYPAL",
           "TREEZOR",
-          "PRAXIS"
+          "PRAXIS",
+          "CUSTOMERIO"
         ]
       },
       "IntegrationFeature": {
@@ -3192,7 +3194,7 @@
         ],
         "additionalProperties": false,
         "x-docs-type": "Stripe",
-        "x-docs-external-url": "https://stripe.com/docs/webhooks#verify-manually"
+        "x-docs-external-url": "https://docs.stripe.com/webhooks?verify=verify-manually"
       },
       "VerificationRechargeConfigs": {
         "type": "object",
@@ -3476,6 +3478,41 @@
         "additionalProperties": false,
         "x-docs-type": "Svix"
       },
+      "VerificationReplicateConfigs": {
+        "type": "object",
+        "properties": {
+          "webhook_secret_key": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "webhook_secret_key"
+        ],
+        "additionalProperties": false,
+        "description": "The verification configs for Replicate. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "ReplicateConfigs"
+      },
+      "VerificationReplicate": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "replicate",
+              "REPLICATE"
+            ]
+          },
+          "configs": {
+            "$ref": "#/components/schemas/VerificationReplicateConfigs"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false,
+        "x-docs-type": "Replicate",
+        "x-docs-external-url": "https://replicate.com/docs/topics/webhooks/verify-webhook"
+      },
       "VerificationZoomConfigs": {
         "type": "object",
         "properties": {
@@ -3509,7 +3546,7 @@
         ],
         "additionalProperties": false,
         "x-docs-type": "Zoom",
-        "x-docs-external-url": "https://developers.zoom.us/docs/api/rest/webhook-reference/#verify-webhook-events"
+        "x-docs-external-url": "https://developers.zoom.us/docs/api/webhooks/#verify-webhook-events"
       },
       "VerificationAkeneoConfigs": {
         "type": "object",
@@ -5125,6 +5162,41 @@
         "x-docs-type": "Praxis",
         "x-docs-external-url": "https://doc.praxiscashier.com/integration_docs/latest/webhooks/validation"
       },
+      "VerificationCustomer.IOConfigs": {
+        "type": "object",
+        "properties": {
+          "webhook_secret_key": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "webhook_secret_key"
+        ],
+        "additionalProperties": false,
+        "description": "The verification configs for Customer.IO. Only included if the ?include=verification.configs query param is present",
+        "x-docs-type": "Customer.IOConfigs"
+      },
+      "VerificationCustomer.IO": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "customerio",
+              "CUSTOMERIO"
+            ]
+          },
+          "configs": {
+            "$ref": "#/components/schemas/VerificationCustomer.IOConfigs"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false,
+        "x-docs-type": "Customer.IO",
+        "x-docs-external-url": "https://docs.customer.io/journeys/webhooks/#securely-verify-requests"
+      },
       "VerificationConfig": {
         "oneOf": [
           {
@@ -5177,6 +5249,9 @@
           },
           {
             "$ref": "#/components/schemas/VerificationSvix"
+          },
+          {
+            "$ref": "#/components/schemas/VerificationReplicate"
           },
           {
             "$ref": "#/components/schemas/VerificationZoom"
@@ -5318,6 +5393,9 @@
           },
           {
             "$ref": "#/components/schemas/VerificationPraxis"
+          },
+          {
+            "$ref": "#/components/schemas/VerificationCustomer.IO"
           }
         ],
         "nullable": true,
