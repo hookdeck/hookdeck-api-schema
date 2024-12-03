@@ -3546,7 +3546,7 @@
         ],
         "additionalProperties": false,
         "x-docs-type": "Zoom",
-        "x-docs-external-url": "https://developers.zoom.us/docs/api/rest/webhook-reference/#verify-webhook-events"
+        "x-docs-external-url": "https://developers.zoom.us/docs/api/webhooks/#verify-webhook-events"
       },
       "VerificationAkeneoConfigs": {
         "type": "object",
