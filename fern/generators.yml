@@ -6,7 +6,7 @@ groups:
   local:
     generators:
       - name: fernapi/fern-go-sdk
-        version: 0.27.0
+        version: 0.33.0
         output:
           location: local-file-system
           path: ../local/go/generated/hookdeck-go-sdk
